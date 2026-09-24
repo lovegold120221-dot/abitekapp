@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/metropolis-font.css">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="food">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/FoodApp.gif" class="img-fluid" alt="food">
+    </div>
+    <!-- loader End -->
+
+    <!-- header starts -->
+    <header class="main-header food-main-header">
+        <div class="custom-container">
+            <div class="header-panel">
+                <a href="cart.html#" onclick="history.back()">
+                    <i class="iconsax back-icon" data-icon="chevron-left"></i>
+                </a>
+                <h3>The Cozy Corner</h3>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+    <!-- product section start -->
+    <section class="section-t-space food-cart-section">
+        <div class="custom-container">
+            <div class="cart-title">
+                <h3>Add Items</h3>
+            </div>
+            <ul>
+                <li>
+                    <a href="restaurant.html">
+                        <img src="../assets/images/food/product/12.jpg" class="img-fluid" alt="product">
+                    </a>
+                    <div class="food-cart-content">
+                        <a href="restaurant.html">Pizza With Shrimp</a>
+                        <h5>Classic Cheese Pizza</h5>
+                        <div class="food-count">
+                            <div class="plus-minus">
+                                <i class="iconsax icon sub" data-icon="minus"></i>
+                                <input type="number" disabled="" value="1" min="1" max="10">
+                                <i class="iconsax icon add" data-icon="add"></i>
+                            </div>
+                            <h6 class="dollar">$16</h6>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="restaurant.html">
+                        <img src="../assets/images/food/product/13.jpg" class="img-fluid" alt="product">
+                    </a>
+                    <div class="food-cart-content">
+                        <a href="restaurant.html">Grilled All Beef Hot Dog</a>
+                        <h5>North Indian, Spice</h5>
+                        <div class="food-count">
+                            <div class="plus-minus">
+                                <i class="iconsax icon sub" data-icon="minus"></i>
+                                <input type="number" disabled="" value="1" min="1" max="10">
+                                <i class="iconsax icon add" data-icon="add"></i>
+                            </div>
+                            <h6 class="dollar">$10</h6>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="restaurant.html">
+                        <img src="../assets/images/food/product/14.jpg" class="img-fluid" alt="product">
+                    </a>
+                    <div class="food-cart-content">
+                        <a href="restaurant.html">Traditional Food in India</a>
+                        <h5>Indian, Chinese</h5>
+                        <div class="food-count">
+                            <div class="plus-minus">
+                                <i class="iconsax icon sub" data-icon="minus"></i>
+                                <input type="number" disabled="" value="1" min="1" max="10">
+                                <i class="iconsax icon add" data-icon="add"></i>
+                            </div>
+                            <h6 class="dollar">$35</h6>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- product section end -->
+
+    <!-- banner section start -->
+    <section class="section-t-space">
+        <div class="custom-container">
+            <div class="food-banner-box">
+                <div class="food-banner-image">
+                    <h2> <span><svg>
+                                <use href="../assets/svg/icon-sprite.svg#rupee"></use>
+                            </svg>75 </span> Savings on this order,<span> <svg>
+                                <use href="../assets/svg/icon-sprite.svg#rupee"></use>
+                            </svg>16</span> including with food one!</h2>
+                </div>
+                <a href="coupon.html" class="food-banner-contant">
+                    <div class="food-banner-detail">
+                        <h5>Apply Coupon</h5>
+                        <h6>Save more with coupons available for you</h6>
+                    </div>
+                    <div class="left-side" onclick="history.back()">
+                        <i class="iconsax back-icon" data-icon="chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- banner section end -->
+
+    <!-- account total section start -->
+    <section class="section-t-space">
+        <div class="custom-container">
+            <div class="title2">
+                <h3>Order Details</h3>
+            </div>
+            <ul class="food-bill-list">
+                <li>Item Total<span>$256.00</span></li>
+                <li>Delivery Fee<a href="cart.html#!">- $16.00</a></li>
+                <li>Delivery Tip<a href="cart.html#!" data-bs-toggle="offcanvas" data-bs-target="#addTip"
+                        aria-controls="addTip">Add Tip</a></li>
+                <li>Taxes & Charges<span> $48.00</span></li>
+                <li class="food-total-bill">Total Amount <span> $288.00</span></li>
+            </ul>
+        </div>
+    </section>
+    <!-- account total section end  -->
+
+    <!-- map section start -->
+    <section class="section-t-space">
+        <div class="custom-container">
+            <div class="title2">
+                <h3>Delivery Address</h3>
+            </div>
+            <div class="food-banner-box">
+                <div class="food-map-image"></div>
+                <div class="food-map-contant">
+                    <div class="food-map-detail">
+                        <h5>Delivery Address</h5>
+                        <h6>4517 Washington Ave. Manchester,
+                            Kentucky 39495</h6>
+                    </div>
+                    <a href="cart.html#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom">
+                        <i class="iconsax edit-icon" data-icon="edit-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- map section end -->
+
+    <!-- fixed panel start -->
+    <div class="custom-container">
+        <div class="food-fixed-panel">
+            <div class="food-fixed-panel-content ">
+                <div>
+                    <h5>$18</h5>
+                    <a href="cart.html#!" id="price">2 item Added</a>
+                </div>
+                <a href="payment.html" class="view-btn">Pay Now</a>
+            </div>
+        </div>
+    </div>
+    <!-- fixed panel end -->
+
+    <!-- bottom panel space start  -->
+    <div class="food-panel-space"></div>
+    <!-- bottom panel space end  -->
+
+    <!-- offcanvas section start  -->
+    <div class="offcanvas offcanvas-bottom theme-offcanvas" tabindex="-1" id="offcanvasBottom">
+        <div class="offcanvas-header theme-header">
+            <a href="cart.html#" onclick="history.back()">
+                <i class="iconsax back-icon" data-icon="chevron-left"></i>
+            </a>
+            <h3>My Address</h3>
+            <button type="button" class="btn-close offcanvas-close" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body small p-0">
+            <div class="custom-container">
+                <div class="address-list-box">
+                    <ul class="address-list">
+                        <li class="address-box ">
+                            <img src="../assets/images/food/map/6.png" alt="map">
+                            <div class="address-list-contant">
+                                <div class="address-name">
+                                    <svg>
+                                        <use href="../assets/svg/icon-sprite.svg#home"></use>
+                                    </svg>
+                                    <h5>Home</h5>
+                                </div>
+                                <p>Stonebridge Park Unit 12, 5th Floor,
+                                    Wing B 2843 Moorland County Zip Code: 74562-1198</p>
+                            </div>
+                        </li>
+                        <li class="address-box m-0">
+                            <img src="../assets/images/food/map/7.png" alt="map">
+                            <div class="address-list-contant">
+                                <div class="address-name">
+                                    <svg>
+                                        <use href="../assets/svg/icon-sprite.svg#work"></use>
+                                    </svg>
+                                    <h5>Work</h5>
+                                </div>
+                                <p>4517 Washington Ave. Manchester,Kentucky 39495 Zip Code: 59422-32659</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- button section start -->
+                <a href="address.html" class="btn food-btn  m_top-20">More Address</a>
+                <!-- button section end -->
+            </div>
+        </div>
+        <!-- space  -->
+        <div class="food-panel-space"></div>
+    </div>
+    <!-- offcanvas section end -->
+
+    <!-- add tip offcanvas start  -->
+    <div class="offcanvas offcanvas-bottom theme-offcanvas" tabindex="-1" id="addTip">
+        <div class="offcanvas-header theme-header">
+            <h3>Add Tips</h3>
+            <button type="button" class="btn-close offcanvas-close" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body small pt-0">
+            <div class="tips-box">
+                <div class="add-tips-wrapper">
+                    <div>
+                        <i class="iconsax" data-icon="wallet-add-1"></i>
+                    </div>
+                    <div>
+                        <h5>Include a tip.</h5>
+                        <h6>Add Special Instructions</h6>
+                    </div>
+                </div>
+                <p>Review your selected items, quantity, and preferences before checking out to avoid any mix-ups.
+                    Delivery times may vary during peak hours. Plan ahead if you're ordering for a group or an
+                    event.Ensure your address is
+                    complete and includes apartment number or landmarks if necessary.
+                </p>
+                <div class="timing-wrapper">
+                    <h3>Rating</h3>
+                    <ul class="custom-radio-list">
+                        <li>
+                            <input type="radio" name="delivery" id="time1" checked>
+                            <label for="time1"><svg>
+                                    <use href="../assets/svg/icon-sprite.svg#star"></use>
+                                </svg>1</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="delivery" id="time2">
+                            <label for="time2"><svg>
+                                    <use href="../assets/svg/icon-sprite.svg#star"></use>
+                                </svg>2</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="delivery" id="time3">
+                            <label for="time3"><svg>
+                                    <use href="../assets/svg/icon-sprite.svg#star"></use>
+                                </svg>3</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="delivery" id="time4">
+                            <label for="time4"><svg>
+                                    <use href="../assets/svg/icon-sprite.svg#star"></use>
+                                </svg>4</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="delivery" id="time5">
+                            <label for="time5"><svg>
+                                    <use href="../assets/svg/icon-sprite.svg#star"></use>
+                                </svg>5</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <a href="delivery.html" class="btn food-btn m_top-30">Done</a>
+            <div class="food-panel-space"></div>
+        </div>
+    </div>
+    <!-- add tip offcanvas start  -->
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- quantity js -->
+    <script src="../assets/js/quantity.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- swiper js -->
+    <script src="../assets/js/vendors/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/js/custom-swiper.js"></script>
+
+    <!-- script js-->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

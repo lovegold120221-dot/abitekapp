@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Manrope:wght@200..800&amp;display=swap.css" rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="chatting manrope-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/chatting.gif" class="img-fluid" alt="chatting">
+    </div>
+    <!-- loader End -->
+
+    <!-- chatting header start  -->
+    <header class="chatting-main-header">
+        <div class="custom-container2">
+            <div class="header-panel">
+                <a href="setting.html#!" onclick="history.back()">
+                    <i class="iconsax icon-btn" data-icon="chevron-left"></i>
+                </a>
+                <h3>Setting</h3>
+            </div>
+        </div>
+    </header>
+    <!-- chatting header end -->
+
+    <!-- Mobile Section Start -->
+    <ul class="chatting-mobile-menu">
+        <li><a href="home.html">
+                <div class="icon">
+                    <i class="iconsax menu-icon inactive" data-icon="messages-2"> </i>
+                    <img src="../assets/images/chatting/icon/1.svg" class="img-fluid active" alt="svg">
+                </div>
+                <h5>Chats</h5>
+            </a>
+        </li>
+        <li><a href="calls.html">
+                <div class="icon">
+                    <i class="iconsax menu-icon inactive" data-icon="phone-calling"> </i>
+
+                    <img src="../assets/images/chatting/icon/2.svg" class="img-fluid active" alt="svg">
+                </div>
+                <h5>Calls</h5>
+            </a>
+        </li>
+        <li class="active"><a href="setting.html">
+                <div class="icon">
+                    <i class="iconsax menu-icon inactive" data-icon="setting-1"></i>
+                    <img src="../assets/images/chatting/icon/3.svg" class="img-fluid active" alt="svg">
+                </div>
+                <h5 class="active">Setting</h5>
+            </a>
+        </li>
+        <li><a href="profile.html">
+                <div class="icon">
+                    <i class="iconsax menu-icon inactive" data-icon="user-1-octagon"> </i>
+                    <img src="../assets/images/chatting/icon/4.svg" class="img-fluid active" alt="svg">
+                </div>
+                <h5>Profile</h5>
+            </a>
+        </li>
+    </ul>
+    <!-- Mobile Section End -->
+
+    <!-- chatting card section start -->
+    <section class="chatting-section chatting-height-scroll">
+        <div class="custom-container2">
+            <div class="chatting-theme-card">
+                <div class="theme-card">
+                    <div class="theme-info">
+                        <div class="icon-container">
+                            <img src="../assets/images/chatting/svg/7.svg" class="img-fluid" alt="moon">
+                        </div>
+                        <span>Dark theme</span>
+                    </div>
+                    <label class="p-0 fill-circle">
+                        <input type="checkbox" name="option" class="chat-check" id="toggleDarkMode">
+                        <span class="message-round"></span>
+                    </label>
+                </div>
+            </div>
+            <ul class="chat-setting-list">
+                <li>
+                    <a href="language.html">
+                        <div>
+                            <i class="iconsax chat-icon" data-icon="globe"></i>
+                        </div>
+                        <div class="chat-setting-contant">
+                            <h5>App Language</h5>
+                            <i class="iconsax back-icon" data-icon="chevron-right"></i>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="finger-lock.html">
+                        <div>
+                            <i class="iconsax chat-icon" data-icon="fingerprint-scan"></i>
+                        </div>
+                        <div class="chat-setting-contant">
+                            <h5>Finger lock</h5>
+                            <i class="iconsax back-icon" data-icon="chevron-right"></i>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="rating.html">
+                        <div>
+                            <i class="iconsax chat-icon" data-icon="star"></i>
+                        </div>
+                        <div class="chat-setting-contant">
+                            <h5>Rate app</h5>
+                            <i class="iconsax back-icon" data-icon="chevron-right"></i>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="avatar.html">
+                        <div>
+                            <i class="iconsax chat-icon" data-icon="emoji-happy"></i>
+                        </div>
+                        <div class="chat-setting-contant">
+                            <h5>Avatar</h5>
+                            <i class="iconsax back-icon" data-icon="chevron-right"></i>
+                        </div>
+                    </a>
+                </li>
+                <li data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                    <a href="setting.html#!">
+                        <div>
+                            <i class="iconsax chat-icon" data-icon="trash"></i>
+                        </div>
+                        <div class="chat-setting-contant">
+                            <h5>Clear storage</h5>
+                            <i class="iconsax back-icon" data-icon="chevron-right"></i>
+                        </div>
+                    </a>
+                </li>
+                <li data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <a href="setting.html#!">
+                        <div>
+                            <i class="iconsax log-icon" data-icon="logout-1"></i>
+                        </div>
+                        <div class="chat-setting-contant">
+                            <h5>Log out</h5>
+                            <i class="iconsax back-icon" data-icon="chevron-right"></i>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- chatting card section  end  -->
+
+    <!-- logout model start-->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="logout-section">
+                        <i class="iconsax icon" data-icon="info-circle"></i>
+                        <div class="logout-contant">
+                            <h3>Logout Account ?</h3>
+                            <p>Do you really want to log off ? You must log in again after logging out.Are you alright?
+                            </p>
+                        </div>
+                        <div class="modal-button">
+                            <a href="setting.html#!" class="no-btn" data-bs-dismiss="modal" aria-label="Close">Close</a>
+                            <a href="login.html" class="yes-btn">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- logout model end-->
+
+    <!-- clear storage start -->
+    <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="logout-section">
+                        <i class="iconsax icon" data-icon="brush-2"></i>
+                        <div class="logout-contant">
+                            <h3>CleanUp ?</h3>
+                            <p>Clears all locally stored app data-cache, localStorage
+                                to its original state.</p>
+                        </div>
+                        <div class="modal-button">
+                            <a href="setting.html#!" class="no-btn" data-bs-dismiss="modal" aria-label="Close">No</a>
+                            <a href="setting.html#!" class="yes-btn" data-bs-dismiss="modal" aria-label="Close">Yes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- clear storage end -->
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- script js-->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

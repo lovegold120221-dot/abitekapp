@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Mulish:ital,wght@0,200..1000%3B1,200..1000&amp;display=swap.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Iconly css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconly.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="grocery mulish-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/grocery.gif" class="img-fluid" alt="grocery">
+    </div>
+    <!-- loader End -->
+
+    <!-- header starts -->
+    <header class="main-header grocery-main-header">
+        <div class="custom-container">
+            <div class="header-panel">
+                <a href="shop.html#" onclick="history.back()">
+                    <i class="iconsax icon-btn" data-icon="chevron-left"> </i>
+                </a>
+                <h3>Shop</h3>
+
+                <a href="search.html">
+                    <i class="iconsax icon-btn" data-icon="search-normal-2"> </i>
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+    <!-- shop section start -->
+    <section class="section-lg-t-space section-b-space">
+        <div class="custom-container">
+            <div class="title plant-title">
+                <h3>Categories</h3>
+                <a href="categories.html">See All</a>
+            </div>
+        </div>
+        <ul class="nav nav-tabs grocery-tab pl-15" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link category-item active" id="pills-cat1-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-cat1" type="button" role="tab">
+
+                    <span class="category-image">
+                        <img class="img-fluid category-icon" src="../assets/images/grocery/category/1.svg"
+                            alt="category">
+                    </span>
+                    <span class="category-name">Sugar</span>
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link category-item " id="pills-cat2-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-cat2" type="button" role="tab">
+                    <span class="category-image">
+                        <img class="img-fluid category-icon" src="../assets/images/grocery/category/2.svg"
+                            alt="category">
+                    </span>
+                    <span class="category-name">Vagetable</span>
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link category-item " id="pills-cat3-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-cat3" type="button" role="tab">
+                    <span class="category-image">
+                        <img class="img-fluid category-icon" src="../assets/images/grocery/category/3.svg"
+                            alt="category">
+                    </span>
+                    <span class="category-name">Cold Drinks</span>
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link category-item " id="pills-cat4-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-cat4" type="button" role="tab">
+                    <span class="category-image">
+                        <img class="img-fluid category-icon" src="../assets/images/grocery/category/4.svg"
+                            alt="category">
+                    </span>
+                    <span class="category-name">Fruits</span>
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link category-item " id="pills-cat5-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-cat5" type="button" role="tab">
+                    <span class="category-image">
+                        <img class="img-fluid category-icon" src="../assets/images/grocery/category/7.svg"
+                            alt="category">
+                    </span>
+                    <span class="category-name">Cakes</span>
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link category-item " id="pills-cat6-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-cat6" type="button" role="tab">
+                    <span class="category-image">
+                        <img class="img-fluid category-icon" src="../assets/images/grocery/category/9.svg"
+                            alt="category">
+                    </span>
+                    <span class="category-name">Ice-Cream</span>
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade pt-3 show active" id="pills-cat1" role="tabpanel" tabindex="0">
+                <div class="custom-container">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/1.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Living that sweet, strawberry life</h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">500g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$30 <span class="offer">25% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/2.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Assorted Capsicum Combo </h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">250g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$15 <span class="offer">15% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/3.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Fresh Organic Avocado</h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">200g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$10 <span class="offer">10% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade pt-3" id="pills-cat2" role="tabpanel" tabindex="0">
+                <div class="custom-container">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/4.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Fresh Onion</h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">1kg</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$30 <span class="offer">25% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/5.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Fresh Potato </h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">250g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$15 <span class="offer">15% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/6.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Fresh and juicy Lemon</h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">200g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$10 <span class="offer">10% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade pt-3" id="pills-cat3" role="tabpanel" tabindex="0">
+                <div class="custom-container">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/1.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Living that sweet, strawberry life</h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">500g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$30 <span class="offer">25% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/6.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Fresh and juicy Lemon</h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">250g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$15 <span class="offer">15% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/3.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Fresh Organic Avocado</h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">200g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$10 <span class="offer">10% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade pt-3" id="pills-cat4" role="tabpanel" tabindex="0">
+                <div class="custom-container">
+                    <div class="row g-3">
+
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/3.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Fresh Organic Avocado</h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">200g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$10 <span class="offer">10% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/1.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Living that sweet, strawberry life</h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">500g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$30 <span class="offer">25% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/6.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Fresh and juicy Lemon</h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">250g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$15 <span class="offer">15% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade pt-3" id="pills-cat5" role="tabpanel" tabindex="0">
+                <div class="custom-container">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/2.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Assorted Capsicum Combo </h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">250g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$15 <span class="offer">15% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/1.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Living that sweet, strawberry life</h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">500g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$30 <span class="offer">25% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/5.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Fresh Potato </h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">250g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$15 <span class="offer">15% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/3.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Fresh Organic Avocado</h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">200g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$10 <span class="offer">10% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade pt-3" id="pills-cat6" role="tabpanel" tabindex="0">
+                <div class="custom-container">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/1.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Living that sweet, strawberry life</h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">500g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$30 <span class="offer">25% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/6.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Fresh and juicy Lemon</h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">250g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$15 <span class="offer">15% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid product-img"
+                                        src="../assets/images/grocery/horizontal-product/3.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Fresh Organic Avocado</h5>
+                                        <button class="wishlist-btn btn">
+                                            <i class="iconly-Heart icli"></i>
+                                            <i class="iconly-Heart icbo"></i>
+                                        </button>
+                                    </div>
+
+                                    <h6 class="content-color">200g</h6>
+
+                                    <div class="flex-space mt-1">
+                                        <h4 class="price">$10 <span class="offer">10% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- shop section end -->
+
+    <!-- fixed-panel start -->
+    <div class="fixed-panel grocery-fixed-panel">
+        <div class="custom-container">
+            <div class="fixed-panel-content">
+                <div>
+                    <h6>2 Items</h6>
+                    <h5>$350.00</h5>
+                </div>
+                <a href="cart.html" class="btn fixed-btn">View Cart <i class="iconsax"
+                        data-icon="chevron-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <!-- fixed-panel end -->
+
+    <!-- panel-space start -->
+    <div class="panel-space"></div>
+    <!-- panel-space end -->
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- quantity js -->
+    <script src="../assets/js/quantity.js"></script>
+
+    <!-- template Settings js-->
+    <script src="../assets/js/template-setting.js"></script>
+
+    <!-- script js-->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

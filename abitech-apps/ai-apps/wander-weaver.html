@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wander Weaver — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .5s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-[#0b3b5e] via-[#0e5a7d] to-[#f59e0b]/80 text-sky-50">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+    <div class="text-center mt-4">
+      <div class="text-5xl">🧭</div>
+      <h1 class="text-3xl font-bold mt-2 text-white">Wander Weaver</h1>
+      <p class="text-sm text-white/80 mt-1">Name a place, pick a vibe — get a day-by-day dream trip.</p>
+    </div>
+
+    <div class="mt-6 bg-black/30 backdrop-blur rounded-2xl p-5 border border-white/20">
+      <input id="destInput" placeholder="Destination: e.g. Kyoto, Marrakech, Cusco…" class="w-full bg-black/30 rounded-xl px-3 py-2.5 text-sm outline-none border border-white/20 focus:border-amber-300 placeholder:text-white/40" />
+      <div class="flex gap-2 mt-3">
+        <select id="daysInput" class="bg-black/30 rounded-full px-4 py-2.5 text-sm border border-white/20 outline-none">
+          <option value="1">1 day</option><option value="3" selected>3 days</option><option value="5">5 days</option><option value="7">7 days</option>
+        </select>
+        <select id="vibeInput" class="bg-black/30 rounded-full px-4 py-2.5 text-sm border border-white/20 outline-none">
+          <option value="foodie">🍜 Foodie</option><option value="adventure">🧗 Adventure</option><option value="chill">🏖️ Chill</option><option value="culture">🏛️ Culture</option><option value="budget">🎒 Budget</option><option value="luxury">💎 Luxury</option>
+        </select>
+        <button id="weaveBtn" onclick="weave()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-black font-semibold text-sm py-2.5 rounded-full transition">Weave it ✈️</button>
+      </div>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/30 border border-red-300/40 rounded-xl p-3"></div>
+    <div id="result" class="mt-5 space-y-4"></div>
+  </div>
+
+  <script>
+const GEMINI_KEY = sessionStorage.getItem('abitech_gemini_key') || '';
+    const GEMINI_MODEL = "gemini-3.5-flash-lite";
+    const LIVE_MODEL = "gemini-3.5-flash-live";
+    function esc(s) { return s.replace(/[&<>"']/g, c => ({ '&': '&', '<': '<', '>': '>', '"': '"', "'": ''' }[c])); }
+    function fmt(t) { return esc(t).replace(/\*\*(.+?)\*\*/g, '<b class="text-amber-300">$1</b>').replace(/\n/g, '<br>'); }
+
+    // Gemini Live API TTS voice state
+    let ttsWs = null;
+    let ttsQueue = [];
+    let ttsSpeaking = false;
+    function ttsSpeakQueue() {
+      if (ttsSpeaking || !ttsWs) return;
+      if (ttsQueue.length === 0) { ttsSpeaking = false; return; }
+      const text = ttsQueue.shift();
+      ttsSpeaking = true;
+      ttsWs.send(JSON.stringify({
+        turns: [{ parts: [{ text: text }] }], turnComplete: true
+      }));
+    }
+    function ttsStop() { try { if (ttsWs) ttsWs.close(); ttsSpeaking = false; ttsQueue = []; } catch (e) {} }
+
+    // Initialise Live API TTS WebSocket
+    function ttsInit() {
+      if (ttsWs) return;
+      const wsUrl = `wss://generativelanguage.googleapis.com/v1beta/models/${LIVE_MODEL}:streamGenerateContent?key=${GEMINI_KEY}`;
+      ttsWs = new WebSocket(wsUrl);
+      ttsWs.onopen = () => ttsSpeakQueue();
+      ttsWs.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        if (data.serverContent && data.serverContent.modelTurn && data.serverContent.modelTurn.parts) {
+          const audioB64 = data.serverContent.modelTurn.parts.find(p => p.inlineData).inlineData.data;
+          const audioBlob = base64ToBlob(audioB64, 'audio/mp3');
+          const url = URL.createObjectURL(audioBlob);
+          const audio = new Audio(url);
+          audio.play().catch(() => {});
+          ttsSpeaking = false;
+          ttsSpeakQueue();
+        }
+      };
+      ttsWs.onerror = () => { ttsSpeaking = false; ttsSpeakQueue(); };
+    }
+
+    // Send text to Gemini Live API for TTS
+    function ttsPlay(text) {
+      try { text = String(text).replace(/[*#_]/g, '').slice(0, 800); } catch (e) {}
+      if (!text) return;
+      ttsQueue.push(text);
+      ttsInit();
+      ttsSpeakQueue();
+    }
+
+    // Base64 decode helper for audio chunks
+    function base64ToBlob(b64, mime) {
+      const byteChars = atob(b64);
+      const byteNumbers = new Uint8Array(byteChars.length);
+      for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
+      return new Blob([byteNumbers], { type: mime });
+    }
+
+    async function gemini(system, user) {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ system_instruction: { parts: [{ text: system }] }, contents: [{ parts: [{ text: user }] }], generationConfig: { temperature: 0.9, maxOutputTokens: 1200 } })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      return data.candidates[0].content.parts.map(p => p.text || '').join('');
+    }
+
+    async function weave() {
+      const dest = document.getElementById('destInput').value.trim();
+      const days = document.getElementById('daysInput').value;
+      const vibe = document.getElementById('vibeInput').value;
+      const btn = document.getElementById('weaveBtn'), err = document.getElementById('errorBox'), out = document.getElementById('result');
+      err.classList.add('hidden');
+      if (!dest) { err.textContent = 'Where to, traveler?'; err.classList.remove('hidden'); return; }
+      btn.disabled = true; btn.textContent = 'Weaving… 🗺️'; out.innerHTML = '';
+      try {
+        const text = await gemini(
+          `You are a brilliant travel planner. Build a ${days}-day itinerary. Format: start with one line "BEST SEASON: ..." then for each day a section starting "DAY n:" with morning/afternoon/evening in 2 lines total per day, then end with "DON'T MISS: ..." one line and "BUDGET HINT: ..." one line. Concrete places, no fluff.`,
+          `Destination: ${dest}. Days: ${days}. Vibe: ${vibe}.`);
+        out.innerHTML = `<div class="fade-in bg-black/30 backdrop-blur rounded-2xl p-5 border border-white/20"><div class="text-sm leading-relaxed">${fmt(text)}</div></div>`;
+      } catch (e) { err.textContent = 'Compass broke: ' + e.message; err.classList.remove('hidden'); }
+      btn.disabled = false; btn.textContent = 'Weave it ✈️';
+    }
+  </script>
+</body>
+</html>

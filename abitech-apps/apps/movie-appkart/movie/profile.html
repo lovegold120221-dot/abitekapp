@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Outfit:wght@100..900&amp;display=swap.css" rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="movie movie outfit-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/movie.gif" class="img-fluid" alt="movie">
+    </div>
+    <!-- loader End -->
+
+    <!-- header start -->
+    <header class="movie-header">
+        <div class="custom-container2">
+            <button class="back-arrow-icon" onclick="history.back()">
+                <i class="iconsax icon" data-icon="arrow-left"></i>
+            </button>
+            <h3>Profile</h3>
+        </div>
+    </header>
+    <!-- header  end  -->
+
+    <!-- mobile menu section start -->
+    <div class="gradient-menu-panel">
+        <ul>
+            <li>
+                <a href="home.html" class="icon">
+                    <img src="../assets/images/movie/svg/1.svg" class="img-fluid" alt="icon">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="search.html" class="icon">
+                    <img src="../assets/images/movie/svg/2.svg" class="img-fluid" alt="icon">
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="save.html" class="icon">
+                    <img src="../assets/images/movie/svg/3.svg" class="img-fluid" alt="icon">
+                    <span>Save</span>
+                </a>
+            </li>
+            <li>
+                <a href="download.html" class="icon">
+                    <img src="../assets/images/movie/svg/4.svg" class="img-fluid" alt="icon">
+                    <span>Download</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="profile.html" class="icon">
+                    <img src="../assets/images/movie/svg/5.svg" class="img-fluid" alt="icon">
+                    <span>Profile</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- mobile menu section  end  -->
+
+    <!-- profile section start -->
+    <section class="pt-0 movie-profile-section">
+        <div class="custom-container2">
+            <div class="movie-profile-list">
+                <img id="output" src="../assets/images/profile/p12.png" class="img-fluid" alt="profile">
+                <div class="movie-profile-content">
+                    <div>
+                        <h4>Jacob Mark</h4>
+                        <a href="profile.html#!">Jacobmark@gmail.com</a>
+                    </div>
+                    <div>
+                        <input id="file" type="file" onchange="loadFile(event)">
+                        <i class="iconsax icon" data-icon="edit-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- profile section  end  -->
+
+    <!-- premium box start -->
+    <section class="section-t-space-2 movie-premium-section">
+        <div class="custom-container2">
+            <div class="movie-premium-box">
+                <div class="premium-image">
+                    <img src="../assets/images/movie/svg/6.svg" class="img-fluid" alt="svg">
+                </div>
+                <div class="premium-content">
+                    <div>
+                        <h4>Join Premium!</h4>
+                        <h5>Enjoy watching full-HD movies.</h5>
+                    </div>
+                    <div>
+                        <i class="iconsax icon" data-icon="chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- premium box  end  -->
+
+    <!-- profile list section start -->
+    <section class="section-t-space-1 movie-profile-list-section">
+        <div class="custom-container2">
+            <ul class="movie-profile-wrapper">
+                <li>
+                    <a href="notification.html" class="movie-profile-box">
+                        <i class="iconsax icon" data-icon="bell-2"></i>
+                        <div class="profile-title">
+                            <h4>Notification</h4>
+                            <i class="iconsax icon" data-icon="chevron-right"></i>
+                        </div>
+                    </a>
+                </li>
+                <li data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom">
+                    <div class="movie-profile-box">
+                        <i class="iconsax icon" data-icon="import-2"></i>
+                        <div class="profile-title">
+                            <h4>Download</h4>
+                            <i class="iconsax icon" data-icon="chevron-right"></i>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="security.html" class="movie-profile-box">
+                        <i class="iconsax icon" data-icon="shield-lock"></i>
+                        <div class="profile-title">
+                            <h4>Security</h4>
+                            <i class="iconsax icon" data-icon="chevron-right"></i>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="help.html" class="movie-profile-box">
+                        <i class="iconsax icon" data-icon="info-circle"></i>
+                        <div class="profile-title">
+                            <h4>Help Center</h4>
+                            <i class="iconsax icon" data-icon="chevron-right"></i>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="setting.html" class="movie-profile-box">
+                        <i class="iconsax icon" data-icon="nut"></i>
+                        <div class="profile-title">
+                            <h4>Setting</h4>
+                            <i class="iconsax icon" data-icon="chevron-right"></i>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="login.html" class="logout movie-profile-box">
+                        <i class="iconsax icon" data-icon="logout-2"></i>
+                        <div class="profile-title">
+                            <h4>Log Out</h4>
+                            <i class="iconsax icon" data-icon="chevron-right"></i>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- profile list section  end  -->
+
+    <!-- offcanvas section start -->
+    <div class="offcanvas offcanvas-bottom movie-offcanvas" tabindex="-1" id="offcanvasBottom">
+        <div class="offcanvas-header">
+            <i class="iconsax back-icon" data-icon="chevron-left"></i>
+            <h5>Filter</h5>
+            <button type="button" class="close-icon" data-bs-dismiss="offcanvas" aria-label="Close">
+                <i class="iconsax icon" data-icon="add"></i>
+            </button>
+        </div>
+        <div class="offcanvas-body  small pt-0">
+            <ul class="download-list">
+                <li>
+                    <span class="play-btn"></span>
+                    <div class="download-content">
+                        <div>
+                            <h4>MP 3</h4>
+                            <h5>1080p <span> 2.50 GB</span></h5>
+                        </div>
+                        <i class="iconsax icon" data-icon="import-2"></i>
+                    </div>
+                </li>
+                <li>
+                    <span class="play-btn"></span>
+                    <div class="download-content">
+                        <div>
+                            <h4>MP 4 URL</h4>
+                            <h5>1080p <span> 2.50 GB</span></h5>
+                        </div>
+                        <div class="star-img">
+                            <img src="../assets/images/movie/svg/6.svg" class="img-fluid" alt="star">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <span class="play-btn"></span>
+                    <div class="download-content">
+                        <div>
+                            <h4>MPU8</h4>
+                            <h5>1080p <span> 2.50 GB</span></h5>
+                        </div>
+                        <i class="iconsax icon" data-icon="import-2"></i>
+                    </div>
+                </li>
+                <li>
+                    <span class="play-btn"></span>
+                    <div class="download-content">
+                        <div>
+                            <h4>MP 3</h4>
+                            <h5>1080p <span> 2.50 GB</span></h5>
+                        </div>
+                        <i class="iconsax icon" data-icon="import-2"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- offcanvas section end  -->
+
+    <!-- Bootstrap JS-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax JS-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- Image change JS -->
+    <script src="../assets/js/image-change.js"></script>
+
+    <!-- script JS -->
+    <script src="../assets/js/script.js"></script>
+
+</body>
+
+</html>

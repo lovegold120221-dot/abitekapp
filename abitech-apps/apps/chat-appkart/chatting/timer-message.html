@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Manrope:wght@200..800&amp;display=swap.css" rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="chatting manrope-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/chatting.gif" class="img-fluid" alt="chatting">
+    </div>
+    <!-- loader End -->
+
+    <!-- chatting header start  -->
+    <header class="chatting-main-header">
+        <div class="custom-container2">
+            <div class="header-panel">
+                <a href="timer-message.html#!" onclick="history.back()">
+                    <i class="iconsax icon-btn" data-icon="chevron-left"></i>
+                </a>
+                <h3>Disappearing messages</h3>
+            </div>
+        </div>
+    </header>
+    <!-- chatting header end -->
+
+    <!-- notification section start -->
+    <section class="chatting-section chatting-height-scroll2">
+        <div class="custom-container2">
+            <div class="message-time">
+                <img src="../assets/images/chatting/svg/time.svg" class="img-fluid" alt="svg">
+                <h5>Start new chats with disappearing message</h5>
+                <p>All new messages will be removed from this conversation for everyone after the chosen amount of time
+                    for more privacy and storage.This parameter is modifiable by any chat participant.</p>
+            </div>
+            <div class="message-button">
+                <div class="title">
+                    <h3>Message Timer</h3>
+                </div>
+                <label class="fill-circle">
+                    <input type="radio" class="chat-radio" name="option" checked>
+                    <span class="message-round"></span> 7 days
+                </label>
+                <label class="fill-circle">
+                    <input type="radio" class="chat-radio" name="option">
+                    <span class="message-round"></span> 90 days
+                </label>
+                <label class="fill-circle">
+                    <input type="radio" class="chat-radio" name="option">
+                    <span class="message-round"></span> off
+                </label>
+            </div>
+
+            <div class="message-time-content">
+                <div>
+                    <i class="iconsax clock-icon" data-icon="clock"></i>
+                </div>
+                <div>
+                    <h4>Try using the standard message timer.</h4>
+                    <p>Start fresh conversations with messages that vanish.</p>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- message section  end  -->
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- script js-->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

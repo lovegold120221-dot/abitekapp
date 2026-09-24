@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/metropolis-font.css">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Iconly css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconly.css">
+
+    <!-- swiper css -->
+    <link rel="stylesheet" href="../assets/css/vendors/swiper/swiper.min.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="food  position-relative">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/FoodApp.gif" class="img-fluid" alt="food">
+    </div>
+    <!-- loader End -->
+
+    <!-- header start  -->
+    <header class="header food-header">
+        <div class="custom-container">
+            <div class="food-head">
+                <a href="home.html#!" class="header-location" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom2"
+                    aria-controls="offcanvasBottom2">
+                    <div class="head-location-icon">
+                        <img src="../assets/images/food/svg/location.svg" alt="location">
+                    </div>
+                    <div class="head-location-contant">
+                        <div class="d-flex align-items-center gap-1">
+                            <h6>Home</h6>
+                            <i class="iconsax down-arrow" data-icon="chevron-down"></i>
+                        </div>
+                        <h5>8502 Preston Rd. Inglewood...</h5>
+                    </div>
+                </a>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="non-notification.html"><i class="iconsax icon-btn"
+                            data-icon="bell-1"></i><span>2</span></a>
+                    <a href="home.html#!" class="sidebar-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+                        <i class="iconsax  left" data-icon="text-align-left"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header end  -->
+
+    <!-- mobile bottom section start-->
+    <div class="food-mobile-menu">
+        <ul>
+            <li class="active"><a href="home.html">
+                    <div class="icon">
+                        <img src="../assets/images/food/svg/1.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/food/svg/2.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5 class="active">Home</h5>
+                </a>
+            </li>
+            <li><a href="coupon.html">
+                    <div class="icon">
+                        <img src="../assets/images/food/svg/3.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/food/svg/4.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5>Offer</h5>
+                </a>
+            </li>
+            <li><a href="cart.html">
+                    <div class="icon">
+                        <img src="../assets/images/food/svg/5.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/food/svg/6.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5>Cart</h5>
+                </a>
+            </li>
+            <li><a href="profile.html">
+                    <div class="icon">
+                        <img src="../assets/images/food/svg/7.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/food/svg/8.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5>Profile</h5>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- mobile bottom section end  -->
+
+    <!-- search section starts -->
+    <section class="pt-0">
+        <div class="custom-container">
+            <form class="food-input-form">
+                <div class="form-group mt-0">
+                    <input type="search" class="form-control search-space" id="inputusername" placeholder="Chinese">
+                    <i class="iconsax search-icon" data-icon="search-normal-2"> </i>
+                    <a href="home.html#filter" class="filter-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom">
+                        <i class="iconsax" data-icon="setting-3"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- search section end -->
+
+    <!-- hero section start -->
+    <section class="section-t-space">
+        <div class="custom-container">
+            <a href="shop.html" class="hero-section">
+                <img src="../assets/images/food/banner/1.jpg" class="img-fluid w-100" alt="banner">
+            </a>
+        </div>
+    </section>
+    <!-- hero section end  -->
+
+    <!-- categories section start  -->
+    <section class="food-category-section">
+        <div class="custom-container">
+            <div class="title">
+                <h3>Food Categories</h3>
+                <a href="categories.html" class="all">View All</a>
+            </div>
+            <div class="swiper food-slider">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <a href="wishlist.html" class="food-category-box">
+                            <img src="../assets/images/food/categories/1.png" class="img-fluid" alt="png">
+                            <h4>Chinese</h4>
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="wishlist.html" class="food-category-box"><img
+                                src="../assets/images/food/categories/2.png" class="img-fluid" alt="png">
+                            <h4>Noodles</h4>
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="wishlist.html" class="food-category-box"><img
+                                src="../assets/images/food/categories/3.png" class="img-fluid" alt="png">
+                            <h4>Pizza</h4>
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="wishlist.html" class="food-category-box"><img
+                                src="../assets/images/food/categories/4.png" class="img-fluid" alt="png">
+                            <h4>Burger</h4>
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="wishlist.html" class="food-category-box"><img
+                                src="../assets/images/food/categories/1.png" class="img-fluid" alt="png">
+                            <h4>Chinese</h4>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- categories section end  -->
+
+    <!-- product section start  -->
+    <section class="section-t-space">
+        <div class="title px-15">
+            <h3>Top Discount</h3>
+            <a href="restaurant.html" class="all">View All</a>
+        </div>
+        <div class="swiper food-product-slider px-15">
+            <div class="swiper-wrapper p_bottom-30">
+                <div class="swiper-slide food-product-box">
+                    <div class="food-product-image">
+                        <a href="shop.html">
+                            <img src="../assets/images/food/product/1.jpg" class="img-fluid w-100" alt="product">
+                        </a>
+                        <h6 class="food-rating">4.5<svg>
+                                <use href="../assets/svg/icon-sprite.svg#star"></use>
+                            </svg>
+                        </h6>
+                    </div>
+                    <div class="food-product-content">
+                        <button class="wishlist-btn btn">
+                            <i class="iconly-Heart icli"></i>
+                            <i class="iconly-Heart icbo"></i>
+                        </button>
+                        <h5>Comfort Kitchen</h5>
+                        <div class="food-shipping">
+                            <div class="food-free-shipping">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#shipping"></use>
+                                </svg>
+                                <h6> Free delivery</h6>
+                            </div>
+                            <div class="food-free-shipping">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#time"></use>
+                                </svg>
+                                <h6>10-15 mins</h6>
+                            </div>
+                        </div>
+                        <ul class="food-option">
+                            <li><a href="shop.html">Taco</a></li>
+                            <li><a href="shop.html">Vag</a></li>
+                            <li><a href="shop.html">Quick Food</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="swiper-slide food-product-box">
+                    <div class="food-product-image">
+                        <a href="shop.html">
+                            <img src="../assets/images/food/product/2.jpg" class="img-fluid w-100" alt="product">
+                        </a>
+                        <h6 class="food-rating">3.8<svg>
+                                <use href="../assets/svg/icon-sprite.svg#star"></use>
+                            </svg></h6>
+                    </div>
+                    <div class="food-product-content">
+                        <button class="wishlist-btn btn">
+                            <i class="iconly-Heart icli"></i>
+                            <i class="iconly-Heart icbo"></i>
+                        </button>
+                        <h5>Pizza Kitchen</h5>
+                        <div class="food-shipping">
+                            <div class="food-free-shipping">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#shipping"></use>
+                                </svg>
+                                <h6> Free delivery</h6>
+                            </div>
+                            <div class="food-free-shipping">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#time"></use>
+                                </svg>
+                                <h6>10-15 mins</h6>
+                            </div>
+                        </div>
+                        <ul class="food-option">
+                            <li><a href="shop.html">Taco</a></li>
+                            <li><a href="shop.html">Vag</a></li>
+                            <li><a href="shop.html">Quick Food</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="swiper-slide food-product-box">
+                    <div class="food-product-image">
+                        <a href="shop.html">
+                            <img src="../assets/images/food/product/11.jpg" class="img-fluid w-100" alt="product">
+                        </a>
+                        <h6 class="food-rating">4.6<svg>
+                                <use href="../assets/svg/icon-sprite.svg#star"></use>
+                            </svg></h6>
+                    </div>
+                    <div class="food-product-content">
+                        <button class="wishlist-btn btn">
+                            <i class="iconly-Heart icli"></i>
+                            <i class="iconly-Heart icbo"></i>
+                        </button>
+                        <h5>Cooked Italian Pasta</h5>
+                        <div class="food-shipping">
+                            <div class="food-free-shipping">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#shipping"></use>
+                                </svg>
+                                <h6> Free delivery</h6>
+                            </div>
+                            <div class="food-free-shipping">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#time"></use>
+                                </svg>
+                                <h6>10-15 mins</h6>
+                            </div>
+                        </div>
+                        <ul class="food-option">
+                            <li><a href="shop.html">Taco</a></li>
+                            <li><a href="shop.html">Vag</a></li>
+                            <li><a href="shop.html">Quick Food</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="swiper-slide food-product-box">
+                    <div class="food-product-image">
+                        <a href="shop.html">
+                            <img src="../assets/images/food/product/10.jpg" class="img-fluid w-100" alt="product">
+                        </a>
+                        <h6 class="food-rating">4.8 <svg>
+                                <use href="../assets/svg/icon-sprite.svg#star"></use>
+                            </svg></h6>
+                    </div>
+                    <div class="food-product-content">
+                        <button class="wishlist-btn btn">
+                            <i class="iconly-Heart icli"></i>
+                            <i class="iconly-Heart icbo"></i>
+                        </button>
+                        <h5>Burgers And Fries</h5>
+                        <div class="food-shipping">
+                            <div class="food-free-shipping">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#shipping"></use>
+                                </svg>
+                                <h6> Free delivery</h6>
+                            </div>
+                            <div class="food-free-shipping">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#time"></use>
+                                </svg>
+                                <h6>10-15 mins</h6>
+                            </div>
+                        </div>
+                        <ul class="food-option">
+                            <li><a href="shop.html">Taco</a></li>
+                            <li><a href="shop.html">Vag</a></li>
+                            <li><a href="shop.html">Quick Food</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- product section end  -->
+
+    <!-- brand section start -->
+    <section class="section-t-space p-0">
+        <div class="custom-container">
+            <div class="title">
+                <h3>Top Brands Offer</h3>
+                <a href="restaurant.html" class="all">View All</a>
+            </div>
+            <div class="swiper food-brand-slider">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="food-brand-main-box">
+                            <div class="food-brand-box">
+                                <div class="food-brand-image">
+                                    <img src="../assets/images/food/brand/1.png" class="img-fluid" alt="brand">
+                                </div>
+                                <div class="food-brand-contant">
+                                    <h6>50% OFF</h6>
+                                    <h5>UPTO $16.00</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="food-brand-main-box">
+                            <div class="food-brand-box">
+                                <div class="food-brand-image">
+                                    <img src="../assets/images/food/brand/2.png" class="img-fluid" alt="brand">
+                                </div>
+                                <div class="food-brand-contant">
+                                    <h6>10% OFF</h6>
+                                    <h5>UPTO $18.00</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="food-brand-main-box">
+                            <div class="food-brand-box">
+                                <div class="food-brand-image">
+                                    <img src="../assets/images/food/brand/3.png" class="img-fluid" alt="brand">
+                                </div>
+                                <div class="food-brand-contant">
+                                    <h6>30% OFF</h6>
+                                    <h5>UPTO $15.00</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="food-brand-main-box">
+                            <div class="food-brand-box">
+                                <div class="food-brand-image">
+                                    <img src="../assets/images/food/brand/1.png" class="img-fluid" alt="brand">
+                                </div>
+                                <div class="food-brand-contant">
+                                    <h6>20% OFF</h6>
+                                    <h5>UPTO $18.00</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- brand section end -->
+
+    <!-- returns list section start  -->
+    <section class="section-t-space">
+        <div class="custom-container">
+            <div class="title">
+                <h3>Featured Restaurants</h3>
+                <a href="restaurant.html" class="all">View All</a>
+            </div>
+            <ul class="food-restaurant-list">
+                <li>
+                    <a href="restaurant.html" class="food-image">
+                        <img src="../assets/images/food/product/3.jpg" class="img-fluid" alt="food">
+                    </a>
+                    <div class="food-list-details">
+                        <div class="food-content-rate">
+                            <div>
+                                <a href="restaurant.html">The Soup Factory</a>
+                                <h6>North Indian, Chinese</h6>
+                            </div>
+                            <h5 class="rating-box"><img src="../assets/images/svg/star-fill.svg" class="img-fluid"
+                                    alt="star">3.7</h5>
+                        </div>
+                        <ul class="food-min-content">
+                            <li>
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#shipping"></use>
+                                </svg>20 mins
+                            </li>
+                            <li>
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#time"></use>
+                                </svg>10-15 mins
+                            </li>
+                            <li class="free">Free Delivery</li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="restaurant.html" class="food-image">
+                        <img src="../assets/images/food/product/4.jpg" class="img-fluid" alt="food">
+                    </a>
+                    <div class="food-list-details">
+                        <div class="food-content-rate">
+                            <div>
+                                <a href="restaurant.html">Chicken Skewers Slices</a>
+                                <h6>North Indian, Chinese</h6>
+                            </div>
+                            <h5 class="rating-box"><img src="../assets/images/svg/star-fill.svg" class="img-fluid"
+                                    alt="star">4.6</h5>
+                        </div>
+                        <ul class="food-min-content">
+                            <li>
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#shipping"></use>
+                                </svg>10 mins
+                            </li>
+                            <li>
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#time"></use>
+                                </svg>2.5 mins
+                            </li>
+                            <li class="free">Best Seller</li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="restaurant.html" class="food-image">
+                        <img src="../assets/images/food/product/5.jpg" class="img-fluid" alt="food">
+                    </a>
+                    <div class="food-list-details">
+                        <div class="food-content-rate">
+                            <div>
+                                <a href="restaurant.html">The Soup Factory</a>
+                                <h6>North Indian, Chinese</h6>
+                            </div>
+                            <h5 class="rating-box"><img src="../assets/images/svg/star-fill.svg" class="img-fluid"
+                                    alt="star">3.6</h5>
+                        </div>
+                        <ul class="food-min-content">
+                            <li>
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#shipping"></use>
+                                </svg>50 mins
+                            </li>
+                            <li>
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#time"></use>
+                                </svg>3 KM
+                            </li>
+                            <li class="free">Free Delivery</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- returns list section end  -->
+
+    <!-- panel-space start -->
+    <div class="food-panel-space"></div>
+    <!-- panel-space end -->
+
+    <!-- offcanvas section start -->
+    <div class="offcanvas offcanvas-end food-profile-offcanvas" tabindex="-1" id="offcanvasRight">
+        <div class="offcanvas-body p-0">
+            <div class="right-profile-box">
+                <div class="right-profile-image">
+                    <img src="../assets/images/food/profile/3.png" class="img-fluid" alt="png">
+                </div>
+                <div class="right-profile-content">
+                    <h3>Savannah Nguyen</h3>
+                    <h4>savanah3@krank.com</h4>
+                    <a href="home.html#!">Edit Profile</a>
+                </div>
+            </div>
+
+            <ul class="right-profile-list">
+                <li>
+                    <a href="order-history.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="box"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Orders</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="address.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="location"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Manage Address</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="wishlist.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="heart"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>My Wishlist</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="wallet.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="wallet-open"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Wallets</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="train.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="driving"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Order on Train</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="order-history.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="receipt-3"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>My Orders History</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="home.html#!" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom1">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="mask-2"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Appearance</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="notification.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="bell-2"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Notification Setting</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="nut"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Other Setting</h5>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <!-- bottom sidebar start -->
+            <div class="bottom-sidebar-btn">
+                <a href="login.html" class=" btn food-btn">
+                    <i class="iconsax logout-icon" data-icon="logout-2"></i> Log Out</a>
+            </div>
+            <!-- bottom sidebar end -->
+        </div>
+    </div>
+    <!-- offcanvas section end -->
+
+    <!-- filter offcanvas section start  -->
+    <div class="offcanvas offcanvas-bottom theme-offcanvas" tabindex="-1" id="offcanvasBottom">
+        <div class="filter-wrapper">
+            <div class="offcanvas-header">
+                <a href="home.html#!" data-bs-dismiss="offcanvas" aria-label="Close">
+                    <i class="iconsax back-icon" data-icon="chevron-left"></i>
+                </a>
+                <h3>Filter</h3>
+                <button type="button" class="btn-close offcanvas-close" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="filter-box">
+                <div class="offcanvas-body small p-0">
+                    <ul class="filter-left-box">
+                        <li><a href="home.html#!" class="active" data-filter-target="sortby">Sort by</a></li>
+                        <li><a href="home.html#!" data-filter-target="cuisine">Cuisine Type</a></li>
+                        <li><a href="home.html#!" data-filter-target="price">Price Range</a></li>
+                        <li><a href="home.html#!" data-filter-target="delivery">Delivery Time</a></li>
+                        <li><a href="home.html#!" data-filter-target="ratings">Ratings</a></li>
+                        <li><a href="home.html#!" data-filter-target="offers">Offers/Discounts</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="filter-right-box ml-0" data-filter="sortby">
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Top Rated
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Nearest Me
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>Cost Hight to Low</label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>Cost Lo\w to High</label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>Most Popular</label>
+
+            </div>
+            <div class="filter-right-box d-none" data-filter="cuisine">
+                <label class=" custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    American
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Italian
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Mexican
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Indian
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Chinese
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Vegetarian/Vegan
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Chinese
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Desserts
+                </label>
+
+            </div>
+            <div class="filter-right-box d-none" data-filter="price">
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Rs.100 - Rs.300
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Rs.300 - Rs.500
+
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Rs.500 - Rs.700
+
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Rs.700 - Rs.900
+                </label>
+                <div class="custom-slider-theme food-range-slider">
+                    <h3>Custom</h3>
+                    <div class="range-slider">
+                        <div class="progress-slider"></div>
+                        <input type="range" min="0" max="100" value="20" class="min-range">
+                        <input type="range" min="0" max="100" value="80" class="max-range">
+
+                        <div class="range-number">
+                            <div class="range-box input-min-box">
+                                <span class="rs-label">Rs.</span>
+                                <input type="number" value="20" class="input-min">
+                            </div>
+                            <div class="range-box input-max-box">
+                                <span class="rs-label">Rs.</span>
+                                <input type="number" value="80" class="input-max">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="range-content">
+                        <span>Rs.0</span>
+                        <span>Rs.1000</span>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-right-box d-none" data-filter="delivery">
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Fast Delivery
+                </label>
+            </div>
+            <div class="filter-right-box d-none" data-filter="ratings">
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    4.5 stars & up
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    4.0 stars & up
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    3.5 stars & up
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Any Rating
+                </label>
+            </div>
+            <div class="filter-right-box d-none" data-filter="offers">
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    Offers
+                </label>
+            </div>
+        </div>
+        <div class="custom-container">
+            <div class="filter-button">
+                <a href="home.html" class=" clear-button">Clear All</a>
+                <a href="shop.html" class="btn food-btn">Apply</a>
+            </div>
+        </div>
+    </div>
+    <!-- filter offcanvas section end  -->
+
+    <!-- theme-box offcanvas section start  -->
+    <div class="offcanvas offcanvas-bottom theme-offcanvas" tabindex="-1" id="offcanvasBottom1">
+        <div class="offcanvas-header theme-header">
+            <a href="home.html#" onclick="history.back()">
+                <i class="iconsax back-icon" data-icon="chevron-left"></i>
+            </a>
+            <h3>Filter</h3>
+            <button type="button" class="btn-close offcanvas-close" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="custom-container">
+            <ul class="theme-box">
+                <li>
+                    <label class="custom-checkbox mt-0">
+                        Light Theme
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="custom-checkbox">Dark Theme
+                        <input type="checkbox" id="toggleDarkMode">
+                        <span class="checkmark"></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="custom-checkbox">
+                        Use Device Theme
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                </li>
+            </ul>
+            <a href="home.html" class="btn food-btn m_bottom-20">Save Preference</a>
+        </div>
+    </div>
+    <!-- theme-box offcanvas section end  -->
+
+    <!-- home offcanvas section start  -->
+    <div class="offcanvas offcanvas-bottom theme-offcanvas" tabindex="-1" id="offcanvasBottom2">
+        <div class="offcanvas-header theme-header">
+            <a href="home.html#" onclick="history.back()">
+                <i class="iconsax back-icon" data-icon="chevron-left"></i>
+            </a>
+            <h3>My Address</h3>
+            <button type="button" class="btn-close offcanvas-close" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <!-- address section start -->
+        <div class="offcanvas-body small p-0">
+            <div class="custom-container">
+                <div class="address-list-box">
+                    <ul class="address-list">
+                        <li class="address-box ">
+                            <img src="../assets/images/food/map/6.png" alt="map">
+                            <div class="address-list-contant">
+                                <div class="address-name">
+                                    <svg>
+                                        <use href="../assets/svg/icon-sprite.svg#home"></use>
+                                    </svg>
+                                    <h5>Home</h5>
+                                </div>
+                                <p>Stonebridge Park Unit 12, 5th Floor,
+                                    Wing B 2843 Moorland County Zip Code: 74562-1198</p>
+                            </div>
+                        </li>
+                        <li class="address-box m-0">
+                            <img src="../assets/images/food/map/7.png" alt="map">
+                            <div class="address-list-contant">
+                                <div class="address-name">
+                                    <svg>
+                                        <use href="../assets/svg/icon-sprite.svg#work"></use>
+                                    </svg>
+                                    <h5>Work</h5>
+                                </div>
+                                <p>4517 Washington Ave. Manchester,Kentucky 39495 Zip Code: 59422-32659</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- address section end -->
+
+            <!-- button section start -->
+            <div class="custom-container">
+                <a href="address.html" class="btn food-btn m_bottom-15">More Address</a>
+            </div>
+            <!-- button section end -->
+        </div>
+    </div>
+    <!-- home offcanvas section end -->
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/popper.min.js"></script>
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Filter select Js -->
+    <script src="../assets/js/filter-select.js"></script>
+
+    <!--  range slider -->
+    <script src="../assets/js/range-slider.js"></script>
+
+    <!-- image change js -->
+    <script src="../assets/js/image-change.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- swiper js -->
+    <script src="../assets/js/vendors/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/js/custom-swiper.js"></script>
+
+
+    <!-- script js-->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

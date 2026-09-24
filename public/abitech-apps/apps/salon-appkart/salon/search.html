@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="wapple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="../../../../fonts.googleapis.com/css2%3Ffamily=Lato:ital,wght@0,100%3B0,300%3B0,400%3B0,700%3B0,900%3B1,100%3B1,300%3B1,400%3B1,700%3B1,900&amp;display=swap.css">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Iconly css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconly.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="salon lato-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/Salon.gif" class="img-fluid" alt="salon">
+    </div>
+    <!-- loader End -->
+
+    <!-- header section start -->
+    <header class="salon-header">
+        <div class="custom-container">
+            <div class="header-title">
+                <button class="left-arrow" onclick="history.back()">
+                    <i class="iconsax icon" data-icon="arrow-left"></i>
+                </button>
+                <h3>Search</h3>
+            </div>
+        </div>
+    </header>
+    <!-- header section  end  -->
+
+    <!-- mobile menu section start -->
+    <div class="bottom-navbar">
+        <ul>
+            <li>
+                <a href="home.html" class="icon">
+                    <i class="iconsax menu-icon" data-icon="home-2"></i>
+                    <h5>Home</h5>
+                </a>
+            </li>
+            <li class="active">
+                <a href="search.html" class="icon">
+                    <i class="iconsax menu-icon" data-icon="search-normal-2"></i>
+                    <h5>Search</h5>
+                </a>
+            </li>
+            <li>
+                <a href="booking.html" class="icon">
+                    <i class="iconsax menu-icon" data-icon="document-text-1"></i>
+                    <h5>Bookings</h5>
+                </a>
+            </li>
+            <li>
+                <a href="chat.html" class="icon">
+                    <i class="iconsax menu-icon" data-icon="messages-2"></i>
+                    <h5>Chats</h5>
+                </a>
+            </li>
+            <li>
+                <a href="profile.html" class="icon">
+                    <i class="iconsax menu-icon" data-icon="user-1"></i>
+                    <h5>Profile</h5>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- mobile menu section  end  -->
+
+    <!-- search section start -->
+    <section class="p-0 salon-search-section">
+        <div class="custom-container2">
+            <form class="salon-auth-form mt-0">
+                <div class="form-group">
+                    <input type="search" class="form-control search-control search" id="inputusername"
+                        placeholder="Search here... ..">
+                    <i class="iconsax search-icon" data-icon="search-normal-2"> </i>
+                    <a href="search.html#!" class="filter-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom">
+                        <i class="iconsax" data-icon="media-sliders-3"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- search section end -->
+
+    <!-- research section start -->
+    <section class="section-t-space-1 salon-reserach-section">
+        <div class="custom-container2">
+            <div class="hair-title">
+                <h3>Recent</h3>
+                <a href="shop.html">Clear all</a>
+            </div>
+            <ul class="recent-search-listing salon-search">
+                <li>
+                    <a href="shop.html">Haircuts for Women</a>
+                    <i class="iconsax close-icon" data-icon="add"></i>
+                </li>
+                <li>
+                    <a href="shop.html">Men’s Grooming Services</a>
+                    <i class="iconsax close-icon" data-icon="add"></i>
+                </li>
+                <li>
+                    <a href="shop.html">Bridal Makeup Packages</a>
+                    <i class="iconsax close-icon" data-icon="add"></i>
+                </li>
+                <li>
+                    <a href="shop.html">Keratin Treatments</a>
+                    <i class="iconsax close-icon" data-icon="add"></i>
+                </li>
+
+            </ul>
+        </div>
+    </section>
+    <!-- research section  end  -->
+
+    <!-- salon rate section start -->
+    <section class="section-t-space salon-rate-section">
+        <div class="custom-container2">
+            <div class="hair-title">
+                <h3>Suggestions</h3>
+            </div>
+            <ul class="salon-rate-list">
+                <li>
+                    <a href="shop.html">
+                        <img src="../assets/images/salon/hair/4.jpg" class="img-fluid" alt="haircut">
+                    </a>
+                    <div class="salon-list-content">
+                        <div class="main-title">
+                            <div>
+                                <a href="search.html">Signature Salon</a>
+                                <p>2715 Ash Dr. South 83475...</p>
+                            </div>
+                            <button class="wishlist-btn btn">
+                                <i class="iconly-Heart icli"></i>
+                                <i class="iconly-Heart icbo"></i>
+                            </button>
+                        </div>
+                        <div class="booking-content">
+                            <div class="flex-common gap-2">
+                                <h5><img src="../assets/images/salon/svg/location.svg" class="img-fluid" alt="map">6.1
+                                    km
+                                </h5>
+                                <h6><img src="../assets/images/svg/Rating-Star.svg" class="img-fluid" alt="star">4.3
+                                </h6>
+                            </div>
+                            <a href="booking.html" class="book">Book</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="shop.html">
+                        <img src="../assets/images/salon/hair/5.jpg" class="img-fluid" alt="haircut">
+                    </a>
+                    <div class="salon-list-content">
+                        <div class="main-title">
+                            <div>
+                                <a href="search.html">Glamour Grove</a>
+                                <p>2715 Ash Dr. South 83475...</p>
+                            </div>
+                            <button class="wishlist-btn btn">
+                                <i class="iconly-Heart icli"></i>
+                                <i class="iconly-Heart icbo"></i>
+                            </button>
+                        </div>
+                        <div class="booking-content">
+                            <div class="flex-common gap-2">
+                                <h5><img src="../assets/images/salon/svg/location.svg" class="img-fluid" alt="map">5.3
+                                    km
+                                </h5>
+                                <h6><img src="../assets/images/svg/Rating-Star.svg" class="img-fluid" alt="star">4.2
+                                </h6>
+                            </div>
+                            <a href="booking.html" class="book">Book</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="shop.html">
+                        <img src="../assets/images/salon/hair/6.jpg" class="img-fluid" alt="haircut">
+                    </a>
+                    <div class="salon-list-content">
+                        <div class="main-title">
+                            <div>
+                                <a href="search.html">Velvet Touch Studio</a>
+                                <p>2715 Ash Dr. South 83475...</p>
+                            </div>
+                            <button class="wishlist-btn btn">
+                                <i class="iconly-Heart icli"></i>
+                                <i class="iconly-Heart icbo"></i>
+                            </button>
+                        </div>
+                        <div class="booking-content">
+                            <div class="flex-common gap-2">
+                                <h5><img src="../assets/images/salon/svg/location.svg" class="img-fluid" alt="map">2.1
+                                    km
+                                </h5>
+                                <h6><img src="../assets/images/svg/Rating-Star.svg" class="img-fluid" alt="star">4.9
+                                </h6>
+                            </div>
+                            <a href="booking.html" class="book">Book</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- salon rate section  end  -->
+    <div class="panel-space-sm"></div>
+
+
+    <!-- filter section start -->
+    <div class="offcanvas offcanvas-bottom salon-theme" tabindex="-1" id="offcanvasBottom">
+        <div class="offcanvas-header">
+            <i class="iconsax back" data-icon="chevron-left"></i>
+            <h5>Filter</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body small">
+            <div class="filter-service">
+                <div class="hair-title">
+                    <h3>Services</h3>
+                    <a href="search.html#!">See All</a>
+                </div>
+                <ul class="hair-services-list">
+                    <li>
+                        <a href="search.html#!">
+                            <img src="../assets/images/salon/services/1.jpg" class="img-fluid" alt="image">
+                            <span>Haircut</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="search.html#!">
+                            <img src="../assets/images/salon/services/2.jpg" class="img-fluid" alt="image">
+                            <span>Facials</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="search.html#!">
+                            <img src="../assets/images/salon/services/3.jpg" class="img-fluid" alt="image">
+                            <span>Waxing</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="search.html#!">
+                            <img src="../assets/images/salon/services/4.jpg" class="img-fluid" alt="image">
+                            <span>Hair Spa</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="search.html#!">
+                            <img src="../assets/images/salon/services/5.jpg" class="img-fluid" alt="image">
+                            <span>Nail Art</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="filter-rate-list p_top-27">
+                <div class="hair-title">
+                    <h3>Services</h3>
+                </div>
+                <div class="size-selector">
+                    <label>
+                        <input type="radio" name="size" value="4.0">
+                        <span><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">5</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="4.5" checked>
+                        <span><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="">4</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="5.0">
+                        <span><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="">3</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="5.5">
+                        <span><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="">2</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="6.0">
+                        <span><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="">1</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="filter-range-slide">
+                <div class="hair-title">
+                    <h3>Distance</h3>
+                </div>
+                <div class="range-slider">
+                    <div class="range-tooltip"></div>
+                    <input class="range-input" type="range" step="10" value="200" min="0" max="800">
+                </div>
+
+            </div>
+            <div class="theme-filter-btn">
+                <a href="home.html" class="btn fill-btn">RESET</a>
+                <a href="home.html" class="btn salon-btn">Apply</a>
+            </div>
+        </div>
+    </div>
+    <!-- filter section  end  -->
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- Range JS  -->
+    <script src="../assets/js/range-slider.js"></script>
+
+    <!-- script js-->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

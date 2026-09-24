@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Outfit:wght@100..900&amp;display=swap.css" rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="learning outfit-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/learning.gif" class="img-fluid" alt="learning">
+    </div>
+    <!-- loader End -->
+
+    <!-- header  start -->
+    <header class="learning-main-header">
+        <div class="custom-container2">
+            <div class="header-panel">
+                <a href="notification.html#" onclick="history.back()">
+                    <i class="iconsax icon-btn" data-icon="arrow-left"></i>
+                </a>
+                <h3>Notification</h3>
+            </div>
+        </div>
+    </header>
+    <!-- header  end  -->
+
+    <!-- wishlist tab section start -->
+    <section class="section-lg-t-space learn-notification-tab-section">
+        <div class="custom-container2">
+            <div class="learning-course-tab">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all-tab-pane"
+                            type="button" role="tab" aria-controls="all-tab-pane" aria-selected="true">All</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="read-tab" data-bs-toggle="tab" data-bs-target="#read-tab-pane"
+                            type="button" role="tab" aria-controls="read-tab-pane" aria-selected="false">Read</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="unread-tab" data-bs-toggle="tab" data-bs-target="#unread-tab-pane"
+                            type="button" role="tab" aria-controls="unread-tab-pane"
+                            aria-selected="false">Unread</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="skill-tab" data-bs-toggle="tab" data-bs-target="#skill-tab-pane"
+                            type="button" role="tab" aria-controls="skill-tab-pane" aria-selected="false">Skill</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="all-tab-pane" role="tabpanel" aria-labelledby="all-tab"
+                        tabindex="0">
+                        <ul class="learn-notification-list">
+                            <li>
+                                <img src="../assets/images/learning/coach/1.jpg" class="img-fluid" alt="image">
+                                <div class="learn-notification-content">
+                                    <div>
+                                        <h4>Esther Howard</h4>
+                                        <h5>Invited you to join the police group</h5>
+                                    </div>
+                                    <div>
+                                        <h6>46 min ago</h6>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="unread">
+                                <img src="../assets/images/learning/coach/2.jpg" class="img-fluid" alt="image">
+                                <div class="learn-notification-content">
+                                    <div>
+                                        <h4>Brooklyn Simmons</h4>
+                                        <h5>Every day is a chance to grow.</h5>
+                                    </div>
+                                    <div>
+                                        <h6>2hr ago</h6>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="unread">
+                                <img src="../assets/images/learning/coach/3.jpg" class="img-fluid" alt="image">
+                                <div class="learn-notification-content">
+                                    <div>
+                                        <h4>Bessie Cooper</h4>
+                                        <h5>Don’t stop now—you're doing great!</h5>
+                                    </div>
+                                    <div>
+                                        <h6>3hr ago</h6>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="unread">
+                                <img src="../assets/images/learning/coach/4.jpg" class="img-fluid" alt="image">
+                                <div class="learn-notification-content">
+                                    <div>
+                                        <h4>Kristin Watson</h4>
+                                        <h5>Keep going! You're making great progress.</h5>
+                                    </div>
+                                    <div>
+                                        <h6>4 min ago</h6>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="../assets/images/learning/coach/5.jpg" class="img-fluid" alt="image">
+                                <div class="learn-notification-content">
+                                    <div>
+                                        <h4>Inactive User Nudge</h4>
+                                        <h5>Invited you to join the police group</h5>
+                                    </div>
+                                    <div>
+                                        <h6>25 min ago</h6>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="read-tab-pane" role="tabpanel" aria-labelledby="read-tab"
+                        tabindex="0">
+                        <ul class="learn-notification-list">
+                            <li>
+                                <img src="../assets/images/learning/coach/2.jpg" class="img-fluid" alt="image">
+                                <div class="learn-notification-content">
+                                    <div>
+                                        <h4>Esther Howard</h4>
+                                        <h5>Invited you to join the police group</h5>
+                                    </div>
+                                    <div>
+                                        <h6>50 min ago</h6>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="../assets/images/learning/coach/3.jpg" class="img-fluid" alt="image">
+                                <div class="learn-notification-content">
+                                    <div>
+                                        <h4>Brooklyn Simmons</h4>
+                                        <h5>Every day is a chance to grow.</h5>
+                                    </div>
+                                    <div>
+                                        <h6>1hr ago</h6>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="../assets/images/learning/coach/1.jpg" class="img-fluid" alt="image">
+                                <div class="learn-notification-content">
+                                    <div>
+                                        <h4>Bessie Cooper</h4>
+                                        <h5>Don’t stop now—you're doing great!</h5>
+                                    </div>
+                                    <div>
+                                        <h6>2hr ago</h6>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="../assets/images/learning/coach/4.jpg" class="img-fluid" alt="image">
+                                <div class="learn-notification-content">
+                                    <div>
+                                        <h4>Kristin Watson</h4>
+                                        <h5>Keep going! You're making great progress.</h5>
+                                    </div>
+                                    <div>
+                                        <h6>5hr min ago</h6>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="unread-tab-pane" role="tabpanel" aria-labelledby="unread-tab"
+                        tabindex="0">
+                        <ul class="learn-notification-list">
+                            <li class="unread">
+                                <img src="../assets/images/learning/coach/2.jpg" class="img-fluid" alt="image">
+                                <div class="learn-notification-content">
+                                    <div>
+                                        <h4>Esther Howard</h4>
+                                        <h5>Invited you to join the police group</h5>
+                                    </div>
+                                    <div>
+                                        <h6>50 min ago</h6>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="unread">
+                                <img src="../assets/images/learning/coach/3.jpg" class="img-fluid" alt="image">
+                                <div class="learn-notification-content">
+                                    <div>
+                                        <h4>Brooklyn Simmons</h4>
+                                        <h5>Every day is a chance to grow.</h5>
+                                    </div>
+                                    <div>
+                                        <h6>1hr ago</h6>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="unread">
+                                <img src="../assets/images/learning/coach/1.jpg" class="img-fluid" alt="image">
+                                <div class="learn-notification-content">
+                                    <div>
+                                        <h4>Bessie Cooper</h4>
+                                        <h5>Don’t stop now—you're doing great!</h5>
+                                    </div>
+                                    <div>
+                                        <h6>2hr ago</h6>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="skill-tab-pane" role="tabpanel" aria-labelledby="skill-tab"
+                        tabindex="0">
+                        <ul class="learn-notification-list">
+                            <li>
+                                <img src="../assets/images/learning/coach/6.jpg" class="img-fluid" alt="image">
+                                <div class="learn-notification-content">
+                                    <div>
+                                        <h4>Coding Skills</h4>
+                                        <h5>Learn to build websites, apps, and solve problems with code.</h5>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="../assets/images/learning/coach/1.jpg" class="img-fluid" alt="image">
+                                <div class="learn-notification-content">
+                                    <div>
+                                        <h4>Design</h4>
+                                        <h5>Create eye-catching, user-friendly visuals that communicate ideas clearly.
+                                        </h5>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="../assets/images/learning/coach/4.jpg" class="img-fluid" alt="image">
+                                <div class="learn-notification-content">
+                                    <div>
+                                        <h4>Marketing</h4>
+                                        <h5>Promote brands, connect with audiences, and drive business growth.</h5>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="../assets/images/learning/coach/1.jpg" class="img-fluid" alt="image">
+                                <div class="learn-notification-content">
+                                    <div>
+                                        <h4>Business</h4>
+                                        <h5>Learn how to plan, manage, and grow a business with real-world strategies
+                                            and decision-making skills.</h5>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- wishlist tab section  end  -->
+
+    <!-- Bootstrap JS-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax JS-->
+    <script src="../assets/js/iconsax.js"></script>
+
+
+    <!-- script JS -->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

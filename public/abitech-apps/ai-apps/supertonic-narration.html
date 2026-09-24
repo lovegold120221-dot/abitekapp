@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supertonic Narration — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+
+  <!-- helper.js imports `onnxruntime-web` as a bare specifier; resolve it here. -->
+  <script type="importmap">
+  {
+    "imports": {
+      "onnxruntime-web": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.30.0/dist/ort.bundle.min.mjs"
+    }
+  }
+  </script>
+</head>
+<body class="min-h-screen bg-[#0b1220] text-slate-100">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+    <a href="../index.html" class="text-xs text-cyan-300/80 hover:text-white">← Abitech Apps Store</a>
+
+    <div class="text-center mt-4">
+      <div class="text-5xl">📖</div>
+      <h1 class="text-3xl font-bold mt-2">Supertonic Narration</h1>
+      <p class="text-sm text-cyan-200/80 mt-1">A 99M-parameter multilingual narrator. 31 languages, 10 voices, zero cloud calls.</p>
+    </div>
+
+    <div class="mt-4 flex items-center justify-center gap-2 text-[11px] flex-wrap">
+      <span id="modelBadge" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Loading Supertonic 3…</span>
+      <span id="backendBadge" class="hidden px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">WASM</span>
+    </div>
+
+    <div class="mt-6 bg-slate-900/70 rounded-2xl p-5 border border-slate-800">
+      <textarea id="text" rows="5"
+        class="w-full bg-slate-950 rounded-xl px-3 py-2.5 text-sm outline-none border border-slate-700 focus:border-cyan-400 resize-y"
+        placeholder="Paste a paragraph to narrate…">A gentle breeze moved through the open window while everyone listened to the story.</textarea>
+
+      <div class="grid sm:grid-cols-2 gap-2 mt-3">
+        <label class="text-xs text-slate-400">Voice
+          <select id="voice" class="mt-1 w-full bg-slate-950 rounded-xl px-3 py-2 text-sm border border-slate-700 outline-none focus:border-cyan-400"></select>
+        </label>
+        <label class="text-xs text-slate-400">Language
+          <select id="lang" class="mt-1 w-full bg-slate-950 rounded-xl px-3 py-2 text-sm border border-slate-700 outline-none focus:border-cyan-400"></select>
+        </label>
+        <label class="text-xs text-slate-400">Steps <span id="stepVal" class="text-slate-500">8</span>
+          <input id="steps" type="range" min="4" max="16" step="1" value="8" class="mt-3 w-full accent-cyan-500" />
+        </label>
+        <label class="text-xs text-slate-400">Speed <span id="speedVal" class="text-slate-500">1.05×</span>
+          <input id="speed" type="range" min="0.8" max="1.6" step="0.05" value="1.05" class="mt-3 w-full accent-cyan-500" />
+        </label>
+      </div>
+
+      <button id="genBtn" disabled
+        class="mt-4 w-full bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold text-sm py-2.5 rounded-full transition">
+        Generate narration
+      </button>
+    </div>
+
+    <div id="status" class="hidden mt-4 text-xs bg-slate-900/70 border border-slate-700 rounded-xl p-3 text-slate-300"></div>
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/15 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="out" class="mt-5"></div>
+
+    <p class="mt-6 text-[11px] text-slate-500 text-center leading-relaxed">
+      Runs <b>Supertone/supertonic-3</b> (ONNX) through <b>onnxruntime-web</b>, right here in the tab.
+      First run downloads roughly 100 MB of model weights from Hugging Face and caches them.
+    </p>
+  </div>
+
+  <script type="module">
+    import {
+      loadTextToSpeech, loadVoiceStyle, writeWavFile, AVAILABLE_LANGS
+    } from "https://cdn.jsdelivr.net/gh/supertone-oss-archive/supertonic@main/web/helper.js";
+
+    const HF = 'https://huggingface.co/supertone-oss-archive/supertonic-3/resolve/main';
+    const ONNX_DIR = HF + '/onnx';
+    const STYLE_DIR = HF + '/voice_styles';
+
+    const VOICES = ['M1', 'M2', 'M3', 'M4', 'M5', 'F1', 'F2', 'F3', 'F4', 'F5'];
+    const LANGS = [
+      ['en', 'English'], ['es', 'Spanish'], ['fr', 'French'], ['de', 'German'], ['it', 'Italian'],
+      ['pt', 'Portuguese'], ['nl', 'Dutch'], ['pl', 'Polish'], ['ru', 'Russian'], ['uk', 'Ukrainian'],
+      ['hi', 'Hindi'], ['ar', 'Arabic'], ['ja', 'Japanese'], ['ko', 'Korean'], ['zh', 'Chinese'],
+      ['tr', 'Turkish'], ['vi', 'Vietnamese'], ['id', 'Indonesian'], ['sv', 'Swedish'], ['da', 'Danish'],
+      ['fi', 'Finnish'], ['cs', 'Czech'], ['el', 'Greek'], ['ro', 'Romanian'],
+      ['na', 'Auto-detect']
+    ];
+
+    const modelBadge = document.getElementById('modelBadge');
+    const backendBadge = document.getElementById('backendBadge');
+    const statusBox = document.getElementById('status');
+    const errBox = document.getElementById('errorBox');
+    const out = document.getElementById('out');
+    const btn = document.getElementById('genBtn');
+    const voiceSel = document.getElementById('voice');
+    const langSel = document.getElementById('lang');
+    const steps = document.getElementById('steps');
+    const speed = document.getElementById('speed');
+
+    let tts = null;
+    let style = null;
+    let loading = false;
+
+    VOICES.forEach(v => {
+      const o = document.createElement('option');
+      o.value = v;
+      o.textContent = (v[0] === 'M' ? 'Male ' : 'Female ') + v.slice(1);
+      voiceSel.appendChild(o);
+    });
+    // Only offer languages the model actually ships.
+    LANGS.filter(([code]) => AVAILABLE_LANGS.includes(code)).forEach(([code, name]) => {
+      const o = document.createElement('option');
+      o.value = code;
+      o.textContent = name + ' (' + code + ')';
+      langSel.appendChild(o);
+    });
+
+    function esc(value) {
+      return String(value || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function status(msg) { statusBox.innerHTML = msg; statusBox.classList.remove('hidden'); }
+    function showError(msg) { errBox.textContent = msg; errBox.classList.remove('hidden'); }
+    function clearError() { errBox.classList.add('hidden'); }
+
+    steps.addEventListener('input', () => document.getElementById('stepVal').textContent = steps.value);
+    speed.addEventListener('input', () => document.getElementById('speedVal').textContent = parseFloat(speed.value).toFixed(2) + '×');
+
+    async function boot() {
+      if (loading) return;
+      loading = true;
+      const onProgress = (name, current, total) => status(`⏳ Loading ONNX models (${current}/${total}) — <b>${esc(name)}</b>…`);
+      try {
+        let result;
+        try {
+          status('⏳ Trying the WebGPU backend…');
+          result = await loadTextToSpeech(ONNX_DIR, { executionProviders: ['webgpu'], graphOptimizationLevel: 'all' }, onProgress);
+          backendBadge.textContent = 'WebGPU';
+        } catch (gpuError) {
+          result = await loadTextToSpeech(ONNX_DIR, { executionProviders: ['wasm'], graphOptimizationLevel: 'all' }, onProgress);
+          backendBadge.textContent = 'WASM';
+        }
+        tts = result.textToSpeech;
+        status('⏳ Loading voice style M1…');
+        style = await loadVoiceStyle([STYLE_DIR + '/M1.json'], true);
+
+        backendBadge.classList.remove('hidden');
+        modelBadge.textContent = 'Supertonic 3 ready';
+        modelBadge.className = 'px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30';
+        status('✅ Models loaded. Press <b>Generate narration</b>.');
+        btn.disabled = false;
+      } catch (e) {
+        modelBadge.textContent = 'Model failed to load';
+        modelBadge.className = 'px-3 py-1 rounded-full bg-red-500/15 text-red-300 border border-red-500/30';
+        statusBox.classList.add('hidden');
+        showError('Could not load Supertonic 3: ' + (e && e.message ? e.message : e));
+      }
+    }
+
+    voiceSel.addEventListener('change', async () => {
+      if (!tts) return;
+      clearError();
+      btn.disabled = true;
+      status(`⏳ Loading voice style ${esc(voiceSel.value)}…`);
+      try {
+        style = await loadVoiceStyle([STYLE_DIR + '/' + voiceSel.value + '.json'], true);
+        status(`✅ Voice style <b>${esc(voiceSel.value)}</b> loaded.`);
+        btn.disabled = false;
+      } catch (e) {
+        showError('Could not load that voice style: ' + (e && e.message ? e.message : e));
+        btn.disabled = false;
+      }
+    });
+
+    async function generate() {
+      const text = document.getElementById('text').value.trim();
+      clearError();
+      if (!text) return showError('Type or paste some text first.');
+      if (!tts || !style) return showError('The model is still loading — give it a moment.');
+
+      btn.disabled = true;
+      out.innerHTML = '';
+      const started = performance.now();
+      try {
+        const totalStep = parseInt(steps.value, 10);
+        const rate = parseFloat(speed.value);
+        const lang = langSel.value;
+        const { wav, duration } = await tts.call(
+          text, lang, style, totalStep, rate, 0.3,
+          (step, total) => status(`🎛️ Denoising step ${step}/${total}…`)
+        );
+        const wavLen = Math.floor(tts.sampleRate * duration[0]);
+        const buffer = writeWavFile(wav.slice(0, wavLen), tts.sampleRate);
+        const url = URL.createObjectURL(new Blob([buffer], { type: 'audio/wav' }));
+        const secs = ((performance.now() - started) / 1000).toFixed(1);
+
+        status('✅ Narration ready.');
+        out.innerHTML = `
+          <div class="fade-in bg-slate-900/70 rounded-2xl p-5 border border-cyan-500/30">
+            <div class="flex items-center justify-between text-[11px] text-slate-400 mb-3">
+              <span>Voice <b class="text-cyan-300">${esc(voiceSel.value)}</b> · <b class="text-cyan-300">${esc(lang)}</b></span>
+              <span>${duration[0].toFixed(1)}s of audio in ${secs}s</span>
+            </div>
+            <audio controls src="${url}" class="w-full"></audio>
+            <a href="${url}" download="supertonic-narration.wav"
+               class="mt-3 inline-flex items-center gap-2 text-xs font-semibold bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition">
+              ⬇️ Download WAV
+            </a>
+          </div>`;
+      } catch (e) {
+        showError('Synthesis failed: ' + (e && e.message ? e.message : e));
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    btn.addEventListener('click', generate);
+    boot();
+  </script>
+</body>
+</html>

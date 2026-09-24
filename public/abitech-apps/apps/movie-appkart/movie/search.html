@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Outfit:wght@100..900&amp;display=swap.css" rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="movie movie outfit-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/movie.gif" class="img-fluid" alt="movie">
+    </div>
+    <!-- loader End -->
+    <!-- header start -->
+    <header class="movie-header">
+        <div class="custom-container2">
+            <form class="movie-auth-form ">
+                <div class="form-group">
+                    <input type="search" class="form-control search" id="inputusername" placeholder="Search here.....">
+                    <i class="iconsax search-icon" data-icon="search-normal-2"> </i>
+                    <a href="search.html#!" class="filter-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom">
+                        <i class="iconsax" data-icon="setting-3"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </header>
+    <!-- header  end  -->
+
+    <!-- search section start -->
+    <section class="pt-0 movie-search-section">
+        <div class="custom-container2">
+            <div class="poster-title">
+                <h3>Recent Search</h3>
+                <a href="detail.html" class="all">See All</a>
+            </div>
+            <ul class="movie-research-list recent-search-listing">
+                <li>
+                    <a href="detail.html">
+                        <img src="../assets/images/movie/post/5.jpg" class="img-fluid" alt="image">
+                        <div class="research-content">
+                            <h4>Shadow of tomorrow</h4>
+                        </div>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"></i>
+                </li>
+                <li>
+                    <a href="detail.html">
+                        <img src="../assets/images/movie/post/6.jpg" class="img-fluid" alt="image">
+                        <div class="research-content">
+                            <h4>Echoes of the Void</h4>
+                        </div>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"></i>
+                </li>
+                <li>
+                    <a href="detail.html">
+                        <img src="../assets/images/movie/post/7.jpg" class="img-fluid" alt="image">
+                        <div class="research-content">
+                            <h4>Starlight Chronicles</h4>
+                        </div>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"></i>
+                </li>
+                <li>
+                    <a href="detail.html">
+                        <img src="../assets/images/movie/post/8.jpg" class="img-fluid" alt="image">
+                        <div class="research-content">
+                            <h4>The Last Horizon</h4>
+                        </div>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"></i>
+                </li>
+                <li>
+                    <a href="detail.html">
+                        <img src="../assets/images/movie/post/9.jpg" class="img-fluid" alt="image">
+                        <div class="research-content">
+                            <h4>Whispered Secrets</h4>
+                        </div>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"></i>
+                </li>
+                <li>
+                    <a href="detail.html">
+                        <img src="../assets/images/movie/post/10.jpg" class="img-fluid" alt="image">
+                        <div class="research-content">
+                            <h4>Phantom's Legacy</h4>
+                        </div>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"></i>
+                </li>
+                <li>
+                    <a href="detail.html">
+                        <img src="../assets/images/movie/post/11.jpg" class="img-fluid" alt="image">
+                        <div class="research-content">
+                            <h4>The Forgotten Realm</h4>
+                        </div>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"></i>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- search section  end  -->
+
+    <!-- offcanvas section start -->
+    <div class="offcanvas offcanvas-bottom movie-offcanvas" tabindex="-1" id="offcanvasBottom">
+        <div class="offcanvas-header">
+            <i class="iconsax back-icon" data-icon="chevron-left"></i>
+            <h5>Filter</h5>
+            <button type="button" class="close-icon" data-bs-dismiss="offcanvas" aria-label="Close">
+                <i class="iconsax icon" data-icon="add"></i>
+            </button>
+        </div>
+        <div class="offcanvas-body  small pt-0">
+            <div class="genre-box">
+                <div class="poster-title">
+                    <h3>Rating</h3>
+                </div>
+                <div class="genre-container">
+                    <label>
+                        <input type="radio" name="size" value="4.0">
+                        <span><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">5</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="4.5">
+                        <span><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">4</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="5.0">
+                        <span><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">3</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="5.5">
+                        <span><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">2</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="6.0">
+                        <span><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">1</span>
+                    </label>
+                </div>
+            </div>
+            <div class="genre-box">
+                <div class="poster-title">
+                    <h3>Type Of Movies</h3>
+                </div>
+                <div class="genre-container">
+                    <label>
+                        <input type="radio" name="size" value="1">
+                        <span>Movie</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="2">
+                        <span>TV Series</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="3">
+                        <span>Short</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="4" checked>
+                        <span>TV Movie</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="5">
+                        <span>Music Video</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="6">
+                        <span>TV Short</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="7">
+                        <span>Video Game</span>
+                    </label>
+                </div>
+            </div>
+            <div class="genre-box">
+                <div class="poster-title">
+                    <h3>Most Popular</h3>
+                </div>
+                <div class="genre-container">
+                    <label>
+                        <input type="radio" name="size" value="7">
+                        <span>Ne Zha 2</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="8">
+                        <span>Lilo & Stitch </span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="9">
+                        <span>A Minecraft Movie</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="size" value="10" checked>
+                        <span>Saiyaara</span>
+                    </label>
+                </div>
+            </div>
+            <div class="movie-fix-btn">
+                <a href="detail.html" class="btn movie-btn">Apply</a>
+            </div>
+            <div class="panel-space-sm"></div>
+        </div>
+    </div>
+    <!-- offcanvas section end  -->
+
+    <!-- mobile menu section start -->
+    <div class="gradient-menu-panel">
+        <ul>
+            <li>
+                <a href="home.html" class="icon">
+                    <img src="../assets/images/movie/svg/1.svg" class="img-fluid" alt="icon">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="search.html" class="icon">
+                    <img src="../assets/images/movie/svg/2.svg" class="img-fluid" alt="icon">
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="save.html" class="icon">
+                    <img src="../assets/images/movie/svg/3.svg" class="img-fluid" alt="icon">
+                    <span>Save</span>
+                </a>
+            </li>
+            <li>
+                <a href="download.html" class="icon">
+                    <img src="../assets/images/movie/svg/4.svg" class="img-fluid" alt="icon">
+                    <span>Download</span>
+                </a>
+            </li>
+            <li>
+                <a href="profile.html" class="icon">
+                    <img src="../assets/images/movie/svg/5.svg" class="img-fluid" alt="icon">
+                    <span>Profile</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- mobile menu section  end  -->
+
+    <!-- Bootstrap JS-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax JS-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- script JS -->
+    <script src="../assets/js/script.js"></script>
+
+</body>
+
+</html>

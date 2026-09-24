@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Semantic Match — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0b1620] text-teal-50">
+  <div class="max-w-3xl mx-auto px-4 py-8">
+    <a href="../index.html" class="text-xs text-teal-300/80 hover:text-white">← Abitech Apps Store</a>
+
+    <div class="text-center mt-4">
+      <div class="text-5xl">🧲</div>
+      <h1 class="text-3xl font-bold mt-2">Semantic Match</h1>
+      <p class="text-sm text-teal-200/80 mt-1">Search by meaning, not spelling. Ask a question, rank your notes, FAQ entries or product lines.</p>
+    </div>
+
+    <div class="mt-4 flex justify-center text-[11px]">
+      <span id="modelBadge" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Loading MiniLM…</span>
+    </div>
+
+    <div class="mt-6 bg-teal-950/40 rounded-2xl p-5 border border-teal-900/60">
+      <label class="text-xs text-teal-300/80">Your query</label>
+      <input id="query" type="text"
+        class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2.5 text-sm outline-none border border-teal-900/60 focus:border-teal-400 placeholder:text-teal-200/30"
+        placeholder="e.g. how do I reset my password?" value="how do I reset my password?" />
+
+      <label class="text-xs text-teal-300/80 block mt-3">Candidates — one per line</label>
+      <textarea id="items" rows="8"
+        class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2.5 text-sm outline-none border border-teal-900/60 focus:border-teal-400 resize-y placeholder:text-teal-200/30"
+        placeholder="One candidate per line…"></textarea>
+
+      <div class="flex items-center justify-between mt-2">
+        <span id="count" class="text-[11px] text-teal-200/50">0 candidates</span>
+        <button id="sampleBtn" class="text-[11px] text-teal-300 hover:text-white font-semibold">Load sample</button>
+      </div>
+
+      <button id="runBtn" disabled
+        class="mt-3 w-full bg-teal-600 hover:bg-teal-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold text-sm py-2.5 rounded-full transition">
+        Rank by meaning
+      </button>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/15 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="out" class="mt-5"></div>
+
+    <p class="mt-6 text-[11px] text-teal-200/50 text-center leading-relaxed">
+      Powered by <b>Xenova/all-MiniLM-L6-v2</b> sentence embeddings via <b>transformers.js</b>.
+      384-dimensional vectors, cosine similarity, zero network calls after the model loads.
+    </p>
+  </div>
+
+  <script type="module">
+    import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0";
+
+    const SAMPLE = [
+      'How to reset your account password from the login screen',
+      'Where to download the desktop app for Windows',
+      'Cancel or downgrade a paid subscription plan',
+      'Set up two-factor authentication with an authenticator app',
+      'Shipping times and delivery partners for physical orders',
+      'Refund policy for digital products purchased by mistake',
+      'Import data from a CSV file into the workspace',
+      'Contact the support team outside of business hours'
+    ].join('\n');
+
+    const modelBadge = document.getElementById('modelBadge');
+    const runBtn = document.getElementById('runBtn');
+    const errBox = document.getElementById('errorBox');
+    const out = document.getElementById('out');
+    const itemsEl = document.getElementById('items');
+    const countEl = document.getElementById('count');
+    let extractor = null;
+
+    function esc(value) {
+      return String(value || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function showError(msg) { errBox.textContent = msg; errBox.classList.remove('hidden'); }
+    function clearError() { errBox.classList.add('hidden'); }
+    function lines() { return itemsEl.value.split('\n').map(l => l.trim()).filter(Boolean); }
+    function updateCount() { countEl.textContent = lines().length + ' candidates'; }
+
+    async function boot() {
+      try {
+        extractor = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+        modelBadge.textContent = 'MiniLM-L6-v2 ready';
+        modelBadge.className = 'px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30';
+        runBtn.disabled = false;
+      } catch (e) {
+        modelBadge.textContent = 'Model failed to load';
+        modelBadge.className = 'px-3 py-1 rounded-full bg-red-500/15 text-red-300 border border-red-500/30';
+        showError('Could not load the model: ' + (e && e.message ? e.message : e));
+      }
+    }
+
+    // Embeddings are L2-normalised, so a dot product is the cosine similarity.
+    async function embed(texts) {
+      const tensor = await extractor(texts, { pooling: 'mean', normalize: true });
+      return tensor.tolist();
+    }
+
+    async function run() {
+      clearError();
+      const query = document.getElementById('query').value.trim();
+      const candidates = lines().slice(0, 60);
+      if (!query) return showError('Type a query first.');
+      if (candidates.length < 2) return showError('Add at least two candidate lines.');
+      if (!extractor) return showError('The model is still loading.');
+
+      runBtn.disabled = true;
+      const original = runBtn.textContent;
+      runBtn.textContent = 'Embedding…';
+      out.innerHTML = '';
+
+      try {
+        const started = performance.now();
+        const vectors = await embed([query, ...candidates]);
+        const q = vectors[0];
+        const scored = candidates.map((text, i) => {
+          const v = vectors[i + 1];
+          let dot = 0;
+          for (let d = 0; d < q.length; d++) dot += q[d] * v[d];
+          return { text, score: dot };
+        }).sort((a, b) => b.score - a.score);
+
+        const secs = ((performance.now() - started) / 1000).toFixed(1);
+        const worst = scored[scored.length - 1].score;
+        const span = Math.max(0.0001, scored[0].score - worst);
+
+        out.innerHTML = `
+          <div class="fade-in bg-teal-950/40 rounded-2xl p-5 border border-teal-700/50">
+            <div class="flex items-center justify-between text-[11px] text-teal-200/60 mb-3">
+              <span>Ranked ${scored.length} candidates by cosine similarity</span>
+              <span>${secs}s on-device</span>
+            </div>
+            <ol class="space-y-3">
+              ${scored.map((r, i) => {
+                const pct = Math.round(r.score * 100);
+                const width = Math.round(((r.score - worst) / span) * 100);
+                return `
+                  <li class="flex items-start gap-3">
+                    <span class="text-xs font-bold text-teal-400/70 w-5 text-right mt-0.5">${i + 1}</span>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm ${i === 0 ? 'text-teal-50 font-semibold' : 'text-teal-50/80'}">${esc(r.text)}</p>
+                      <div class="flex items-center gap-2 mt-1.5">
+                        <div class="flex-1 h-1.5 rounded-full bg-black/40 overflow-hidden">
+                          <div class="h-full ${i === 0 ? 'bg-teal-300' : 'bg-teal-700'}" style="width:${Math.max(4, width)}%"></div>
+                        </div>
+                        <span class="text-[10px] text-teal-200/60 w-10 text-right">${pct}%</span>
+                      </div>
+                    </div>
+                  </li>`;
+              }).join('')}
+            </ol>
+          </div>`;
+      } catch (e) {
+        showError('Matching failed: ' + (e && e.message ? e.message : e));
+      } finally {
+        runBtn.disabled = false;
+        runBtn.textContent = original;
+      }
+    }
+
+    itemsEl.addEventListener('input', updateCount);
+    document.getElementById('sampleBtn').addEventListener('click', () => { itemsEl.value = SAMPLE; updateCount(); });
+    runBtn.addEventListener('click', run);
+    updateCount();
+    boot();
+  </script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/metropolis-font.css">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="food position-relative">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/FoodApp.gif" class="img-fluid" alt="food">
+    </div>
+    <!-- loader End -->
+
+    <!-- header starts -->
+    <header class="main-header food-main-header">
+        <div class="custom-container">
+            <div class="header-panel">
+                <a href="delivery.html#" onclick="history.back()">
+                    <i class="iconsax back-icon" data-icon="chevron-left"></i>
+                </a>
+                <h3>Food Delivered!!</h3>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+    <!-- successfully msg section start -->
+    <section class="section-lg-t-space">
+        <div class="d-flex justify-content-center">
+            <img src="../assets/images/food/icon/2.png" class="img-fluid" alt="successfully-icon">
+        </div>
+    </section>
+    <!-- successfully msg section end -->
+
+    <!-- account total section start -->
+    <section class="section-t-space">
+        <div class="custom-container">
+            <div class="title2">
+                <h3>Order Details</h3>
+            </div>
+            <ul class="food-bill-list">
+                <li>Item Total<span>$256.00</span></li>
+                <li>Delivery Fee<a href="delivery.html#!">- $16.00</a></li>
+                <li>Delivery Tip<a href="delivery.html#!" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom"
+                        aria-controls="offcanvasBottom">Add Tip</a></li>
+                <li>Taxes & Charges<span> $48.00</span></li>
+                <li class="food-total-bill">Total Amount <span> $288.00</span></li>
+            </ul>
+        </div>
+    </section>
+    <!-- account total section end  -->
+
+    <!-- address section start -->
+    <section class="section-t-space">
+        <div class="custom-container">
+            <div class="title">
+                <h3>Delivery Address</h3>
+            </div>
+            <div class="address-list-box">
+                <div class="address-list">
+                    <div class="address-box mb-0">
+                        <img src="../assets/images/food/map/6.png" alt="map">
+                        <div class="address-list-contant">
+                            <div class="address-name">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#home"></use>
+                                </svg>
+                                <h5>Home</h5>
+                            </div>
+                            <p>Stonebridge Park Unit 12, 5th Floor,
+                                Wing B 2843 Moorland County Zip Code: 74562-1198</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- address section end -->
+
+    <!-- button section start -->
+    <div class="custom-container">
+        <a href="delivery.html#!" class="btn food-btn m_top-65" data-bs-toggle="modal" data-bs-target="#feedback-filter">Give
+            Feedback Now</a>
+        <a href="home.html" class="btn food-btn map-btn">I’II do it later</a>
+    </div>
+    <!-- button section end -->
+
+
+    <!-- toggle modal section start -->
+
+    <div class="modal fade feedback-model" id="feedback-filter">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <h4>How are you feeling?</h4>
+                <p>We value your feedback so that we can better understand your needs and adjust our service.</p>
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="emoji-items">
+                            <li>
+                                <img src="../assets/images/food/icon/5.svg" alt="emoji">
+                                <span></span>
+                            </li>
+                            <li>
+                                <img src="../assets/images/food/icon/4.svg" alt="emoji">
+                                <span></span>
+                            </li>
+                            <li class="active">
+                                <img src="../assets/images/food/icon/1.svg" alt="emoji">
+                                <span></span>
+                            </li>
+                            <li>
+                                <img src="../assets/images/food/icon/2.svg" alt="emoji">
+                                <span></span>
+                            </li>
+                            <li>
+                                <img src="../assets/images/food/icon/3.svg" alt="emoji">
+                                <span></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="feedback-comment">
+                    <textarea name="text" class="textarea" placeholder="Add a Comment..." id="text-input"
+                        rows="2"></textarea>
+                </div>
+                <button class="btn food-btn m_top-20" data-bs-toggle="modal" data-bs-target="#happy-filter">Submit
+                    Now</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade feedback-model" id="happy-filter">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <h4>Thank You !!</h4>
+                <p>Thank you for your great feedback, we appreciate your review</p>
+
+                <div class="feedback-image">
+                    <img src="../assets/images/food/icon/3.png" class="img-fluid" alt="image">
+                </div>
+                <a href="home.html" class="btn food-btn m_top-20">Back To Home</a>
+            </div>
+        </div>
+    </div>
+    <!-- toggle modal section end -->
+
+    <!-- add tip offcanvas start  -->
+    <div class="offcanvas offcanvas-bottom theme-offcanvas" tabindex="-1" id="offcanvasBottom">
+        <div class="offcanvas-header theme-header">
+            <h3>Add Tips</h3>
+            <button type="button" class="btn-close offcanvas-close" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body small pt-0">
+            <div class="tips-box">
+                <div class="add-tips-wrapper">
+                    <div>
+                        <i class="iconsax" data-icon="wallet-add-1"></i>
+                    </div>
+                    <div>
+                        <h5>Include a tip.</h5>
+                        <h6>Add Special Instructions</h6>
+                    </div>
+                </div>
+                <p>Review your selected items, quantity, and preferences before checking out to avoid any mix-ups.
+                    Delivery times may vary during peak hours. Plan ahead if you're ordering for a group or an
+                    event.Ensure your address is
+                    complete and includes apartment number or landmarks if necessary.
+                </p>
+                <div class="timing-wrapper">
+                    <h3>Rating</h3>
+                    <ul class="custom-radio-list">
+                        <li>
+                            <input type="radio" name="delivery" id="time1" checked>
+                            <label for="time1"><svg>
+                                    <use href="../assets/svg/icon-sprite.svg#star"></use>
+                                </svg>1</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="delivery" id="time2" checked>
+                            <label for="time2"><svg>
+                                    <use href="../assets/svg/icon-sprite.svg#star"></use>
+                                </svg>2</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="delivery" id="time3" checked>
+                            <label for="time3"><svg>
+                                    <use href="../assets/svg/icon-sprite.svg#star"></use>
+                                </svg>3</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="delivery" id="time4" checked>
+                            <label for="time4"><svg>
+                                    <use href="../assets/svg/icon-sprite.svg#star"></use>
+                                </svg>4</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="delivery" id="time5" checked>
+                            <label for="time5"><svg>
+                                    <use href="../assets/svg/icon-sprite.svg#star"></use>
+                                </svg>5</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <a href="delivery.html" class="btn food-btn m_top-20">Done</a>
+        </div>
+    </div>
+    <!-- add tip offcanvas start  -->
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- Active section JS -->
+    <script src="../assets/js/active-section.js"></script>
+
+    <!-- Script Js  -->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

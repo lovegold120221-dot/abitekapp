@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Review Miner — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#161311] text-orange-50">
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <a href="../index.html" class="text-xs text-orange-300/80 hover:text-white">← Abitech Apps Store</a>
+
+    <div class="text-center mt-4">
+      <div class="text-5xl">⭐</div>
+      <h1 class="text-3xl font-bold mt-2">Review Miner</h1>
+      <p class="text-sm text-orange-200/80 mt-1">Dump a batch of reviews in, get out which products get named, which aspects sour, and what to fix first.</p>
+    </div>
+
+    <div class="mt-4 flex flex-wrap items-center justify-center gap-2 text-[11px]">
+      <span id="bSent" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Sentiment: loading…</span>
+      <span id="bZero" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Aspects: idle</span>
+      <span id="bNer" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Entities: idle</span>
+    </div>
+
+    <div class="mt-6 bg-orange-950/25 rounded-2xl p-5 border border-orange-900/50">
+      <label class="text-xs text-orange-300/80">Reviews — one per line</label>
+      <textarea id="reviews" rows="8"
+        class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2.5 text-sm outline-none border border-orange-900/50 focus:border-orange-400 resize-y placeholder:text-orange-200/30"
+        placeholder="Paste your review export, one review per line…"></textarea>
+      <div class="flex items-center justify-between mt-2">
+        <span id="count" class="text-[11px] text-orange-200/50">0 reviews</span>
+        <button id="sampleBtn" class="text-[11px] text-orange-300 hover:text-white font-semibold">Load sample</button>
+      </div>
+
+      <label class="block text-xs text-orange-300/80 mt-3">Aspects (comma separated)
+        <input id="aspects" value="product quality, price and value, shipping and delivery, customer support"
+          class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2 text-sm border border-orange-900/50 outline-none focus:border-orange-400" />
+      </label>
+
+      <button id="runBtn" disabled class="mt-4 w-full bg-orange-600 hover:bg-orange-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold text-sm py-2.5 rounded-full transition">Mine the reviews</button>
+      <p id="status" class="mt-2 text-xs text-orange-200/60"></p>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/15 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="out" class="mt-5"></div>
+
+    <p class="mt-6 text-[11px] text-orange-200/50 text-center leading-relaxed">
+      <b>distilbert-sst-2</b> scores each review, <b>mobilebert-mnli</b> assigns the aspect, <b>bert-base-NER</b> pulls
+      named products and brands. Sentiment models misread sarcasm — spot-check the negatives before acting on them.
+    </p>
+  </div>
+
+  <script type="module">
+    import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0';
+
+    const SENT = 'Xenova/distilbert-base-uncased-finetuned-sst-2-english';
+    const ZERO = 'Xenova/mobilebert-uncased-mnli';
+    const NER = 'Xenova/bert-base-NER';
+    const SAMPLE = [
+      'The TrailRunner 5 shoes are superb — light, grippy and my knees thank me after long runs.',
+      'Absolute rubbish: the TrailRunner 5 sole started peeling after two weeks. Waste of money.',
+      'Delivery from Northwind was incredibly fast, arrived a day early and well packaged.',
+      'Support took nine days to answer and then sent a copy-paste reply. Unacceptable.',
+      'Great value for the price. Bought two more for the family.',
+      'Overpriced for what you get. The fabric feels cheap compared to the previous model.',
+      'Northwind courier left the parcel in the rain and the box was soaked through.',
+      'The Kate Spade bag is beautiful and the stitching is flawless. Very happy.',
+      'Battery life is nowhere near the advertised 20 hours — I get about six.',
+      'Perfect. Exactly as described, and the carry case is a nice touch.'
+    ].join('\n');
+
+    const bSent = document.getElementById('bSent'), bZero = document.getElementById('bZero'), bNer = document.getElementById('bNer');
+    const runBtn = document.getElementById('runBtn');
+    const errBox = document.getElementById('errorBox');
+    const out = document.getElementById('out');
+    const reviewsEl = document.getElementById('reviews');
+    const countEl = document.getElementById('count');
+    const statusEl = document.getElementById('status');
+    const cache = new Map();
+
+    function esc(v) {
+      return String(v || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function showError(m) { errBox.textContent = m; errBox.classList.remove('hidden'); }
+    function clearError() { errBox.classList.add('hidden'); }
+    function badge(el, text, tone) {
+      el.textContent = text;
+      const t = { wait: 'bg-amber-500/15 text-amber-300 border-amber-500/30', ok: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30', err: 'bg-red-500/15 text-red-300 border-red-500/30', idle: 'bg-slate-800 text-slate-400 border-slate-700' };
+      el.className = 'px-3 py-1 rounded-full border ' + (t[tone] || t.idle);
+    }
+    async function model(task, id) {
+      const key = task + '|' + id;
+      if (!cache.has(key)) {
+        const p = pipeline(task, id).catch(e => { cache.delete(key); throw e; });
+        cache.set(key, p);
+      }
+      return cache.get(key);
+    }
+    const rows = () => reviewsEl.value.split('\n').map(l => l.trim()).filter(Boolean);
+    function updateCount() { countEl.textContent = rows().length + ' reviews'; }
+    const label = a => a.replace(/\b\w/g, c => c.toUpperCase());
+
+    async function boot() {
+      try {
+        await model('sentiment-analysis', SENT);
+        badge(bSent, 'Sentiment: ready', 'ok');
+        runBtn.disabled = false;
+      } catch (e) {
+        badge(bSent, 'Sentiment: failed', 'err');
+        showError('Could not load the sentiment model: ' + (e.message || e));
+      }
+    }
+
+    async function run() {
+      clearError(); out.innerHTML = '';
+      const items = rows().slice(0, 60);
+      const aspects = document.getElementById('aspects').value.split(',').map(s => s.trim()).filter(Boolean).slice(0, 8);
+      if (!items.length) return showError('Paste at least one review.');
+      if (aspects.length < 2) return showError('Give me at least two aspects.');
+
+      runBtn.disabled = true;
+      const original = runBtn.textContent;
+      try {
+        const sent = await model('sentiment-analysis', SENT);
+        runBtn.textContent = 'Loading aspect model…';
+        badge(bZero, 'Aspects: working…', 'wait');
+        const zero = await model('zero-shot-classification', ZERO);
+        badge(bZero, 'Aspects: ready', 'ok');
+        badge(bNer, 'Entities: working…', 'wait');
+        const ner = await model('token-classification', NER);
+        badge(bNer, 'Entities: ready', 'ok');
+
+        const aspectStats = Object.fromEntries(aspects.map(a => [a, { total: 0, negative: 0, examples: [] }]));
+        const entityStats = {};
+        const details = [];
+
+        for (let i = 0; i < items.length; i++) {
+          runBtn.textContent = `Mining ${i + 1}/${items.length}…`;
+          statusEl.textContent = `Review ${i + 1} of ${items.length}…`;
+          const text = items[i];
+
+          const s = await sent(text.slice(0, 400));
+          const negative = s[0].label === 'NEGATIVE';
+
+          const z = await zero(text.slice(0, 450), aspects, { hypothesis_template: 'This review is about {}.' });
+          const aspect = z.labels[0];
+          const aspectScore = z.scores[0];
+
+          let ents = [];
+          try {
+            const raw = await ner(text.slice(0, 700), { aggregation_strategy: 'simple' });
+            ents = raw.map(e => String(e.word || '').trim()).filter(w => w.length > 2);
+          } catch (e) { /* entities are a bonus */ }
+
+          aspectStats[aspect].total++;
+          if (negative) aspectStats[aspect].negative++;
+          if (negative && aspectStats[aspect].examples.length < 3) aspectStats[aspect].examples.push(text);
+          ents.forEach(e => {
+            const k = e.toLowerCase();
+            entityStats[k] = entityStats[k] || { name: e, count: 0, negative: 0 };
+            entityStats[k].count++;
+            if (negative) entityStats[k].negative++;
+          });
+          details.push({ text, negative, score: s[0].score, aspect, aspectScore, ents });
+        }
+
+        const negatives = details.filter(d => d.negative);
+        const aspectList = Object.entries(aspectStats)
+          .filter(([, v]) => v.total > 0)
+          .sort((a, b) => (b[1].negative / b[1].total) - (a[1].negative / a[1].total));
+        const entityList = Object.values(entityStats).sort((a, b) => b.count - a.count).slice(0, 12);
+        const worst = aspectList[0];
+
+        statusEl.textContent = `✅ ${details.length} reviews mined. ${negatives.length} negative.`;
+        out.innerHTML = `
+          <div class="fade-in space-y-4">
+            <section class="bg-orange-950/25 rounded-2xl p-5 border border-orange-700/50">
+              <div class="flex flex-wrap items-end justify-between gap-3">
+                <div>
+                  <p class="text-xs uppercase tracking-widest text-orange-300/80 font-semibold">Verdict</p>
+                  <p class="text-2xl font-bold mt-1">${Math.round((negatives.length / details.length) * 100)}% negative</p>
+                  <p class="text-[11px] text-orange-200/60">${details.length} reviews · ${details.length - negatives.length} positive</p>
+                </div>
+                ${worst && worst[1].negative ? `<div class="text-right">
+                  <p class="text-[11px] text-orange-200/60">Most complained about</p>
+                  <p class="text-lg font-semibold text-rose-300">${esc(label(worst[0]))}</p>
+                  <p class="text-[11px] text-orange-200/50">${worst[1].negative} of ${worst[1].total} reviews</p>
+                </div>` : ''}
+              </div>
+            </section>
+
+            <section class="bg-orange-950/25 rounded-2xl p-5 border border-orange-900/50">
+              <p class="text-xs uppercase tracking-widest text-orange-300/80 font-semibold">Aspects by complaint rate</p>
+              <div class="mt-3 space-y-3">
+                ${aspectList.map(([name, v]) => {
+                  const pct = Math.round((v.negative / v.total) * 100);
+                  return `
+                    <div>
+                      <div class="flex justify-between text-[11px] mb-1">
+                        <span class="text-orange-100/85">${esc(label(name))} <span class="text-orange-200/40">· ${v.total} review${v.total === 1 ? '' : 's'}</span></span>
+                        <span class="${pct > 40 ? 'text-rose-300' : 'text-orange-200/60'}">${pct}% negative</span>
+                      </div>
+                      <div class="h-2 rounded-full bg-black/40 overflow-hidden">
+                        <div class="h-full ${pct > 40 ? 'bg-rose-400' : pct > 15 ? 'bg-amber-400' : 'bg-emerald-400'}" style="width:${pct}%"></div>
+                      </div>
+                    </div>`;
+                }).join('')}
+              </div>
+            </section>
+
+            ${entityList.length ? `
+              <section class="bg-orange-950/25 rounded-2xl p-5 border border-orange-900/50">
+                <p class="text-xs uppercase tracking-widest text-orange-300/80 font-semibold">Products, brands and couriers named</p>
+                <div class="flex flex-wrap gap-2 mt-3">
+                  ${entityList.map(e => `
+                    <span class="text-[11px] px-2.5 py-1 rounded-full bg-black/40 border ${e.negative > e.count / 2 ? 'border-rose-800 text-rose-200' : 'border-orange-900/60 text-orange-100/80'}">
+                      ${esc(e.name)} <b>×${e.count}</b>${e.negative ? ` <span class="text-rose-400">(${e.negative} neg)</span>` : ''}
+                    </span>`).join('')}
+                </div>
+                <p class="text-[10px] text-orange-200/40 mt-3">Entity detection is noisy on short, informal text — treat this as a hint list.</p>
+              </section>` : ''}
+
+            <section class="bg-orange-950/25 rounded-2xl p-5 border border-orange-900/50">
+              <p class="text-xs uppercase tracking-widest text-orange-300/80 font-semibold">Complaints worth reading (${negatives.length})</p>
+              ${negatives.length ? `<ul class="mt-3 space-y-3">${negatives.slice(0, 12).map(n => `
+                <li class="flex gap-3">
+                  <span class="text-rose-400 text-xs shrink-0 pt-0.5">▲</span>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm text-orange-50/90">${esc(n.text)}</p>
+                    <p class="text-[10px] text-orange-200/50 mt-0.5">${esc(label(n.aspect))} · ${Math.round(n.score * 100)}% negative${n.ents.length ? ' · mentions ' + esc(n.ents.slice(0, 3).join(', ')) : ''}</p>
+                  </div>
+                </li>`).join('')}</ul>` : '<p class="mt-2 text-sm text-orange-200/60">No negative reviews in this batch.</p>'}
+            </section>
+
+            <button id="copyRep" class="w-full text-xs font-semibold bg-white/10 hover:bg-white/20 px-4 py-2.5 rounded-full transition">Copy report</button>
+          </div>`;
+
+        const report = [
+          `Reviews: ${details.length} · negative: ${negatives.length} (${Math.round((negatives.length / details.length) * 100)}%)`,
+          '',
+          'Aspect breakdown:',
+          ...aspectList.map(([n, v]) => `  ${label(n)}: ${v.negative}/${v.total} negative`),
+          '',
+          entityList.length ? 'Named entities: ' + entityList.map(e => `${e.name} (${e.count})`).join(', ') : '',
+          '',
+          'Complaints:',
+          ...negatives.map(n => `  [${label(n.aspect)}] ${n.text}`)
+        ].join('\n');
+        document.getElementById('copyRep').addEventListener('click', () => navigator.clipboard.writeText(report));
+      } catch (e) {
+        statusEl.textContent = 'Mining failed.';
+        showError('Could not mine those reviews: ' + (e.message || e));
+      } finally {
+        runBtn.disabled = false;
+        runBtn.textContent = original;
+      }
+    }
+
+    reviewsEl.addEventListener('input', updateCount);
+    document.getElementById('sampleBtn').addEventListener('click', () => { reviewsEl.value = SAMPLE; updateCount(); });
+    runBtn.addEventListener('click', run);
+    updateCount();
+    boot();
+  </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voice Cloner — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0d1117] text-gray-200">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+    <div class="text-center mt-4">
+      <div class="text-5xl">🎙️</div>
+      <h1 class="text-3xl font-bold text-white">Voice Cloner</h1>
+      <p class="text-sm text-gray-400 mt-1">Record your voice and clone it with AI.</p>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/20 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="result" class="mt-5"></div>
+  </div>
+
+  <script>
+    const GEMINI_KEY = sessionStorage.getItem('abitech_gemini_key') || '';
+    const GEMINI_MODEL = "gemini-3.5-flash-lite";
+    const SYSTEM = "You are a voice cloning AI. Given a short audio reference and text, clone the voice to speak the text. Output raw audio base64 format.";
+    function esc(s) { return s.replace(/[&<>"']/g, function(c) { return { '&': '&', '<': '<', '>': '>', '"': '"', "'": ''' }[c]; }); }
+
+    async function gemini(user) {
+      const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent?key=" + GEMINI_KEY, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ system_instruction: { parts: [{ text: SYSTEM }] }, contents: [{ parts: [{ text: user }] }], generationConfig: { temperature: 0.8, maxOutputTokens: 500 } })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      return data.candidates[0].content.parts.map(function(p) { return p.text || ''; }).join("");
+    }
+
+    async function clone() {
+      var text = document.getElementById("text").value.trim();
+      var ref = document.getElementById("ref").value.trim();
+      var btn = document.getElementById("cloneBtn"), err = document.getElementById("errorBox"), out = document.getElementById("result");
+      err.classList.add("hidden");
+      if (!text) { err.textContent = "Enter text to clone."; err.classList.remove("hidden"); return; }
+      if (!ref) { err.textContent = "Provide a voice reference."; err.classList.remove("hidden"); return; }
+      btn.disabled = true; btn.textContent = "Cloning…"; out.innerHTML = "";
+      try {
+        var raw = await gemini("Reference: [audio base64], Text: " + text);
+        out.innerHTML = "<div class=\"fade-in bg-white/10 backdrop-blur rounded-2xl p-5 border border-violet-400/30 shadow-lg shadow-violet-900/40\"><p class=\"text-xs uppercase tracking-widest text-amber-300 font-semibold mb-2\">🎙️ Cloned voice</p><div class=\"text-sm leading-relaxed\">" + raw + "</div></div>";
+      } catch (e) {
+        err.textContent = "Cloning failed: " + e.message; err.classList.remove("hidden");
+      }
+      btn.disabled = false; btn.textContent = "Clone Voice &#9832;";
+    }
+  </script>
+</body>
+</html>

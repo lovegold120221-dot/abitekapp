@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Startup Roulette — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .neon { text-shadow: 0 0 18px rgba(236,72,153,.8), 0 0 40px rgba(168,85,247,.5); }
+    .fade-in { animation: fadeIn .5s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(.97); } to { opacity: 1; transform: scale(1); } }
+    .spinning { animation: wobble .12s linear infinite; }
+    @keyframes wobble { 0% { transform: rotate(-2deg); } 100% { transform: rotate(2deg); } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#12041f] text-pink-100">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+    <div class="text-center mt-4">
+      <div id="slot" class="text-6xl">🎰</div>
+      <h1 class="neon text-4xl font-bold mt-2 text-white">Startup Roulette</h1>
+      <p class="text-sm text-pink-300/80 mt-1">Pull the lever. Get a billion-dollar idea (valuation not guaranteed).</p>
+    </div>
+
+    <div class="mt-6 flex gap-2">
+      <input id="themeInput" placeholder="Optional theme: pets, food, space… (blank = pure chaos)"
+        class="flex-1 bg-white/10 rounded-full px-4 py-2.5 text-sm outline-none border border-pink-500/30 focus:border-pink-400 placeholder:text-pink-300/40" />
+    </div>
+    <div class="mt-3 flex gap-2">
+      <button id="spinBtn" onclick="spin()" class="flex-1 bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 font-bold text-sm py-3 rounded-full transition">SPIN 🎰</button>
+      <button onclick="spin(true)" class="px-5 bg-white/10 hover:bg-white/20 font-semibold text-sm rounded-full transition border border-pink-500/30">↻ Pivot</button>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/20 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="result" class="mt-5"></div>
+  </div>
+
+  <script>
+const GEMINI_KEY = sessionStorage.getItem('abitech_gemini_key') || '';
+    const GEMINI_MODEL = "gemini-3.5-flash-lite";
+    const LIVE_MODEL = "gemini-3.5-flash-live";
+    const SYSTEM = "You invent absurd-yet-plausible startup ideas. Reply with EXACTLY these labeled lines, nothing else:\nNAME: <2-4 word startup name>\nTAGLINE: <one funny punchy sentence>\nMODEL: <how it makes money, one line>\nVALUATION: <silly valuation like $420M pre-seed>\nCUSTOMER: <first target customer, one line>\nPITCH: <30-second elevator pitch, 2 sentences max>\nBe witty. No extra commentary.";
+    function esc(s) { return s.replace(/[&<>"']/g, c => ({ '&': '&', '<': '<', '>': '>', '"': '"', "'": ''' }[c])); }
+
+    // Gemini Live API TTS voice state
+    let ttsWs = null;
+    let ttsQueue = [];
+    let ttsSpeaking = false;
+    function ttsSpeakQueue() {
+      if (ttsSpeaking || !ttsWs) return;
+      if (ttsQueue.length === 0) { ttsSpeaking = false; return; }
+      const text = ttsQueue.shift();
+      ttsSpeaking = true;
+      ttsWs.send(JSON.stringify({
+        turns: [{ parts: [{ text: text }] }], turnComplete: true
+      }));
+    }
+    function ttsStop() { try { if (ttsWs) ttsWs.close(); ttsSpeaking = false; ttsQueue = []; } catch (e) {} }
+
+    // Initialise Live API TTS WebSocket
+    function ttsInit() {
+      if (ttsWs) return;
+      const wsUrl = `wss://generativelanguage.googleapis.com/v1beta/models/${LIVE_MODEL}:streamGenerateContent?key=${GEMINI_KEY}`;
+      ttsWs = new WebSocket(wsUrl);
+      ttsWs.onopen = () => ttsSpeakQueue();
+      ttsWs.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        if (data.serverContent && data.serverContent.modelTurn && data.serverContent.modelTurn.parts) {
+          const audioB64 = data.serverContent.modelTurn.parts.find(p => p.inlineData).inlineData.data;
+          const audioBlob = base64ToBlob(audioB64, 'audio/mp3');
+          const url = URL.createObjectURL(audioBlob);
+          const audio = new Audio(url);
+          audio.play().catch(() => {});
+          ttsSpeaking = false;
+          ttsSpeakQueue();
+        }
+      };
+      ttsWs.onerror = () => { ttsSpeaking = false; ttsSpeakQueue(); };
+    }
+
+    // Send text to Gemini Live API for TTS
+    function ttsPlay(text) {
+      try { text = String(text).replace(/[*#_]/g, '').slice(0, 800); } catch (e) {}
+      if (!text) return;
+      ttsQueue.push(text);
+      ttsInit();
+      ttsSpeakQueue();
+    }
+
+    // Base64 decode helper for audio chunks
+    function base64ToBlob(b64, mime) {
+      const byteChars = atob(b64);
+      const byteNumbers = new Uint8Array(byteChars.length);
+      for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
+      return new Blob([byteNumbers], { type: mime });
+    }
+
+    function hearBtn(i) { return `<button onclick="ttsPlay(spokenTexts[${i}] || '')" class="mt-3 text-xs font-semibold text-pink-300 hover:text-pink-200">🔊 Hear the pitch</button>`; }
+
+    async function gemini(user) {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ system_instruction: { parts: [{ text: SYSTEM }] }, contents: [{ parts: [{ text: user }] }], generationConfig: { temperature: 1.1, maxOutputTokens: 500 } })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      return data.candidates[0].content.parts.map(p => p.text || '').join('');
+    }
+
+    function field(raw, name) { const m = raw.match(new RegExp('^' + name + ':\\s*(.+)$', 'im')); return m ? m[1].trim() : ''; }
+
+    async function spin(isPivot) {
+      const theme = document.getElementById('themeInput').value.trim();
+      const btn = document.getElementById('spinBtn'), err = document.getElementById('errorBox'), out = document.getElementById('result'), slot = document.getElementById('slot');
+      err.classList.add('hidden');
+      btn.disabled = true; btn.textContent = 'SPINNING…';
+      slot.textContent = '🎲'; slot.classList.add('spinning');
+      stopSpeak();
+      try {
+        const raw = await gemini(`Invent a startup${theme ? ' about: ' + theme : ' (any wild domain)'}. ${isPivot ? 'It must be completely different from a food-delivery app.' : ''}`);
+        const rows = [['🏷️ Name', field(raw, 'NAME')], ['💬 Tagline', field(raw, 'TAGLINE')], ['💰 Model', field(raw, 'MODEL')], ['📈 Valuation', field(raw, 'VALUATION')], ['🎯 First customer', field(raw, 'CUSTOMER')], ['🎤 Pitch', field(raw, 'PITCH')]]
+          .filter(([, v]) => v);
+        out.innerHTML = `<div class="fade-in bg-white/10 backdrop-blur rounded-2xl p-5 border border-pink-500/40 shadow-lg shadow-pink-900/40">
+          ${rows.length ? rows.map(([k, v]) => `<div class="py-1.5 border-b border-white/5 last:border-0"><p class="text-[11px] uppercase tracking-widest text-pink-300/70">${esc(k)}</p><p class="text-sm font-medium">${esc(v)}</p></div>`).join('')
+          : `<p class="text-sm">${esc(raw).replace(/\n/g, '<br>')}</p>`}${hearBtn(spokenTexts.push(raw) - 1)}</div>`;
+      } catch (e) { err.textContent = 'Roulette jammed: ' + e.message; err.classList.remove('hidden'); }
+      slot.textContent = '🎰'; slot.classList.remove('spinning');
+      btn.disabled = false; btn.textContent = 'SPIN 🎰';
+    }
+  </script>
+</body>
+</html>

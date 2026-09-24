@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/case-studies/patient-support",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "AI-Powered Patient Support System | ABI Tech",
+      "hasCanvas": false,
+      "bodyTextLen": 1665,
+      "bodyTextHash": "f7d87a4aa067b8bbab9cda2c323582e651bcba16d5c11f95088f5379973805c7",
+      "bodyTextPrefix": "ABI Tech AI Business Implementation Technology Home About Servic",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/case-check.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "AI-Powered Patient Support System | ABI Tech",
+      "hasCanvas": false,
+      "bodyTextLen": 1512,
+      "bodyTextHash": "d57155f6c3b8f59d7612addcb5e74d4509fba541b01b15f7da804b723cde3fa7",
+      "bodyTextPrefix": "ABI Tech Let's Talk ← All case studies HEALTHCARE AI-Powered Pat",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/case-check-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/case-check.json"
+}

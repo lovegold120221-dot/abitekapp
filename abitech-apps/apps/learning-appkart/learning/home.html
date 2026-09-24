@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Outfit:wght@100..900&amp;display=swap.css" rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Swiper slider css  -->
+    <link rel="stylesheet" href="../assets/css/vendors/swiper/swiper.min.css">
+
+    <!-- Iconly css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconly.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="learning outfit-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/learning.gif" class="img-fluid" alt="learning">
+    </div>
+    <!-- loader End -->
+
+    <!-- header start -->
+    <header class="header learning-header">
+        <div class="custom-container2">
+            <div class="head-content">
+                <div class="header-location">
+                    <div class="location-content">
+                        <div class="d-flex align-items-center gap-1">
+                            <h3>Hello Albert</h3>
+                            <img src="../assets/images/learning/background/3.png" class="img-fluid" alt="hand">
+                        </div>
+                        <h5>Let's get to work learning!</h5>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="notification.html" class="notify-icon">
+                        <i class="iconsax icon-btn" data-icon="bell-1"></i>
+                        <span>2</span>
+                    </a>
+                    <a href="home.html#sidebar" class="sidebar-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+                        <i class="iconsax" data-icon="text-align-left"></i>
+                    </a>
+                </div>
+            </div>
+            <form class="learning-auth-form">
+                <div class="form-group">
+                    <input type="search" class="form-control search" id="inputusername" placeholder="Search here.....">
+                    <i class="iconsax search-icon" data-icon="search-normal-2"> </i>
+                    <a href="home.html#!" class="filter-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom">
+                        <i class="iconsax" data-icon="setting-3"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </header>
+    <!-- header end  -->
+
+    <!-- learning mobile menu section start -->
+    <div class="learning-mobile-menu">
+        <ul>
+            <li class="active">
+                <a href="home.html" class="icon">
+                    <img src="../assets/images/learning/icon/1.svg" class="img-fluid inactive" alt="icon">
+                    <div class="bottom-icon">
+                        <img src="../assets/images/learning/icon/h1.svg" class="img-fluid active" alt="icon">
+                    </div>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="search.html" class="icon">
+                    <img src="../assets/images/learning/icon/2.svg" class="img-fluid inactive" alt="icon">
+                    <img src="../assets/images/learning/icon/s1.svg" class="img-fluid active" alt="icon">
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="coures.html" class="icon">
+                    <div class="icon">
+                        <img src="../assets/images/learning/icon/3.svg" class="img-fluid inactive" alt="icon">
+                        <img src="../assets/images/learning/icon/v1.svg" class="img-fluid active" alt="icon">
+                    </div>
+                    <span>My Courses</span>
+                </a>
+            </li>
+            <li>
+                <a href="wishlist.html" class="icon">
+                    <div class="icon">
+                        <img src="../assets/images/learning/icon/4.svg" class="img-fluid inactive" alt="icon">
+                        <img src="../assets/images/learning/icon/d1.svg" class="img-fluid active" alt="icon">
+                    </div>
+                    <span>Wishlist</span>
+                </a>
+            </li>
+            <li>
+                <a href="profile.html" class="icon">
+                    <div class="icon">
+                        <img src="../assets/images/learning/icon/5.svg" class="img-fluid inactive" alt="icon">
+                        <img src="../assets/images/learning/icon/p1.svg" class="img-fluid active" alt="icon">
+                    </div>
+                    <span>Profile</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- learning mobile menu section  end  -->
+
+    <!-- categories section start -->
+    <section class="section-t-space-1 learn-categories-section">
+        <div class="custom-container2">
+            <div class="learning-title">
+                <h3>Categories</h3>
+                <a href="wishlist.html">See All</a>
+            </div>
+            <ul class="learn-category-section">
+                <li>
+                    <a href="wishlist.html">
+                        <img src="../assets/images/learning/categories/1.svg" class="img-fluid" alt="image">
+                    </a>
+                    <h5>Design</h5>
+                </li>
+                <li>
+                    <a href="wishlist.html">
+                        <img src="../assets/images/learning/categories/2.svg" class="img-fluid" alt="image">
+                    </a>
+                    <h5>Coding</h5>
+                </li>
+                <li>
+                    <a href="wishlist.html">
+                        <img src="../assets/images/learning/categories/3.svg" class="img-fluid" alt="image">
+                    </a>
+                    <h5>Art</h5>
+                </li>
+                <li>
+                    <a href="wishlist.html">
+                        <img src="../assets/images/learning/categories/4.svg" class="img-fluid" alt="image">
+                    </a>
+                    <h5>Business</h5>
+                </li>
+                <li>
+                    <a href="wishlist.html">
+                        <img src="../assets/images/learning/categories/5.svg" class="img-fluid" alt="image">
+                    </a>
+                    <h5>Marketing</h5>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- categories section  end  -->
+
+    <!-- hero section start -->
+    <section class="section-t-space learn-hero-section">
+        <div class="custom-container2">
+            <a href="detail.html">
+                <img src="../assets/images/learning/banner/1.jpg" class="img-fluid learn-main--image" alt="image">
+            </a>
+        </div>
+    </section>
+    <!-- hero section and -->
+
+    <!-- Courses section start -->
+    <section class="section-t-space learn-coures-section">
+        <div class="custom-container2">
+            <div class="learning-title">
+                <h3>Featured Courses</h3>
+                <a href="detail.html">See All</a>
+            </div>
+            <div class="swiper courses-slide">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide courses-slider-box">
+                        <a href="detail.html">
+                            <img src="../assets/images/learning/courses/1.jpg" class="img-fluid" alt="image">
+                        </a>
+                        <button class="wishlist-btn btn animate active inactive">
+                            <i class="iconly-Heart icli"></i>
+                            <i class="iconly-Heart icbo"></i>
+                        </button>
+                        <div class="course-detail">
+                            <h3><i class="iconsax icon" data-icon="user-1"></i> Wade Warren</h3>
+                            <h4>UI UX - The Complete Guide...</h4>
+                            <div class="course-price">
+                                <span>$36.00 <del>$40.00</del></span>
+                                <h4><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">4.5</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide courses-slider-box">
+                        <a href="detail.html">
+                            <img src="../assets/images/learning/courses/2.jpg" class="img-fluid" alt="image">
+                        </a>
+                        <div class="course-detail">
+                            <h3><i class="iconsax icon" data-icon="user-1"></i>Esther Howard</h3>
+                            <h4>React - The Complete Guide...</h4>
+                            <div class="course-price">
+                                <span>$40.00<del>$50.00</del></span>
+                                <h4><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">4.8</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide courses-slider-box">
+                        <a href="detail.html">
+                            <img src="../assets/images/learning/courses/3.jpg" class="img-fluid" alt="image">
+                        </a>
+                        <div class="course-detail">
+                            <h3><i class="iconsax icon" data-icon="user-1"></i>Wade Warren</h3>
+                            <h4>UI UX - The Complete Guide...</h4>
+                            <div class="course-price">
+                                <span>$36.00 <del>$40.00</del></span>
+                                <h4><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">4.2</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide courses-slider-box">
+                        <a href="detail.html">
+                            <img src="../assets/images/learning/courses/4.jpg" class="img-fluid" alt="image">
+                        </a>
+                        <div class="course-detail">
+                            <h3><i class="iconsax icon" data-icon="user-1"></i>Esther Howard</h3>
+                            <h4>React - The Complete Guide...</h4>
+                            <div class="course-price">
+                                <span>$40.00<del>$50.00</del></span>
+                                <h4><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">3.9</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Courses section  end  -->
+
+    <!-- coach section start -->
+    <section class="section-t-space  learn-coach-section">
+        <div class="custom-container2">
+            <div class="learning-title">
+                <h3>Top Coach</h3>
+                <a href="coach.html">See All</a>
+            </div>
+            <ul class="coach-wrapper">
+                <li>
+                    <a href="coach.html">
+                        <img src="../assets/images/learning/coach/1.jpg" class="img-fluid" alt="coach-image">
+                    </a>
+                    <h4>Jane C.</h4>
+                </li>
+                <li>
+                    <a href="coach.html">
+                        <img src="../assets/images/learning/coach/2.jpg" class="img-fluid" alt="coach-image">
+                    </a>
+                    <h4>Esther H.</h4>
+                </li>
+                <li>
+                    <a href="coach.html">
+                        <img src="../assets/images/learning/coach/3.jpg" class="img-fluid" alt="coach-image">
+                    </a>
+                    <h4>Leslie.</h4>
+                </li>
+                <li>
+                    <a href="coach.html">
+                        <img src="../assets/images/learning/coach/4.jpg" class="img-fluid" alt="coach-image">
+                    </a>
+                    <h4>Robert.</h4>
+                </li>
+                <li>
+                    <a href="coach.html">
+                        <img src="../assets/images/learning/coach/5.jpg" class="img-fluid" alt="coach-image">
+                    </a>
+                    <h4>Kristin W.</h4>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- coach section  end  -->
+
+    <!-- learning section start -->
+    <section class="section-t-space learning-section">
+        <div class="custom-container2">
+            <div class="learning-title">
+                <h3>Continue Learning</h3>
+                <a href="coures.html">See All</a>
+            </div>
+            <ul class="learning-wrapper">
+                <li>
+                    <a href="coures.html">
+                        <img src="../assets/images/learning/courses/5.jpg" class="img-fluid" alt="png">
+                    </a>
+                    <div class="learning-list-content">
+                        <div class="coaching-list">
+                            <h3>
+                                <i class="iconsax icon" data-icon="user-1"></i>
+                                Esther Howard
+                            </h3>
+                            <h4>Coding</h4>
+                        </div>
+                        <a href="coures.html">React - The Complete Guide...</a>
+                        <div class="reading-view">
+                            <h6>19/24</h6>
+                            <div class="progress">
+                                <div class="progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="coures.html">
+                        <img src="../assets/images/learning/courses/6.jpg" class="img-fluid" alt="png">
+                    </a>
+                    <div class="learning-list-content">
+                        <div class="coaching-list">
+                            <h3>
+                                <i class="iconsax icon" data-icon="user-1"></i>
+                                Brooklyn Simmons
+                            </h3>
+                            <h4>Design</h4>
+                        </div>
+                        <a href="coures.html">Python Beyond the Basics Object...</a>
+                        <div class="reading-view">
+                            <h6>22/30</h6>
+                            <div class="progress">
+                                <div class="progress-bar thurd-"></div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="coures.html">
+                        <img src="../assets/images/learning/courses/7.jpg" class="img-fluid" alt="png">
+                    </a>
+                    <div class="learning-list-content">
+                        <div class="coaching-list">
+                            <h3>
+                                <i class="iconsax icon" data-icon="user-1"></i>
+                                Ronald Richards
+                            </h3>
+                            <h4>Coding</h4>
+                        </div>
+                        <a href="coures.html">Python Beyond the Basics Object...</a>
+                        <div class="reading-view">
+                            <h6>10/25</h6>
+                            <div class="progress">
+                                <div class="progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- learning section  end  -->
+    <div class="panel-space"></div>
+
+
+    <!-- side bar offcanvas section start -->
+    <div class="offcanvas offcanvas-end learn-offcanvas" data-bs-scroll="true" tabindex="-1" id="offcanvasRight">
+        <div class="offcanvas-header">
+            <div class="learning-profile-wrapper ">
+                <img src="../assets/images/profile/p9.png" class="img-fluid" alt="profile">
+                <div class="learning-profile-content">
+                    <h5>Leslie Alexander</h5>
+                    <a href="profile.html"><i class="iconsax icon" data-icon="mail"></i>lesliealexander12@gmail.com</a>
+                </div>
+            </div>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="learn-sidebar-list">
+                <li>
+                    <a href="personal-profile.html">
+                        <i class="iconsax icon" data-icon="user-1"></i>
+                        <h5>Your Profile</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="payment.html">
+                        <i class="iconsax icon" data-icon="bank-card"></i>
+                        <h5>Payment Method</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://themes.pixelstrap.net/pwa/appkart/learning/setting">
+                        <i class="iconsax icon" data-icon="setting-1"></i>
+                        <h5>Setting</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://themes.pixelstrap.net/pwa/appkart/learning/security.html">
+                        <i class="iconsax icon" data-icon="lock-2"></i>
+                        <h5>Account Security</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="notification.html">
+                        <i class="iconsax icon" data-icon="bell-2"></i>
+                        <h5>Notification</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="wishlist.html">
+                        <i class="iconsax icon" data-icon="heart"></i>
+                        <h5>Wishlist</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://themes.pixelstrap.net/pwa/appkart/learning/help.html">
+                        <i class="iconsax icon" data-icon="phone-calling"></i>
+                        <h5>Help/Customer Care</h5>
+                    </a>
+                </li>
+            </ul>
+            <div class="learn-logout">
+                <a href="login.html" class="btn learning-btn"><i class="iconsax icon"
+                        data-icon="logout-2"></i>Logout</a>
+            </div>
+        </div>
+    </div>
+    <!-- side bar offcanvas section  end  -->
+
+    <!--filter offcanvas section start -->
+    <div class="offcanvas offcanvas-bottom  filter-theme-offcanvas" id="offcanvasBottom">
+        <div class="offcanvas-header hotel-theme-header">
+            <h5 class="offcanvas-title">Sort by</h5>
+        </div>
+        <div class="offcanvas-body small">
+            <div class="sort-group">
+                <label class="sort-box">
+                    <input type="radio" name="sort" value="low-to-high">
+                    <span class="icon"><i class="iconsax icon-btn" data-icon="like"></i></span>
+                    <span class="text">Popularity</span>
+                    <span class="custom-radio"></span>
+                </label>
+
+                <label class="sort-box">
+                    <input type="radio" name="sort" value="high-to-low" checked>
+                    <span class="icon">$<i class="iconsax icon" data-icon="
+                        arrow-down"></i></span>
+                    <span class="text">Price: Low to High</span>
+                    <span class="custom-radio"></span>
+                </label>
+
+                <label class="sort-box">
+                    <input type="radio" name="sort" value="high-to-low">
+                    <span class="icon">$<i class="iconsax icon" data-icon="
+                        arrow-up"></i></span>
+                    <span class="text">Price: High to Low</span>
+                    <span class="custom-radio"></span>
+                </label>
+
+                <label class="sort-box">
+                    <input type="radio" name="sort" value="user-ratings">
+                    <span class="icon"><i class="iconsax icon" data-icon="star"></i></span>
+                    <span class="text">User Ratings: Highest</span>
+                    <span class="custom-radio"></span>
+                </label>
+            </div>
+            <a href="home.html#!" class="btn learning-btn mt-3" data-bs-dismiss="offcanvas" aria-label="Close">Apply</a>
+        </div>
+    </div>
+    <!-- filter offcanvas section  end  -->
+
+    <!-- Bootstrap JS-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax JS-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- Swiper Slider JS -->
+    <script src="../assets/js/vendors/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/js/custom-swiper.js"></script>
+
+    <!-- script JS -->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

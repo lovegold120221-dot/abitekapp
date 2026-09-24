@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TL;DR Digest — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0c1220] text-sky-50">
+  <div class="max-w-3xl mx-auto px-4 py-8">
+    <a href="../index.html" class="text-xs text-sky-300/80 hover:text-white">← Abitech Apps Store</a>
+
+    <div class="text-center mt-4">
+      <div class="text-5xl">📰</div>
+      <h1 class="text-3xl font-bold mt-2">TL;DR Digest</h1>
+      <p class="text-sm text-sky-200/80 mt-1">Paste an article, report or wall of text. Get the gist, on-device.</p>
+    </div>
+
+    <div class="mt-4 flex justify-center text-[11px]">
+      <span id="modelBadge" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Loading DistilBART…</span>
+    </div>
+
+    <div class="mt-6 grid md:grid-cols-2 gap-4">
+      <div class="bg-sky-950/40 rounded-2xl p-4 border border-sky-900/60">
+        <label class="text-xs text-sky-300/80">Source text</label>
+        <textarea id="text" rows="12"
+          class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2.5 text-sm outline-none border border-sky-900/60 focus:border-sky-400 resize-y placeholder:text-sky-200/30"
+          placeholder="Paste a long article here…"></textarea>
+        <div class="flex items-center justify-between mt-2">
+          <span id="count" class="text-[11px] text-sky-200/50">0 words</span>
+          <button id="sampleBtn" class="text-[11px] text-sky-300 hover:text-white font-semibold">Load sample</button>
+        </div>
+      </div>
+
+      <div class="bg-sky-950/40 rounded-2xl p-4 border border-sky-900/60 flex flex-col">
+        <label class="text-xs text-sky-300/80">Length</label>
+        <select id="length" class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2 text-sm border border-sky-900/60 outline-none focus:border-sky-400">
+          <option value="60">Brief — a couple of sentences</option>
+          <option value="120" selected>Standard — one short paragraph</option>
+          <option value="200">Detailed — a full paragraph</option>
+        </select>
+
+        <button id="runBtn" disabled
+          class="mt-3 w-full bg-sky-600 hover:bg-sky-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold text-sm py-2.5 rounded-full transition">
+          Summarise
+        </button>
+
+        <div id="errorBox" class="hidden mt-3 text-sm bg-red-500/15 border border-red-400/40 rounded-xl p-3"></div>
+        <div id="out" class="mt-3 flex-1"></div>
+      </div>
+    </div>
+
+    <p class="mt-6 text-[11px] text-sky-200/50 text-center leading-relaxed">
+      Runs <b>Xenova/distilbart-cnn-6-6</b> via <b>transformers.js</b>. Long inputs are split into chunks,
+      summarised one by one and stitched back together — all locally.
+    </p>
+  </div>
+
+  <script type="module">
+    import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0";
+
+    const SAMPLE = `Remote work was once a perk offered by a handful of technology companies. Today it is a baseline expectation across industries, and the data is starting to show what that shift actually costs and delivers. Studies tracking thousands of employees over several years report that fully remote workers are, on average, roughly as productive as their office counterparts on individual tasks, while collaborative work suffers slightly when teams never meet in person. The largest gains show up in retention: employees who are allowed to work from home two or three days a week are markedly less likely to resign, and the effect is strongest among caregivers and older workers. Real estate savings for employers are real but smaller than early projections suggested, because many firms now maintain offices at lower density rather than closing them entirely. The clearest losers in the arrangement are junior employees, who report fewer mentoring opportunities and slower promotion timelines. Most organisations that have settled into a stable pattern have landed on a hybrid model with two or three mandatory in-office days, and the firms that struggle are usually the ones that never wrote down clear rules.`;
+
+    const modelBadge = document.getElementById('modelBadge');
+    const runBtn = document.getElementById('runBtn');
+    const errBox = document.getElementById('errorBox');
+    const out = document.getElementById('out');
+    const count = document.getElementById('count');
+    const textEl = document.getElementById('text');
+    let summarizer = null;
+
+    function esc(value) {
+      return String(value || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function showError(msg) { errBox.textContent = msg; errBox.classList.remove('hidden'); }
+    function clearError() { errBox.classList.add('hidden'); }
+    function updateCount() { count.textContent = textEl.value.split(/\s+/).filter(Boolean).length + ' words'; }
+
+    // DistilBART handles ~1024 tokens; keep chunks comfortably below that.
+    function chunk(text, maxChars = 1100) {
+      const sentences = text.replace(/\s+/g, ' ').trim().split(/(?<=[.!?])\s+/);
+      const chunks = [];
+      let current = '';
+      for (const s of sentences) {
+        if ((current + ' ' + s).length > maxChars && current) {
+          chunks.push(current.trim());
+          current = s;
+        } else {
+          current += (current ? ' ' : '') + s;
+        }
+      }
+      if (current.trim()) chunks.push(current.trim());
+      return chunks.slice(0, 6);
+    }
+
+    async function boot() {
+      try {
+        summarizer = await pipeline('summarization', 'Xenova/distilbart-cnn-6-6');
+        modelBadge.textContent = 'DistilBART ready';
+        modelBadge.className = 'px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30';
+        runBtn.disabled = false;
+      } catch (e) {
+        modelBadge.textContent = 'Model failed to load';
+        modelBadge.className = 'px-3 py-1 rounded-full bg-red-500/15 text-red-300 border border-red-500/30';
+        showError('Could not load the model: ' + (e && e.message ? e.message : e));
+      }
+    }
+
+    async function run() {
+      clearError();
+      const text = textEl.value.trim();
+      if (text.split(/\s+/).filter(Boolean).length < 30) return showError('Give me at least ~30 words to work with.');
+      if (!summarizer) return showError('The model is still loading.');
+
+      runBtn.disabled = true;
+      const original = runBtn.textContent;
+      const parts = chunk(text);
+      out.innerHTML = '';
+      const started = performance.now();
+
+      try {
+        const maxTokens = parseInt(document.getElementById('length').value, 10);
+        const summaries = [];
+        for (let i = 0; i < parts.length; i++) {
+          runBtn.textContent = `Summarising ${i + 1}/${parts.length}…`;
+          const res = await summarizer(parts[i], {
+            max_new_tokens: Math.max(40, Math.round(maxTokens / parts.length) + 20),
+            min_new_tokens: 15
+          });
+          summaries.push((res[0] && res[0].summary_text ? res[0].summary_text : '').trim());
+        }
+        const summary = summaries.join(' ');
+        const sourceWords = text.split(/\s+/).filter(Boolean).length;
+        const summaryWords = summary.split(/\s+/).filter(Boolean).length;
+        const reduction = Math.max(0, Math.round((1 - summaryWords / sourceWords) * 100));
+        const secs = ((performance.now() - started) / 1000).toFixed(1);
+
+        out.innerHTML = `
+          <div class="fade-in bg-black/40 rounded-xl p-4 border border-sky-500/30">
+            <p class="text-sm leading-relaxed text-sky-50/95">${esc(summary)}</p>
+            <p class="mt-3 text-[11px] text-sky-200/50">${sourceWords} → ${summaryWords} words · ${reduction}% shorter · ${secs}s on-device</p>
+            <button id="copyBtn" class="mt-3 text-xs font-semibold bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition">Copy summary</button>
+          </div>`;
+        const copyBtn = document.getElementById('copyBtn');
+        if (copyBtn) copyBtn.addEventListener('click', () => navigator.clipboard.writeText(summary));
+      } catch (e) {
+        showError('Summarisation failed: ' + (e && e.message ? e.message : e));
+      } finally {
+        runBtn.disabled = false;
+        runBtn.textContent = original;
+      }
+    }
+
+    textEl.addEventListener('input', updateCount);
+    document.getElementById('sampleBtn').addEventListener('click', () => { textEl.value = SAMPLE; updateCount(); });
+    runBtn.addEventListener('click', run);
+    updateCount();
+    boot();
+  </script>
+</body>
+</html>

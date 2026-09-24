@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kokoro Voice Studio — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+    <a href="../index.html" class="text-xs text-indigo-300/80 hover:text-white">← Abitech Apps Store</a>
+
+    <div class="text-center mt-4">
+      <div class="text-5xl">🎙️</div>
+      <h1 class="text-3xl font-bold mt-2">Kokoro Voice Studio</h1>
+      <p class="text-sm text-indigo-200/80 mt-1">Type anything — an 82M-parameter voice model reads it aloud, entirely on your device.</p>
+    </div>
+
+    <div class="mt-4 flex items-center justify-center gap-2 text-[11px]">
+      <span id="modelBadge" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Loading Kokoro-82M…</span>
+      <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">WebAssembly</span>
+    </div>
+
+    <div class="mt-6 bg-slate-900/70 rounded-2xl p-5 border border-slate-800">
+      <textarea id="text" rows="5"
+        class="w-full bg-slate-950 rounded-xl px-3 py-2.5 text-sm outline-none border border-slate-700 focus:border-indigo-400 resize-y"
+        placeholder="Type something for Kokoro to read…">Kokoro is an open-weight text-to-speech model with 82 million parameters. Despite its lightweight architecture, it runs completely inside your browser.</textarea>
+
+      <label class="block text-xs text-slate-400 mt-3">Voice
+        <select id="voice" class="mt-1 w-full bg-slate-950 rounded-xl px-3 py-2 text-sm border border-slate-700 outline-none focus:border-indigo-400"></select>
+      </label>
+
+      <button id="genBtn" disabled
+        class="mt-4 w-full bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold text-sm py-2.5 rounded-full transition">
+        Generate speech
+      </button>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/15 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="out" class="mt-5"></div>
+
+    <p class="mt-6 text-[11px] text-slate-500 text-center leading-relaxed">
+      Runs <b>onnx-community/Kokoro-82M-v1.0-ONNX</b> locally via <b>kokoro-js</b> + <b>transformers.js</b>.
+      The first run downloads ~90 MB of model weights, then it works offline. Nothing you type leaves your device.
+    </p>
+  </div>
+
+  <script type="module">
+    import { KokoroTTS } from "https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm";
+
+    const VOICES = [
+      ['af_heart', 'Heart · US female (grade A)'],
+      ['af_bella', 'Bella · US female (grade A-)'],
+      ['af_nicole', 'Nicole · US female (grade B-)'],
+      ['am_michael', 'Michael · US male'],
+      ['am_fenrir', 'Fenrir · US male'],
+      ['am_puck', 'Puck · US male'],
+      ['bf_emma', 'Emma · UK female'],
+      ['bm_george', 'George · UK male']
+    ];
+
+    const modelBadge = document.getElementById('modelBadge');
+    const errBox = document.getElementById('errorBox');
+    const out = document.getElementById('out');
+    const btn = document.getElementById('genBtn');
+    const voiceSel = document.getElementById('voice');
+    let tts = null;
+
+    VOICES.forEach(([id, label]) => {
+      const opt = document.createElement('option');
+      opt.value = id;
+      opt.textContent = label;
+      voiceSel.appendChild(opt);
+    });
+
+    function esc(value) {
+      return String(value || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function showError(msg) { errBox.textContent = msg; errBox.classList.remove('hidden'); }
+    function clearError() { errBox.classList.add('hidden'); }
+
+    async function boot() {
+      try {
+        tts = await KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX', {
+          dtype: 'q8',
+          device: 'wasm'
+        });
+        modelBadge.textContent = 'Kokoro-82M ready';
+        modelBadge.className = 'px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30';
+        btn.disabled = false;
+      } catch (e) {
+        modelBadge.textContent = 'Model failed to load';
+        modelBadge.className = 'px-3 py-1 rounded-full bg-red-500/15 text-red-300 border border-red-500/30';
+        showError('Could not load Kokoro-82M: ' + (e && e.message ? e.message : e));
+      }
+    }
+
+    async function generate() {
+      const text = document.getElementById('text').value.trim();
+      clearError();
+      if (!text) return showError('Type some text first.');
+      if (!tts) return showError('The voice model is still loading — give it a few seconds.');
+
+      btn.disabled = true;
+      const original = btn.textContent;
+      btn.textContent = 'Synthesising…';
+      out.innerHTML = '';
+      const started = performance.now();
+
+      try {
+        const voice = voiceSel.value;
+        const audio = await tts.generate(text, { voice });
+        const blob = audio.toBlob();
+        const url = URL.createObjectURL(blob);
+        const secs = ((performance.now() - started) / 1000).toFixed(1);
+        const words = text.split(/\s+/).filter(Boolean).length;
+
+        out.innerHTML = `
+          <div class="fade-in bg-slate-900/70 rounded-2xl p-5 border border-indigo-500/30">
+            <div class="flex items-center justify-between text-[11px] text-slate-400 mb-3">
+              <span>Voice <b class="text-indigo-300">${esc(voice)}</b></span>
+              <span>${words} words · generated in ${secs}s on-device</span>
+            </div>
+            <audio controls src="${url}" class="w-full"></audio>
+            <a href="${url}" download="kokoro-speech.wav"
+               class="mt-3 inline-flex items-center gap-2 text-xs font-semibold bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition">
+              ⬇️ Download WAV
+            </a>
+          </div>`;
+      } catch (e) {
+        showError('Synthesis failed: ' + (e && e.message ? e.message : e));
+      } finally {
+        btn.disabled = false;
+        btn.textContent = original;
+      }
+    }
+
+    btn.addEventListener('click', generate);
+    boot();
+  </script>
+</body>
+</html>

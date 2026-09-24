@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Manrope:wght@200..800&amp;display=swap.css" rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="chatting manrope-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/chatting.gif" class="img-fluid" alt="chatting">
+    </div>
+    <!-- loader End -->
+
+    <!-- chatting header start -->
+    <header class="chatting-main-header">
+        <div class="custom-container2">
+            <div class="header-panel">
+                <a href="notification.html#!" onclick="history.back()">
+                    <i class="iconsax icon-btn" data-icon="chevron-left"></i>
+                </a>
+                <h3>Notification</h3>
+            </div>
+        </div>
+    </header>
+    <!-- chatting header end -->
+
+    <!-- notification section start -->
+    <section class="chatting-section chatting-height-scroll2">
+        <div class="custom-container2">
+            <div class="chatting-tab">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="login-tab" data-bs-toggle="tab"
+                            data-bs-target="#login-tab-pane">General</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="signup-tab" data-bs-toggle="tab"
+                            data-bs-target="#signup-tab-pane">History</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade p-2 show active" id="login-tab-pane">
+                        <ul class="toggle-notification-list">
+                            <li>
+                                <div>
+                                    <h4>Conversation tones</h4>
+                                    <h5>play sounds for incoming and outgoing message</h5>
+                                </div>
+                                <div>
+                                    <label class="toggle-button">
+                                        <input type="checkbox">
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <h4>Reminders</h4>
+                                    <h5>Get sporadic reminders regarding missed status updates or message calls.</h5>
+                                </div>
+                                <div>
+                                    <label class="toggle-button">
+                                        <input type="checkbox">
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <h4>Notification tone</h4>
+                                </div>
+                                <div>
+                                    <label class="toggle-button">
+                                        <input type="checkbox">
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <h4>High-Priority Notifications</h4>
+                                    <h5>Display notification previews at the top of the screen.</h5>
+                                </div>
+                                <div>
+                                    <label class="toggle-button">
+                                        <input type="checkbox">
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <h4>Notification of reaction</h4>
+                                    <h5>Display notifications for responses to your messages</h5>
+                                </div>
+                                <div>
+                                    <label class="toggle-button">
+                                        <input type="checkbox">
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                        <button class="offcanvas-button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasBottom">Reset
+                            notification settings
+                        </button>
+                    </div>
+                    <div class="tab-pane fade" id="signup-tab-pane">
+                        <div class="history-list">
+                            <h3>Today</h3>
+                            <ul class="toggle-notification-list">
+                                <li class="unread">
+                                    <div>
+                                        <i class="iconsax bell-icon" data-icon="music"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <div>
+                                            <h4>Tone Alerts</h4>
+                                            <h5>Play notification tones for outgoing and incoming messages.</h5>
+                                        </div>
+                                        <div>
+                                            <h6>10 min ago</h6>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <i class="iconsax bell-icon" data-icon="refresh-circle"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <div>
+                                            <h4>mention</h4>
+                                            <h5>You were mentioned by Sarah in #TeamChat.</h5>
+                                        </div>
+
+                                        <div>
+                                            <h6>2h ago</h6>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <h3>Yesterday</h3>
+                            <ul class="toggle-notification-list">
+                                <li>
+                                    <div>
+                                        <i class="iconsax bell-icon" data-icon="tick-circle"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <div>
+                                            <h4>You booking </h4>
+                                            <h5>at The Grand willow is confirmed April 10 - April 12</h5>
+                                        </div>
+                                        <div>
+                                            <h6>1 day ago</h6>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <h3>Monday , May 20 ,2025</h3>
+                            <ul class="toggle-notification-list">
+                                <li>
+                                    <div>
+                                        <i class="iconsax bell-icon" data-icon="user-1-square"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <div>
+                                            <h4>Alex Parker</h4>
+                                            <h5>Looking forward to our meeting tomorrow!</h5>
+                                        </div>
+                                        <div>
+                                            <h6>2 day ago</h6>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="unread">
+                                    <div>
+                                        <i class="iconsax bell-icon" data-icon="percentage-circle"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <div>
+                                            <h4>20% off your next booking ot</h4>
+                                            <h5>participating hotels!</h5>
+                                        </div>
+                                        <div>
+                                            <h6>4 day ago</h6>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="unread">
+                                    <div>
+                                        <i class="iconsax bell-icon" data-icon="users"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <div>
+                                            <h4>You've got a new message from Daniel</h4>
+                                            <h5>Morgan .Check it out !</h5>
+                                        </div>
+                                        <div>
+                                            <h6>10 day ago</h6>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- notification section end -->
+
+    <!-- offcanvas section start -->
+    <div class="offcanvas offcanvas-bottom theme-offcanvas chatting-share" tabindex="-1" id="offcanvasBottom">
+        <div class="offcanvas-body small">
+            <div class="reset-contant">
+                <h3>Reset notification...!</h3>
+                <p>"All of your notification settings have been reset, including any custom settings you've applied to
+                    individual chats. This means you'll need to reconfigure your preferences, such as sound alerts,
+                    vibration patterns, or chat-specific notification tones, to suit your needs once again."</p>
+                <div class="button-reset">
+                    <button class="btn chatting-btn mt-0" data-bs-dismiss="offcanvas">Cancel</button>
+                    <button class="btn chatting-btn mt-0" data-bs-dismiss="offcanvas">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- offcanvas section start -->
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- script js-->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="wapple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="../../../../fonts.googleapis.com/css2%3Ffamily=Lato:ital,wght@0,100%3B0,300%3B0,400%3B0,700%3B0,900%3B1,100%3B1,300%3B1,400%3B1,700%3B1,900&amp;display=swap.css">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Iconly css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconly.css">
+
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="salon lato-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/Salon.gif" class="img-fluid" alt="salon">
+    </div>
+    <!-- loader End -->
+
+    <!-- header section start -->
+    <header class="salon-main-header shop">
+        <div class="custom-container">
+            <div class="flex-space">
+                <button class="left-arrow-btn" onclick="history.back()">
+                    <i class="iconsax icon" data-icon="arrow-left"></i>
+                </button>
+                <div class="flex-common gap-1">
+                    <a href="shop.html#!" class="shop-button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasShare">
+                        <img src="../assets/images/svg/share.svg" class="img-fluid" alt="share">
+                    </a>
+                    <a href="wishlist.html" class="shop-button">
+                        <i class="iconsax icon" data-icon="heart"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header section  end  -->
+
+    <!-- shop  section start -->
+    <section class=" p-0 salon-shop-banner-section">
+        <img src="../assets/images/salon/salon/5.jpg" class="img-fluid" alt="shop">
+    </section>
+    <!-- shop  section end  -->
+
+    <!-- shop details start -->
+    <section class="p-0 salon-shop-details-section">
+        <div class="custom-container2">
+            <div class="salon-shop-title">
+                <h3>Plush Beauty Lounge</h3>
+                <p>360 Stillwater Rd. Palm City, FL 34990</p>
+                <ul class="status-item">
+                    <li><i class="iconsax icon" data-icon="clock"></i>[Open Today]</li>
+                    <li><img src="../assets/images/salon/svg/Icon.svg" class="img-fluid" alt="icon">
+                        <h5>-58%</h5>
+                        <p>(6 pax available)</p>
+                    </li>
+                    <li><img src="../assets/images/svg/Rating-Star.svg" class="img-fluid"
+                            alt="icon"><span>4.7</span>(2.7k)</li>
+                    <li><i class="iconsax icon" data-icon="eye"></i>10k views</li>
+                </ul>
+            </div>
+            <ul class="sharing-option">
+                <li>
+                    <a href="home.html"><img src="../assets/images/salon/svg/1.svg" class="img-fluid" alt="svg"></a>
+                    Website
+                </li>
+                <li>
+                    <a href="chat.html"><img src="../assets/images/salon/svg/2.svg" class="img-fluid" alt="svg"></a>
+                    Message
+                </li>
+                <li>
+                    <a href="call.html"><img src="../assets/images/salon/svg/3.svg" class="img-fluid" alt="svg"></a>
+                    Call
+                </li>
+                <li>
+                    <a href="booking.html"><img src="../assets/images/salon/svg/4.svg" class="img-fluid" alt="svg"></a>
+                    Direction
+                </li>
+                <li data-bs-toggle="offcanvas" data-bs-target="#offcanvasShare">
+                    <a href="shop.html#!"><img src="../assets/images/salon/svg/5.svg" class="img-fluid" alt="svg"></a>
+                    Share
+                </li>
+            </ul>
+            <div class="opening-content">
+                <h4>Opening Hours</h4>
+                <ul class="shop-open-time-content">
+                    <li>
+                        Monday - Friday
+                        <h5>08:00am - 03:00pm</h5>
+                    </li>
+                    <li>
+                        Saturday - Sunday
+                        <h5>09:00am - 02:00pm</h5>
+                    </li>
+                </ul>
+            </div>
+            <div class="salon-course-tab">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="item-tab" data-bs-toggle="tab"
+                            data-bs-target="#item-tab-pane" type="button" role="tab" aria-controls="item-tab-pane"
+                            aria-selected="true">Services</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="item1-tab" data-bs-toggle="tab" data-bs-target="#item1-tab-pane"
+                            type="button" role="tab" aria-controls="item1-tab-pane"
+                            aria-selected="false">Specialist</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="item2-tab" data-bs-toggle="tab" data-bs-target="#item2-tab-pane"
+                            type="button" role="tab" aria-controls="item2-tab-pane"
+                            aria-selected="false">Package</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="item3-tab" data-bs-toggle="tab" data-bs-target="#item3-tab-pane"
+                            type="button" role="tab" aria-controls="item3-tab-pane"
+                            aria-selected="false">Gallery</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="item4-tab" data-bs-toggle="tab" data-bs-target="#item4-tab-pane"
+                            type="button" role="tab" aria-controls="item4-tab-pane"
+                            aria-selected="false">Review</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="item-tab-pane" role="tabpanel" aria-labelledby="item-tab"
+                        tabindex="0">
+                        <ul class="hair-services-list">
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/1.jpg" class="img-fluid" alt="image">
+                                    <span>Haircut</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/2.jpg" class="img-fluid" alt="image">
+                                    <span>Facials</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/3.jpg" class="img-fluid" alt="image">
+                                    <span>Waxing</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/4.jpg" class="img-fluid" alt="image">
+                                    <span>Hair Spa</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/5.jpg" class="img-fluid" alt="image">
+                                    <span>Nail Art</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="item1-tab-pane" role="tabpanel" aria-labelledby="item1-tab"
+                        tabindex="0">
+                        <ul class="hair-services-list">
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/1.jpg" class="img-fluid" alt="image">
+                                    <span>Haircut</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/4.jpg" class="img-fluid" alt="image">
+                                    <span>Hair Spa</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/5.jpg" class="img-fluid" alt="image">
+                                    <span>Nail Art</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="item2-tab-pane" role="tabpanel" aria-labelledby="item2-tab"
+                        tabindex="0">
+                        <ul class="hair-services-list">
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/1.jpg" class="img-fluid" alt="image">
+                                    <span>Haircut</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/2.jpg" class="img-fluid" alt="image">
+                                    <span>Facials</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/3.jpg" class="img-fluid" alt="image">
+                                    <span>Waxing</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/4.jpg" class="img-fluid" alt="image">
+                                    <span>Hair Spa</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="item3-tab-pane" role="tabpanel" aria-labelledby="item3-tab"
+                        tabindex="0">
+                        <ul class="hair-services-list">
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/3.jpg" class="img-fluid" alt="image">
+                                    <span>Waxing</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/4.jpg" class="img-fluid" alt="image">
+                                    <span>Hair Spa</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/5.jpg" class="img-fluid" alt="image">
+                                    <span>Nail Art</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="item4-tab-pane" role="tabpanel" aria-labelledby="item4-tab"
+                        tabindex="0">
+                        <ul class="hair-services-list">
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/3.jpg" class="img-fluid" alt="image">
+                                    <span>Waxing</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/4.jpg" class="img-fluid" alt="image">
+                                    <span>Hair Spa</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="shop.html#!">
+                                    <img src="../assets/images/salon/services/5.jpg" class="img-fluid" alt="image">
+                                    <span>Nail Art</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <ul class="salon-rate-list mt-4">
+                <li>
+                    <a href="shop.html">
+                        <img src="../assets/images/salon/hair/4.jpg" class="img-fluid" alt="haircut">
+                    </a>
+                    <div class="salon-list-content">
+                        <div class="main-title">
+                            <div>
+                                <a href="shop.html">Signature Salon</a>
+                                <p>2715 Ash Dr. South 83475...</p>
+                            </div>
+                            <button class="wishlist-btn btn">
+                                <i class="iconly-Heart icli"></i>
+                                <i class="iconly-Heart icbo"></i>
+                            </button>
+                        </div>
+                        <div class="booking-content">
+                            <div class="flex-common gap-2">
+                                <h5><img src="../assets/images/salon/svg/location.svg" class="img-fluid" alt="map">6.1
+                                    km
+                                </h5>
+                                <h6><img src="../assets/images/svg/Rating-Star.svg" class="img-fluid" alt="star">4.3
+                                </h6>
+                            </div>
+                            <a href="booking.html" class="book">Book</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="shop.html">
+                        <img src="../assets/images/salon/hair/5.jpg" class="img-fluid" alt="haircut">
+                    </a>
+                    <div class="salon-list-content">
+                        <div class="main-title">
+                            <div>
+                                <a href="shop.html">Glamour Grove</a>
+                                <p>2715 Ash Dr. South 83475...</p>
+                            </div>
+                            <button class="wishlist-btn btn animate active inactive">
+                                <i class="iconly-Heart icli"></i>
+                                <i class="iconly-Heart icbo"></i>
+                            </button>
+                        </div>
+                        <div class="booking-content">
+                            <div class="flex-common gap-2">
+                                <h5><img src="../assets/images/salon/svg/location.svg" class="img-fluid" alt="map">5.3
+                                    km
+                                </h5>
+                                <h6><img src="../assets/images/svg/Rating-Star.svg" class="img-fluid" alt="star">4.2
+                                </h6>
+                            </div>
+                            <a href="booking.html" class="book">Book</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="shop.html">
+                        <img src="../assets/images/salon/hair/6.jpg" class="img-fluid" alt="haircut">
+                    </a>
+                    <div class="salon-list-content">
+                        <div class="main-title">
+                            <div>
+                                <a href="shop.html">Velvet Touch Studio</a>
+                                <p>2715 Ash Dr. South 83475...</p>
+                            </div>
+                            <button class="wishlist-btn btn">
+                                <i class="iconly-Heart icli"></i>
+                                <i class="iconly-Heart icbo"></i>
+                            </button>
+                        </div>
+                        <div class="booking-content">
+                            <div class="flex-common gap-2">
+                                <h5><img src="../assets/images/salon/svg/location.svg" class="img-fluid" alt="map">2.1
+                                    km
+                                </h5>
+                                <h6><img src="../assets/images/svg/Rating-Star.svg" class="img-fluid" alt="star">4.9
+                                </h6>
+                            </div>
+                            <a href="booking.html" class="book">Book</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- shop details  end  -->
+
+    <div class="panel-space-sm"></div>
+
+
+    <!-- bottom menu start -->
+    <div class="booking-summary">
+        <div>
+            <h4>Total Price (1 Service)</h4>
+            <h5>$209.00</h5>
+        </div>
+        <div>
+            <a href="booking.html" class="btn salon-btn">Book Now</a>
+        </div>
+    </div>
+    <!-- bottom menu  end  -->
+
+    <!-- share icon offcanvas section start -->
+    <div class="offcanvas offcanvas-bottom  blog-theme-offcanvas" tabindex="-1" id="offcanvasShare">
+        <div class="offcanvas-header blog-theme-header">
+            <h5 class="offcanvas-title" id="offcanvasBottomLabel">Social Share Link</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body small px-0">
+            <div class="blog-link-section">
+                <h5>Share this link via</h5>
+                <div class="tab-content">
+                    <div class="tab-pane active show" id="facebook-tab-pane" role="tabpanel"
+                        aria-labelledby="facebook-tab">
+                        <div class="share-link-content">
+                            <div class="form-group">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control link" value="https://www.facebook.com/">
+                                </div>
+                                <div class="link-icon" onclick="copyLink(this)">
+                                    Copy
+                                    <i class="iconsax icon" data-icon="link-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="whatsapp-tab-pane" role="tabpanel" aria-labelledby="whatsapp-tab">
+                        <div class="share-link-content">
+                            <div class="form-group">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control link" value="https://www.whatsapp.com/">
+                                </div>
+                                <div class="link-icon" onclick="copyLink(this)">
+                                    Copy
+                                    <i class="iconsax icon" data-icon="link-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="snap-tab-pane" role="tabpanel" aria-labelledby="snap-tab">
+                        <div class="share-link-content">
+                            <div class="form-group">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control link" value="https://www.snapchat.com/">
+                                </div>
+                                <div class="link-icon" onclick="copyLink(this)">
+                                    Copy
+                                    <i class="iconsax icon" data-icon="link-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="google-tab-pane" role="tabpanel" aria-labelledby="google-tab">
+                        <div class="share-link-content">
+                            <div class="form-group">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control link" value="https://www.google.com/">
+                                </div>
+                                <div class="link-icon" onclick="copyLink(this)">
+                                    Copy
+                                    <i class="iconsax icon" data-icon="link-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="instagram-tab-pane" role="tabpanel" aria-labelledby="instagram-tab">
+                        <div class="share-link-content">
+                            <div class="form-group">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control link" value="https://www.instagram.com/">
+                                </div>
+                                <div class="link-icon" onclick="copyLink(this)">
+                                    Copy
+                                    <i class="iconsax icon" data-icon="link-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="youtube-tab-pane" role="tabpanel" aria-labelledby="youtube-tab">
+                        <div class="share-link-content">
+                            <div class="form-group">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control link" value="https://www.youtube.com/">
+                                </div>
+                                <div class="link-icon" onclick="copyLink(this)">
+                                    Copy
+                                    <i class="iconsax icon" data-icon="link-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="facebook-tab" data-bs-toggle="tab"
+                            data-bs-target="#facebook-tab-pane" type="button" role="tab"
+                            aria-controls="facebook-tab-pane" aria-selected="true">
+                            <img src="../assets/images/social/4.svg" class="img" alt="social-image">
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="whatsapp-tab" data-bs-toggle="tab"
+                            data-bs-target="#whatsapp-tab-pane" type="button" role="tab"
+                            aria-controls="whatsapp-tab-pane" aria-selected="false">
+                            <img src="../assets/images/social/10.svg" class="img" alt="social-image">
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="snap-tab" data-bs-toggle="tab" data-bs-target="#snap-tab-pane"
+                            type="button" role="tab" aria-controls="snap-tab-pane" aria-selected="false">
+                            <img src="../assets/images/social/2.svg" class="img" alt="social-image"></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="google-tab" data-bs-toggle="tab" data-bs-target="#google-tab-pane"
+                            type="button" role="tab" aria-controls="google-tab-pane" aria-selected="false">
+                            <img src="../assets/images/social/9.svg" class="img" alt="social-image"></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="instagram-tab" data-bs-toggle="tab"
+                            data-bs-target="#instagram-tab-pane" type="button" role="tab"
+                            aria-controls="instagram-tab-pane" aria-selected="false">
+                            <img src="../assets/images/social/1.svg" class="img" alt="social-image"></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="youtube-tab" data-bs-toggle="tab"
+                            data-bs-target="#youtube-tab-pane" type="button" role="tab" aria-controls="youtube-tab-pane"
+                            aria-selected="false"> <img src="../assets/images/social/3.svg" class="img"
+                                alt="social-image"></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- share icon offcanvas section end -->
+
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- script js-->
+
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

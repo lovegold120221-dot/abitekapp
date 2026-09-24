@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="../../../../fonts.googleapis.com/css2%3Ffamily=Lato:ital,wght@0,100%3B0,300%3B0,400%3B0,700%3B0,900%3B1,100%3B1,300%3B1,400%3B1,700%3B1,900&amp;display=swap.css">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Iconly css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconly.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="ecommerce lato-font position-relative">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/fashion.gif" class="img-fluid" alt="ecommerce">
+    </div>
+    <!-- loader End -->
+
+    <!-- header starts -->
+    <header class="header ecommerce-main-header">
+        <div class="custom-container2">
+            <div class="header-panel">
+                <div class="header-top-content">
+                    <a href="delivery-address.html#" onclick="history.back()">
+                        <i class="iconsax icon-btn" data-icon="chevron-left"> </i>
+                    </a>
+                    <h3>Delivery Address</h3>
+                </div>
+                <div>
+                    <a href="delivery-address.html#sidebar" data-bs-toggle="offcanvas">
+                        <i class="iconsax icon-btn" data-icon="text-align-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+    <section class="pt-0">
+        <div class="custom-container">
+            <ul class="address-listing">
+                <li>
+                    <div class="address-box">
+                        <div class="address-head">
+                            <div class="flex-common gap-2">
+                                <div class="address-icon">
+                                    <i class="iconsax icon" data-icon="home-1"></i>
+                                </div>
+                                <h5>Home</h5>
+                            </div>
+                            <a href="delivery-address.html#">
+                                <i class="iconsax edit-icon" data-icon="edit-1"></i>
+                            </a>
+                        </div>
+
+                        <div class="address-content">
+                            <h4>John Doe</h4>
+                            <h5>3501 Maloy Court, East Elmhurst,
+                                New York City, NY 11369
+                            </h5>
+                            <span>Phone No: 903-239-1284</span>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="address-box">
+                        <div class="address-head">
+                            <div class="flex-common gap-2">
+                                <div class="address-icon">
+                                    <i class="iconsax icon" data-icon="building-1"></i>
+                                </div>
+                                <h5>Office</h5>
+                            </div>
+                            <a href="delivery-address.html#">
+                                <i class="iconsax edit-icon" data-icon="edit-1"></i>
+                            </a>
+                        </div>
+
+                        <div class="address-content">
+                            <h4>Cameron Williamson</h4>
+                            <h5>301 Maloy st., Normative Rd,
+                                New York City, NY 11767
+                            </h5>
+                            <span>Phone No: 983-365-4539</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- fixed-panel start -->
+    <div class="fixed-panel">
+        <div class="custom-container">
+            <div class="fixed-panel-content">
+                <h5>$270 <a href="delivery-address.html#!" class="link-offset-1">View Details</a></h5>
+                <a href="payment-method.html" class="btn fixed-btn">Proceed payment</a>
+            </div>
+        </div>
+    </div>
+    <!-- fixed-panel end -->
+
+    <!-- panel-space start -->
+    <div class="panel-space"></div>
+    <!-- panel-space end -->
+
+    <!-- sidebar starts -->
+    <div class="offcanvas sidebar-offcanvas offcanvas-end" tabindex="-1" id="sidebar">
+        <div class="offcanvas-body">
+            <div class="custom-container">
+                <div class="profile-background">
+                    <div class="profile-part">
+                        <div class="profile-image">
+                            <img id="output" class="img-fluid profile-pic" src="../assets/images/profile/p3.png"
+                                alt="3">
+                        </div>
+                        <h3>Smith Williams</h3>
+                        <h4>smithwilliams452@gmail.com</h4>
+                    </div>
+                </div>
+                <ul class="profile-list">
+                    <li>
+                        <a href="order.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="document-text-1"> </i>
+                            </div>
+                            <div class="setting-content">
+                                <h5>Orders</h5>
+                                <h6>Ongoing orders, Recent orders..</h6>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="wishlist.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="heart"> </i>
+
+                            </div>
+                            <div class="setting-content">
+                                <h5> Your Wishlist</h5>
+                                <h6>Your save products</h6>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://themes.pixelstrap.net/pwa/appkart/ecommerce/payment.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="bank-card-diagonal"></i>
+
+                            </div>
+                            <div class="setting-content">
+                                <h5>Payment</h5>
+                                <h6>Saved cards, Wallets</h6>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="language.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="globe"> </i>
+                            </div>
+                            <div class="setting-content">
+                                <h5>Language</h5>
+                                <h6>Select your language here..</h6>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="notification.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="bell-2"> </i>
+                            </div>
+                            <div class="setting-content">
+                                <h5>Notification</h5>
+                                <h6>Offers, Order tracking messages..</h6>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="app-setting.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="setting-1"> </i>
+                            </div>
+                            <div class="setting-content">
+                                <h5>Settings</h5>
+                                <h6>App settings, Help center</h6>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <div class="bottom-sidebar">
+                    <a href="login.html" class="btn ecommerce-btn w-100"> <i class="iconsax sidebar-icon"
+                            data-icon="logout-2"> </i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- sidebar end -->
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- quantity js -->
+    <script src="../assets/js/quantity.js"></script>
+
+    <!-- template Settings js-->
+    <script src="../assets/js/template-setting.js"></script>
+
+    <!-- script js-->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

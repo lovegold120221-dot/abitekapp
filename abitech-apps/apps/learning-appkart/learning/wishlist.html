@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Outfit:wght@100..900&amp;display=swap.css" rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="learning outfit-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/learning.gif" class="img-fluid" alt="learning">
+    </div>
+    <!-- loader End -->
+
+    <!-- header  start -->
+    <header class="learning-main-header">
+        <div class="custom-container2">
+            <div class="header-panel">
+                <a href="wishlist.html#" onclick="history.back()">
+                    <i class="iconsax icon-btn" data-icon="arrow-left"></i>
+                </a>
+                <h3>My Wishlist</h3>
+            </div>
+        </div>
+    </header>
+    <!-- header  end  -->
+
+
+    <!-- learning mobile menu section start -->
+    <div class="learning-mobile-menu">
+        <ul>
+            <li>
+                <a href="home.html" class="icon">
+                    <img src="../assets/images/learning/icon/1.svg" class="img-fluid inactive" alt="icon">
+                    <img src="../assets/images/learning/icon/h1.svg" class="img-fluid active" alt="icon">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="search.html" class="icon">
+                    <img src="../assets/images/learning/icon/2.svg" class="img-fluid inactive" alt="icon">
+                    <img src="../assets/images/learning/icon/s1.svg" class="img-fluid active" alt="icon">
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="coures.html" class="icon">
+                    <div class="icon">
+                        <img src="../assets/images/learning/icon/3.svg" class="img-fluid inactive" alt="icon">
+                        <img src="../assets/images/learning/icon/v1.svg" class="img-fluid active" alt="icon">
+                    </div>
+                    <span>My Courses</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="wishlist.html" class="icon">
+                    <div class="icon">
+                        <img src="../assets/images/learning/icon/4.svg" class="img-fluid inactive" alt="icon">
+                        <div class="bottom-icon">
+                            <img src="../assets/images/learning/icon/d1.svg" class="img-fluid active" alt="icon">
+                        </div>
+                    </div>
+                    <span>Wishlist</span>
+                </a>
+            </li>
+            <li>
+                <a href="profile.html" class="icon">
+                    <div class="icon">
+                        <img src="../assets/images/learning/icon/5.svg" class="img-fluid inactive" alt="icon">
+                        <img src="../assets/images/learning/icon/p1.svg" class="img-fluid active" alt="icon">
+                    </div>
+                    <span>Profile</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- learning mobile menu section  end  -->
+
+    <!-- search section start -->
+    <section class="section-lg-t-space search-section">
+        <div class="custom-container2">
+            <form class="learning-auth-form mt-0">
+                <div class="form-group">
+                    <input type="search" class="form-control search" id="inputusername" placeholder="Search">
+                    <i class="iconsax search-icon" data-icon="search-normal-2"> </i>
+                    <a href="detail.html" class="filter-btn" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasBottom">
+                        <i class="iconsax" data-icon="setting-3"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- search section  end  -->
+
+    <!-- wishlist tab section start -->
+    <section class="section-t-space-1 learn-wishlist-tab-section">
+        <div class="custom-container2">
+            <div class="learn-wishlist-tab-wrapper">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="design-tab" data-bs-toggle="tab"
+                            data-bs-target="#design-tab-pane" type="button" role="tab" aria-controls="design-tab-pane"
+                            aria-selected="true">Design</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="coding-tab" data-bs-toggle="tab" data-bs-target="#coding-tab-pane"
+                            type="button" role="tab" aria-controls="coding-tab-pane"
+                            aria-selected="false">Coding</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="market-tab" data-bs-toggle="tab" data-bs-target="#market-tab-pane"
+                            type="button" role="tab" aria-controls="market-tab-pane"
+                            aria-selected="false">Marketing</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="fitness-tab" data-bs-toggle="tab"
+                            data-bs-target="#fitness-tab-pane" type="button" role="tab" aria-controls="fitness-tab-pane"
+                            aria-selected="false">Health & Fitness</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="design-tab-pane" role="tabpanel"
+                        aria-labelledby="design-tab" tabindex="0">
+                        <ul class="learning-wrapper wishlist-tab">
+                            <li>
+                                <a href="detail.html">
+                                    <img src="../assets/images/learning/courses/12.jpg" class="img-fluid" alt="png">
+                                </a>
+                                <div class="close-icon">
+                                    <i class="iconsax close-icon" data-icon="add"></i>
+                                </div>
+                                <div class="learning-list-content">
+                                    <div class="coaching-list">
+                                        <h3>
+                                            <i class="iconsax icon" data-icon="user-1"></i>
+                                            Esther Howard
+                                        </h3>
+                                        <h4>Design</h4>
+                                    </div>
+                                    <a href="detail.html">Introduction of Figma...</a>
+                                    <div class="learning-price">
+                                        <span>$45.00<del>$50.00</del></span>
+                                        <h4><img src="../assets/images/svg/star-fill.svg" class="img-fluid"
+                                                alt="star">3.2</h4>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="detail.html">
+                                    <img src="../assets/images/learning/courses/4.jpg" class="img-fluid" alt="png">
+                                </a>
+                                <div class="close-icon">
+                                    <i class="iconsax close-icon" data-icon="add"></i>
+                                </div>
+                                <div class="learning-list-content">
+                                    <div class="coaching-list">
+                                        <h3>
+                                            <i class="iconsax icon" data-icon="user-1"></i>
+                                            Brooklyn Simmons
+                                        </h3>
+                                        <h4>Design</h4>
+                                    </div>
+                                    <a href="detail.html">From Concept to Launch</a>
+                                    <div class="learning-price">
+                                        <span>$60.00<del>$66.00</del></span>
+                                        <h4><img src="../assets/images/svg/star-fill.svg" class="img-fluid"
+                                                alt="star">2.5</h4>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="detail.html">
+                                    <img src="../assets/images/learning/courses/11.jpg" class="img-fluid" alt="png">
+                                </a>
+                                <div class="close-icon">
+                                    <i class="iconsax close-icon" data-icon="add"></i>
+                                </div>
+                                <div class="learning-list-content">
+                                    <div class="coaching-list">
+                                        <h3>
+                                            <i class="iconsax icon" data-icon="user-1"></i>
+                                            Bessie Cooper
+                                        </h3>
+                                        <h4>Design</h4>
+                                    </div>
+                                    <a href="detail.html">React - The Complete Guide...</a>
+                                    <div class="learning-price">
+                                        <span>$26.00<del>$30.00</del></span>
+                                        <h4><img src="../assets/images/svg/star-fill.svg" class="img-fluid"
+                                                alt="star">4.5</h4>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="coding-tab-pane" role="tabpanel" aria-labelledby="coding-tab"
+                        tabindex="0">
+                        <ul class="learning-wrapper wishlist-tab">
+                            <li>
+                                <a href="detail.html">
+                                    <img src="../assets/images/learning/courses/11.jpg" class="img-fluid" alt="png">
+                                </a>
+                                <div class="close-icon">
+                                    <i class="iconsax close-icon" data-icon="add"></i>
+                                </div>
+                                <div class="learning-list-content">
+                                    <div class="coaching-list">
+                                        <h3>
+                                            <i class="iconsax icon" data-icon="user-1"></i>
+                                            Bessie Cooper
+                                        </h3>
+                                        <h4>Coding</h4>
+                                    </div>
+                                    <a href="detail.html">React - The Complete Guide...</a>
+                                    <div class="learning-price">
+                                        <span>$26.00<del>$30.00</del></span>
+                                        <h4><img src="../assets/images/svg/star-fill.svg" class="img-fluid"
+                                                alt="star">4.5</h4>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="detail.html">
+                                    <img src="../assets/images/learning/courses/12.jpg" class="img-fluid" alt="png">
+                                </a>
+                                <div class="close-icon">
+                                    <i class="iconsax close-icon" data-icon="add"></i>
+                                </div>
+                                <div class="learning-list-content">
+                                    <div class="coaching-list">
+                                        <h3>
+                                            <i class="iconsax icon" data-icon="user-1"></i>
+                                            Esther Howard
+                                        </h3>
+                                        <h4>Coding</h4>
+                                    </div>
+                                    <a href="detail.html">Introduction of Figma...</a>
+                                    <div class="learning-price">
+                                        <span>$45.00<del>$50.00</del></span>
+                                        <h4><img src="../assets/images/svg/star-fill.svg" class="img-fluid"
+                                                alt="star">3.2</h4>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="detail.html">
+                                    <img src="../assets/images/learning/courses/4.jpg" class="img-fluid" alt="png">
+                                </a>
+                                <div class="close-icon">
+                                    <i class="iconsax close-icon" data-icon="add"></i>
+                                </div>
+                                <div class="learning-list-content">
+                                    <div class="coaching-list">
+                                        <h3>
+                                            <i class="iconsax icon" data-icon="user-1"></i>
+                                            Brooklyn Simmons
+                                        </h3>
+                                        <h4>Coding</h4>
+                                    </div>
+                                    <a href="detail.html">From Concept to Launch</a>
+                                    <div class="learning-price">
+                                        <span>$60.00<del>$66.00</del></span>
+                                        <h4><img src="../assets/images/svg/star-fill.svg" class="img-fluid"
+                                                alt="star">2.5</h4>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="detail.html">
+                                    <img src="../assets/images/learning/courses/10.jpg" class="img-fluid" alt="png">
+                                </a>
+                                <div class="close-icon">
+                                    <i class="iconsax close-icon" data-icon="add"></i>
+                                </div>
+                                <div class="learning-list-content">
+                                    <div class="coaching-list">
+                                        <h3>
+                                            <i class="iconsax icon" data-icon="user-1"></i>
+                                            Bessie Cooper
+                                        </h3>
+                                        <h4>Coding</h4>
+                                    </div>
+                                    <a href="detail.html">React - The Complete Guide...</a>
+                                    <div class="learning-price">
+                                        <span>$45.00<del>$55.00</del></span>
+                                        <h4><img src="../assets/images/svg/star-fill.svg" class="img-fluid"
+                                                alt="star">3.5</h4>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="market-tab-pane" role="tabpanel" aria-labelledby="market-tab"
+                        tabindex="0">
+                        <ul class="learning-wrapper wishlist-tab">
+                            <li>
+                                <a href="detail.html">
+                                    <img src="../assets/images/learning/courses/9.jpg" class="img-fluid" alt="png">
+                                </a>
+                                <div class="close-icon">
+                                    <i class="iconsax close-icon" data-icon="add"></i>
+                                </div>
+                                <div class="learning-list-content">
+                                    <div class="coaching-list">
+                                        <h3>
+                                            <i class="iconsax icon" data-icon="user-1"></i>
+                                            Kristin Watson
+                                        </h3>
+                                        <h4>Marketing</h4>
+                                    </div>
+                                    <a href="detail.html">Social Media Promotion</a>
+                                    <div class="learning-price">
+                                        <span>$26.00<del>$30.00</del></span>
+                                        <h4><img src="../assets/images/svg/star-fill.svg" class="img-fluid"
+                                                alt="star">4.0</h4>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="detail.html">
+                                    <img src="../assets/images/learning/courses/6.jpg" class="img-fluid" alt="png">
+                                </a>
+                                <div class="close-icon">
+                                    <i class="iconsax close-icon" data-icon="add"></i>
+                                </div>
+                                <div class="learning-list-content">
+                                    <div class="coaching-list">
+                                        <h3>
+                                            <i class="iconsax icon" data-icon="user-1"></i>
+                                            Ronald Richards
+                                        </h3>
+                                        <h4>Marketing</h4>
+                                    </div>
+                                    <a href="detail.html">Social reach made easy.</a>
+                                    <div class="learning-price">
+                                        <span>$30.00<del>$50.00</del></span>
+                                        <h4><img src="../assets/images/svg/star-fill.svg" class="img-fluid"
+                                                alt="star">3.2</h4>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="fitness-tab-pane" role="tabpanel" aria-labelledby="fitness-tab"
+                        tabindex="0">
+                        <ul class="learning-wrapper wishlist-tab">
+                            <li>
+                                <a href="detail.html">
+                                    <img src="../assets/images/learning/courses/8.jpg" class="img-fluid" alt="png">
+                                </a>
+                                <div class="close-icon">
+                                    <i class="iconsax close-icon" data-icon="add"></i>
+                                </div>
+                                <div class="learning-list-content">
+                                    <div class="coaching-list">
+                                        <h3>
+                                            <i class="iconsax icon" data-icon="user-1"></i>
+                                            Kristin Watson
+                                        </h3>
+                                        <h4>Fitness</h4>
+                                    </div>
+                                    <a href="detail.html">Your Health, Your Power</a>
+                                    <div class="learning-price">
+                                        <span>$55.00<del>$60.00</del></span>
+                                        <h4><img src="../assets/images/svg/star-fill.svg" class="img-fluid"
+                                                alt="star">4.9</h4>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="detail.html">
+                                    <img src="../assets/images/learning/courses/9.jpg" class="img-fluid" alt="png">
+                                </a>
+                                <div class="close-icon">
+                                    <i class="iconsax close-icon" data-icon="add"></i>
+                                </div>
+                                <div class="learning-list-content">
+                                    <div class="coaching-list">
+                                        <h3>
+                                            <i class="iconsax icon" data-icon="user-1"></i>
+                                            Ronald Richards
+                                        </h3>
+                                        <h4>Fitness</h4>
+                                    </div>
+                                    <a href="detail.html">Fitness, made simple.</a>
+                                    <div class="learning-price">
+                                        <span>$60.00<del>$90.00</del></span>
+                                        <h4><img src="../assets/images/svg/star-fill.svg" class="img-fluid"
+                                                alt="star">4.5</h4>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="detail.html">
+                                    <img src="../assets/images/learning/courses/11.jpg" class="img-fluid" alt="png">
+                                </a>
+                                <div class="close-icon">
+                                    <i class="iconsax close-icon" data-icon="add"></i>
+                                </div>
+                                <div class="learning-list-content">
+                                    <div class="coaching-list">
+                                        <h3>
+                                            <i class="iconsax icon" data-icon="user-1"></i>
+                                            Brooklyn Simmons
+                                        </h3>
+                                        <h4>Fitness</h4>
+                                    </div>
+                                    <a href="detail.html">Strong starts here.</a>
+                                    <div class="learning-price">
+                                        <span>$60.00<del>$80.00</del></span>
+                                        <h4><img src="../assets/images/svg/star-fill.svg" class="img-fluid"
+                                                alt="star">3.2</h4>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- wishlist tab section  end  -->
+
+    <!--filter offcanvas section start -->
+    <div class="offcanvas offcanvas-bottom  filter-theme-offcanvas" id="offcanvasBottom">
+        <div class="offcanvas-header hotel-theme-header">
+            <h5 class="offcanvas-title">Sort by</h5>
+        </div>
+        <div class="offcanvas-body small">
+            <div class="sort-group">
+                <label class="sort-box">
+                    <input type="radio" name="sort" value="low-to-high">
+                    <span class="icon"><i class="iconsax icon-btn" data-icon="like"></i></span>
+                    <span class="text">Popularity</span>
+                    <span class="custom-radio"></span>
+                </label>
+
+                <label class="sort-box">
+                    <input type="radio" name="sort" value="high-to-low" checked>
+                    <span class="icon">$<i class="iconsax icon" data-icon="
+                        arrow-down"></i></span>
+                    <span class="text">Price: Low to High</span>
+                    <span class="custom-radio"></span>
+                </label>
+
+                <label class="sort-box">
+                    <input type="radio" name="sort" value="high-to-low">
+                    <span class="icon">$<i class="iconsax icon" data-icon="
+                        arrow-up"></i></span>
+                    <span class="text">Price: High to Low</span>
+                    <span class="custom-radio"></span>
+                </label>
+
+                <label class="sort-box">
+                    <input type="radio" name="sort" value="user-ratings">
+                    <span class="icon"><i class="iconsax icon" data-icon="star"></i></span>
+                    <span class="text">User Ratings: Highest</span>
+                    <span class="custom-radio"></span>
+                </label>
+            </div>
+            <a href="detail.html" class="btn learning-btn mt-3" data-bs-dismiss="offcanvas" aria-label="Close">Apply</a>
+        </div>
+    </div>
+    <!-- filter offcanvas section  end  -->
+
+
+    <!-- Bootstrap JS-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax JS-->
+    <script src="../assets/js/iconsax.js"></script>
+
+
+    <!-- script JS -->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

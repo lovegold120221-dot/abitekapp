@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/metropolis-font.css">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+
+    <!-- swiper css -->
+    <link rel="stylesheet" href="../assets/css/vendors/swiper/swiper.min.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="food">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/FoodApp.gif" class="img-fluid" alt="food">
+    </div>
+    <!-- loader End -->
+
+    <!-- header start -->
+    <header class="main-header food-main-header main-header2">
+        <a href="train.html#" onclick="history.back()" class="icon-circle">
+            <i class="iconsax back-icon" data-icon="chevron-left"></i>
+        </a>
+    </header>
+    <!-- header end -->
+
+    <!-- train and order start -->
+    <section class="pt-0 slider-after">
+        <div class="swiper restaurant-slider">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="../assets/images/food/restaurant/2.jpg" class="img-fluid w-100" alt="png">
+                </div>
+                <div class="swiper-slide">
+                    <img src="../assets/images/food/restaurant/2.jpg" class="img-fluid w-100" alt="png">
+                </div>
+                <div class="swiper-slide">
+                    <img src="../assets/images/food/restaurant/2.jpg" class="img-fluid w-100" alt="png">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- train and order slider end -->
+
+    <!-- order title start -->
+    <section class="section-t-space">
+        <div class="custom-container">
+            <div class="center-title">
+                <h2>Enter Your PNR</h2>
+                <h5>Get Order Delivered at your Seat</h5>
+            </div>
+        </div>
+    </section>
+    <!-- order title end -->
+
+    <!-- order section start -->
+    <section class="section-t-space train-detail-section">
+        <div class="custom-container">
+            <form class="food-input-form">
+                <div class="form-group mt-0">
+                    <input type="search" class="form-control search" id="inputusername"
+                        placeholder="Enter your 10 digit PNR">
+                    <svg class="icon">
+                        <use href="../assets/svg/icon-sprite.svg#order"></use>
+                    </svg>
+                </div>
+            </form>
+            <ul class="food-order-details">
+                <li>
+                    <div class="bg-lighter-primary">
+                        <i class="iconsax menu-icon" data-icon="box-time"></i>
+                    </div>
+                    <div class="food-order-contant">
+                        <div class="order-title">
+                            <h5>Guaranteed Delivery</h5>
+                            <h6>Get delivery at your seat when the train
+                                arrives, else get 100% refund</h6>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="bg-lighter-primary">
+                        <i class="iconsax menu-icon" data-icon="clock"></i>
+                    </div>
+                    <div class="food-order-contant">
+                        <div class="order-title">
+                            <h5>Real-Time Tracking</h5>
+                            <h6>We ensure on-time delivery by tracking
+                                your live train status</h6>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="bg-lighter-primary">
+                        <i class="iconsax menu-icon" data-icon="receipt-2"></i>
+                    </div>
+                    <div class="food-order-contant">
+                        <div class="order-title">
+                            <h5>Plan Your Meal</h5>
+                            <h6>Order your food up to 4 days in advance</h6>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="bg-lighter-primary">
+                        <i class="iconsax menu-icon" data-icon="close-circle"></i>
+                    </div>
+                    <div class="food-order-contant">
+                        <div class="order-title">
+                            <h5>Free Cancellation</h5>
+                            <h6>Easy order cancellation before food
+                                preparation starts</h6>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <a href="tracking-order.html" class="btn food-btn m_bottom-30">Continue</a>
+        </div>
+    </section>
+    <!-- order  section end -->
+
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- swiper js -->
+    <script src="../assets/js/vendors/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/js/custom-swiper.js"></script>
+
+    <!-- script js-->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

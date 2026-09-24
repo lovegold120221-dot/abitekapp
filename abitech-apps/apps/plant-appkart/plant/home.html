@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="../../../../fonts.googleapis.com/css2%3Ffamily=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000%3B1,6..12,200..1000&amp;display=swap.css"
+        rel="stylesheet">
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Iconly css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconly.css">
+
+    <!-- swiper css -->
+    <link rel="stylesheet" href="../assets/css/vendors/swiper/swiper.min.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="plant nunito-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/plant.gif" class="img-fluid" alt="plant">
+    </div>
+    <!-- loader End -->
+
+    <!-- header start -->
+    <header class="header plant-header">
+        <div class="custom-container">
+            <div class="head-content">
+                <div class="flex-common gap-2">
+                    <a href="home.html#sidebar" class="sidebar-btn" data-bs-toggle="offcanvas">
+                        <i class="iconsax" data-icon="text-align-left"></i>
+                    </a>
+                    <div class="profile-content">
+                        <div class="flex-common gap-1">
+                            <h4>Good Morning <img class="img-fluid hand"
+                                    src="../assets/images/plant/gif/hand-moving.gif" alt="hand"></h4>
+                            <i class="iconsax d-arrow" data-icon="chevron-down"></i>
+                        </div>
+                        <h6>Shop Here for Your Favorite Plants</h6>
+                    </div>
+                </div>
+                <div class="flex-common gap-2">
+                    <a href="notification.html" class="notify-icon">
+                        <i class="iconsax icon-btn notification-icon" data-icon="bell-2"></i>
+                        <span>2</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+    <!-- search section starts -->
+    <section class="pt-0">
+        <div class="custom-container">
+            <form class="auth-input-form">
+                <div class="form-group mt-0">
+                    <input type="search" class="form-control search" id="inputusername" placeholder="Search here.....">
+                    <i class="iconsax search-icon" data-icon="search-normal-2"> </i>
+                    <a href="home.html#filter" class="filter-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilter">
+                        <i class="iconsax" data-icon="setting-3"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- search section end -->
+
+    <!-- banner section starts -->
+    <section class="banner-section">
+        <div class="custom-container">
+            <a href="shop.html">
+                <img class="img-fluid banner-img w-100" src="../assets/images/plant/banner/1.jpg" alt="banner">
+            </a>
+        </div>
+    </section>
+    <!-- banner section ends -->
+
+    <!--popular product section start -->
+    <section>
+        <div class="custom-container">
+            <div class="title plant-title">
+                <h3>Most Popular</h3>
+                <a href="shop.html">See All</a>
+            </div>
+            <div class="swiper plant-product">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class=" plant-product-box">
+                            <div class="img-part">
+                                <a href="product.html" class="product-image"><img
+                                        src="../assets/images/plant/product/1.png" alt="" class="img-fluid product"></a>
+                                <button class="wishlist-btn btn">
+                                    <i class="iconly-Heart icli"></i>
+                                    <i class="iconly-Heart icbo"></i>
+                                </button>
+                            </div>
+                            <div class="product-content">
+                                <a href="product.html" class="product-name">
+                                    Lucky Jade Plant
+                                </a>
+                                <h6>Indirect Light</h6>
+
+                                <div class="flex-space mt-2">
+                                    <h4 class="price">$15<del> $20</del></h4>
+                                    <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="plant-product-box">
+                            <div class="img-part">
+                                <a href="product.html" class="product-image"><img
+                                        src="../assets/images/plant/product/2.png" alt="" class="img-fluid product"></a>
+                                <button class="wishlist-btn btn">
+                                    <i class="iconly-Heart icli"></i>
+                                    <i class="iconly-Heart icbo"></i>
+                                </button>
+                            </div>
+                            <div class="product-content">
+
+                                <a href="product.html" class="product-name">
+                                    Golden Money Plant
+                                </a>
+                                <h6>Fast Growing</h6>
+
+                                <div class="flex-space mt-2">
+                                    <h4 class="price">$20<del> $30</del></h4>
+                                    <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class=" plant-product-box">
+                            <div class="img-part">
+                                <a href="product.html" class="product-image"><img
+                                        src="../assets/images/plant/product/3.png" alt="" class="img-fluid product"></a>
+                                <button class="wishlist-btn btn">
+                                    <i class="iconly-Heart icli"></i>
+                                    <i class="iconly-Heart icbo"></i>
+                                </button>
+                            </div>
+                            <div class="product-content">
+
+                                <a href="product.html" class="product-name">
+                                    Black Rubber Plant
+                                </a>
+                                <h6>Air-Purifying</h6>
+
+                                <div class="flex-space mt-2">
+                                    <h4 class="price">$15<del> $20</del></h4>
+                                    <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class=" plant-product-box">
+                            <div class="img-part">
+                                <a href="product.html" class="product-image"><img
+                                        src="../assets/images/plant/product/4.png" alt="" class="img-fluid product"></a>
+                                <button class="wishlist-btn btn">
+                                    <i class="iconly-Heart icli"></i>
+                                    <i class="iconly-Heart icbo"></i>
+                                </button>
+                            </div>
+                            <div class="product-content">
+
+                                <a href="product.html" class="product-name">
+                                    Peace Lily Plant
+                                </a>
+                                <h6>Indirect Light</h6>
+
+                                <div class="flex-space mt-2">
+                                    <h4 class="price">$12<del> $15</del></h4>
+                                    <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- popular product section end -->
+
+    <!-- categories section start -->
+    <section>
+        <div class="custom-container">
+            <div class="title plant-title">
+                <h3>Categories</h3>
+                <a href="categories.html">See All</a>
+            </div>
+        </div>
+        <ul class="nav nav-tabs ecommerce-tab plant-tab pl-15">
+            <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#all" type="button">
+                    All</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#medicinal" type="button"> Medicinal
+                    Plant</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#shrubs" type="button">Shrubs
+                    Plant</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#herbs" type="button">Herbs
+                    plant</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#wild" type="button">Wild
+                    Plant</button>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="all">
+                <div class="custom-container">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid cart-img"
+                                        src="../assets/images/plant/horizontal-product/1.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Golden Hahnii Snake Plant</h5>
+                                    </div>
+
+                                    <h6 class="content-color">Moderate Water</h6>
+
+                                    <div class="flex-space mt-2">
+                                        <h4 class="price">$25 <span class="offer">20% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid cart-img"
+                                        src="../assets/images/plant/horizontal-product/2.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Aglaonema Lipstick Plant</h5>
+                                    </div>
+
+                                    <h6 class="content-color">Air-Purifying</h6>
+
+                                    <div class="flex-space mt-2">
+                                        <h4 class="price">$15 <span class="offer">15% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid cart-img"
+                                        src="../assets/images/plant/horizontal-product/3.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Calathea Triostar Plant</h5>
+                                    </div>
+
+                                    <h6 class="content-color">Meticulous Care</h6>
+
+                                    <div class="flex-space mt-2">
+                                        <h4 class="price">$20 <span class="offer">20% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="medicinal">
+                <div class="custom-container">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid cart-img"
+                                        src="../assets/images/plant/horizontal-product/5.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Rhoeo Tricolor Plant</h5>
+                                    </div>
+                                    <h6 class="content-color">Indirect Light</h6>
+                                    <div class="flex-space mt-3">
+                                        <h4 class="price">$22 <span class="offer">22% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid cart-img"
+                                        src="../assets/images/plant/horizontal-product/4.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Peace Lily Plant</h5>
+                                    </div>
+
+                                    <h6 class="content-color">Air-Purifying</h6>
+
+                                    <div class="flex-space mt-3">
+                                        <h4 class="price">$15 <span class="offer">15% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid cart-img"
+                                        src="../assets/images/plant/horizontal-product/6.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Golden Money Plant</h5>
+                                    </div>
+                                    <h6 class="content-color">Fast Growing</h6>
+                                    <div class="flex-space mt-3">
+                                        <h4 class="price">$20 <span class="offer">20% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="shrubs">
+                <div class="custom-container">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid cart-img"
+                                        src="../assets/images/plant/horizontal-product/1.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Golden Hahnii Snake Plant</h5>
+                                    </div>
+
+                                    <h6 class="content-color">Moderate Water</h6>
+
+                                    <div class="flex-space mt-3">
+                                        <h4 class="price">$25 <span class="offer">20% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid cart-img"
+                                        src="../assets/images/plant/horizontal-product/2.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Aglaonema Lipstick Plant</h5>
+                                    </div>
+
+                                    <h6 class="content-color">Air-Purifying</h6>
+
+                                    <div class="flex-space mt-3">
+                                        <h4 class="price">$15 <span class="offer">15% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid cart-img"
+                                        src="../assets/images/plant/horizontal-product/3.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Calathea Triostar Plant</h5>
+                                    </div>
+
+                                    <h6 class="content-color">Meticulous Care</h6>
+
+                                    <div class="flex-space mt-3">
+                                        <h4 class="price">$20 <span class="offer">20% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="herbs">
+                <div class="custom-container">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid cart-img"
+                                        src="../assets/images/plant/horizontal-product/5.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Rhoeo Tricolor Plant</h5>
+                                    </div>
+
+                                    <h6 class="content-color">Indirect Light</h6>
+
+                                    <div class="flex-space mt-3">
+                                        <h4 class="price">$22 <span class="offer">22% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid cart-img"
+                                        src="../assets/images/plant/horizontal-product/4.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Peace Lily Plant</h5>
+                                    </div>
+
+                                    <h6 class="content-color">Air-Purifying</h6>
+
+                                    <div class="flex-space mt-3">
+                                        <h4 class="price">$15 <span class="offer">15% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid cart-img"
+                                        src="../assets/images/plant/horizontal-product/6.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Golden Money Plant</h5>
+                                    </div>
+
+                                    <h6 class="content-color">Fast Growing</h6>
+
+                                    <div class="flex-space mt-3">
+                                        <h4 class="price">$20 <span class="offer">20% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="wild">
+                <div class="custom-container">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="plant-horizontal-product-box">
+                                <div class="img-part">
+                                    <img class="img-fluid cart-img"
+                                        src="../assets/images/plant/horizontal-product/2.png" alt="p1">
+                                </div>
+                                <div class="product-content">
+                                    <div class="flex-space">
+                                        <h5>Aglaonema Lipstick Plant</h5>
+                                    </div>
+
+                                    <h6 class="content-color">Air-Purifying</h6>
+
+                                    <div class="flex-space mt-3">
+                                        <h4 class="price">$15 <span class="offer">15% off</span></h4>
+                                        <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- categories section end -->
+
+    <!-- Mobile Section Start -->
+    <div class="ecommerce-mobile-menu plant-mobile-menu">
+        <ul class="mobile-list">
+            <li class="active">
+                <a href="home.html">
+                    <div class="icon">
+                        <img class="inactive" src="../assets/images/plant/svg/home.svg" alt="home">
+                        <img class="active" src="../assets/images/plant/svg/home-fill.svg" alt="home">
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a href="categories.html">
+                    <div class="icon">
+                        <img class="inactive" src="../assets/images/plant/svg/category.svg" alt="category">
+                        <img class="active" src="../assets/images/plant/svg/category-fill.svg" alt="category">
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a href="cart.html">
+                    <div class="icon">
+                        <img class="inactive" src="../assets/images/plant/svg/cart.svg" alt="cart">
+                        <img class="active" src="../assets/images/plant/svg/cart-fill.svg" alt="cart">
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a href="wishlist.html">
+                    <div class="icon">
+                        <img class="inactive" src="../assets/images/plant/svg/wishlist.svg" alt="wishlist">
+                        <img class="active" src="../assets/images/plant/svg/wishlist-fill.svg" alt="wishlist">
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a href="profile.html">
+                    <div class="icon">
+                        <img class="inactive" src="../assets/images/plant/svg/profile.svg" alt="profile">
+                        <img class="active" src="../assets/images/plant/svg/profile-fill.svg" alt="profile">
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- Mobile Section End -->
+
+    <!-- sidebar starts -->
+    <div class="offcanvas sidebar-offcanvas offcanvas-start" tabindex="-1" id="sidebar">
+        <div class="offcanvas-body">
+            <div class="custom-container">
+                <div class="profile-background">
+                    <div class="profile-part">
+                        <div class="profile-image">
+                            <img id="output" class="img-fluid profile-pic" src="../assets/images/profile/p8.png"
+                                alt="3">
+                        </div>
+                        <h3>Leslie Alexander</h3>
+                        <h4>lesliealexander@gmail.com</h4>
+                    </div>
+                </div>
+                <ul class="profile-list">
+                    <li>
+                        <a href="order.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="document-text-1"> </i>
+                            </div>
+                            <div class="setting-content">
+                                <h5>Orders</h5>
+                                <h6>Ongoing orders, Recent orders..</h6>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="wishlist.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="heart"> </i>
+
+                            </div>
+                            <div class="setting-content">
+                                <h5> Your Wishlist</h5>
+                                <h6>Your save products</h6>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="payment.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="bank-card-diagonal"> </i>
+
+                            </div>
+                            <div class="setting-content">
+                                <h5>Payment</h5>
+                                <h6>Saved cards, Wallets</h6>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="language.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="globe"> </i>
+                            </div>
+                            <div class="setting-content">
+                                <h5>Langauge</h5>
+                                <h6>Select your language here..</h6>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="notification.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="bell-2"> </i>
+                            </div>
+                            <div class="setting-content">
+                                <h5>Notification</h5>
+                                <h6>Offers, Order tracking messages..</h6>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="app-setting.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="setting-1"> </i>
+                            </div>
+                            <div class="setting-content">
+                                <h5>Settings</h5>
+                                <h6>App settings, Help center</h6>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="bottom-sidebar">
+                    <a href="login.html" class="btn plant-btn w-100"> <i class="iconsax sidebar-icon"
+                            data-icon="logout-2"> </i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- sidebar end -->
+
+    <!-- filter offcanvas section start -->
+    <div class="offcanvas offcanvas-bottom  filter-theme-offcanvas" id="offcanvasFilter">
+        <div class="offcanvas-header hotel-theme-header">
+            <h5 class="offcanvas-title">Filter</h5>
+        </div>
+        <div class="offcanvas-body small pt-0">
+            <div class="custom-slider-theme">
+                <h4>Guest Details</h4>
+                <div class="range-slider hotel-range-slider">
+                    <div class="progress-slider"></div>
+                    <input type="range" min="0" max="100" value="30" class="min-range">
+                    <input type="range" min="0" max="100" value="60" class="max-range">
+
+                    <div class="range-number hotel-range-number">
+                        <div class="range-box input-min-box hotel-range-box">
+                            <span class="rs-label">$</span>
+                            <input type="number" value="30" class="input-min">
+                        </div>
+                        <div class="range-box input-max-box hotel-range-box">
+                            <span class="rs-label">$</span>
+                            <input type="number" value="60" class="input-max">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="title plant-title m_top-17">
+                <h3>Categories</h3>
+            </div>
+            <ul class="nav nav-tabs ecommerce-tab p-0">
+                <li class="nav-item">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#all" type="button">
+                        All</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#medicinal" type="button"> Medicinal
+                        Plant</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#shrubs" type="button">Shrubs
+                        product</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#herbs" type="button">Herbs
+                        Rhoeo</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#wild" type="button">Wild
+                        Shipping</button>
+                </li>
+            </ul>
+        </div>
+        <div class="hotel-filter-wrapper">
+            <h3>Star Rating</h3>
+            <ul class="hotel-star-rating hotel-tab">
+                <li><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">5</li>
+                <li><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">4</li>
+                <li class="active"><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">3</li>
+                <li><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">2</li>
+                <li><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">1</li>
+            </ul>
+        </div>
+        <div class="hotel-filter-wrapper">
+            <h3>Facilities</h3>
+            <div class="checkbox-section">
+                <label class="native-checkbox">
+                    <input type="checkbox">
+                    Wifi
+                </label>
+                <label class="native-checkbox">
+                    <input type="checkbox" checked>
+                    Swimming Pool
+                </label>
+                <label class="native-checkbox">
+                    <input type="checkbox">
+                    Breakfast Available
+                </label>
+            </div>
+        </div>
+        <div class="plant-reset">
+            <a href="home.html" class="btn reset-btn">Reset</a>
+            <a href="categories.html" class="btn review-button">Apply Filter</a>
+        </div>
+    </div>
+    <div class="panel-space-sm"></div>
+    <!-- filter offcanvas section end -->
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- Active JS -->
+    <script src="../assets/js/active-section.js"></script>
+
+    <!-- swiper js -->
+    <script src="../assets/js/vendors/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/js/custom-swiper.js"></script>
+
+    <!-- Range JS -->
+    <script src="../assets/js/range-slider.js"></script>
+
+    <!-- script js-->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

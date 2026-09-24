@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Haiku Dojo — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .5s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-[#f5f0e6] to-[#e8dcc8] text-stone-800">
+  <div class="max-w-xl mx-auto px-4 py-8">
+    <div class="text-center mt-4">
+      <div class="text-5xl">⛩️</div>
+      <h1 class="text-3xl font-bold mt-2">Haiku Dojo</h1>
+      <p class="text-sm text-stone-500 mt-1">Offer a topic. The sensei returns a haiku, a verdict, and a score. Build your streak. 🍵</p>
+      <p class="mt-2 inline-block text-xs font-bold bg-stone-800 text-amber-100 px-4 py-1.5 rounded-full">🔥 Streak: <span id="streak">0</span></p>
+    </div>
+
+    <div class="mt-5 bg-white/70 rounded-2xl p-4 border border-stone-300 shadow-sm">
+      <div class="flex flex-wrap gap-2 mb-3" id="chips"></div>
+      <div class="flex gap-2">
+        <input id="topicInput" placeholder="Topic: rain, deadlines, my cat…" class="flex-1 bg-white rounded-full px-4 py-2.5 text-sm outline-none border border-stone-300 focus:border-stone-500" />
+        <button id="goBtn" onclick="compose()" class="px-6 bg-stone-800 hover:bg-stone-700 text-amber-50 font-semibold text-sm rounded-full transition">Compose ✍️</button>
+      </div>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-100 border border-red-300 text-red-700 rounded-xl p-3"></div>
+    <div id="result" class="mt-5"></div>
+  </div>
+
+  <script>
+const GEMINI_KEY = sessionStorage.getItem('abitech_gemini_key') || '';
+    const GEMINI_MODEL = "gemini-3.5-flash-lite";
+    const LIVE_MODEL = "gemini-3.5-flash-live";
+    const SYSTEM = "You are a zen haiku master. Reply EXACTLY:\nLine 1-3: a true 5-7-5 haiku about the topic.\nLine 4: VERDICT: <one poetic sentence judging the haiku>\nLine 5: SCORE: <integer 1-10>\nNothing else.";
+    const IDEAS = ['midnight rain', 'Monday meetings', 'a sleepy cat', 'old bicycles', 'first coffee', 'desert wind', 'neon cities', 'grandma\'s kitchen'];
+    function esc(s) { return s.replace(/[&<>"']/g, c => ({ '&': '&', '<': '<', '>': '>', '"': '"', "'": ''' }[c])); }
+    document.getElementById('streak').textContent = localStorage.getItem('haikuStreak') || 0;
+
+    // Gemini Live API TTS voice state
+    let ttsWs = null;
+    let ttsQueue = [];
+    let ttsSpeaking = false;
+    function ttsSpeakQueue() {
+      if (ttsSpeaking || !ttsWs) return;
+      if (ttsQueue.length === 0) { ttsSpeaking = false; return; }
+      const text = ttsQueue.shift();
+      ttsSpeaking = true;
+      ttsWs.send(JSON.stringify({
+        turns: [{ parts: [{ text: text }] }], turnComplete: true
+      }));
+    }
+    function ttsStop() { try { if (ttsWs) ttsWs.close(); ttsSpeaking = false; ttsQueue = []; } catch (e) {} }
+
+    // Initialise Live API TTS WebSocket
+    function ttsInit() {
+      if (ttsWs) return;
+      const wsUrl = `wss://generativelanguage.googleapis.com/v1beta/models/${LIVE_MODEL}:streamGenerateContent?key=${GEMINI_KEY}`;
+      ttsWs = new WebSocket(wsUrl);
+      ttsWs.onopen = () => ttsSpeakQueue();
+      ttsWs.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        if (data.serverContent && data.serverContent.modelTurn && data.serverContent.modelTurn.parts) {
+          const audioB64 = data.serverContent.modelTurn.parts.find(p => p.inlineData).inlineData.data;
+          const audioBlob = base64ToBlob(audioB64, 'audio/mp3');
+          const url = URL.createObjectURL(audioBlob);
+          const audio = new Audio(url);
+          audio.play().catch(() => {});
+          ttsSpeaking = false;
+          ttsSpeakQueue();
+        }
+      };
+      ttsWs.onerror = () => { ttsSpeaking = false; ttsSpeakQueue(); };
+    }
+
+    // Send text to Gemini Live API for TTS
+    function ttsPlay(text) {
+      try { text = String(text).replace(/[*#_]/g, '').slice(0, 800); } catch (e) {}
+      if (!text) return;
+      ttsQueue.push(text);
+      ttsInit();
+      ttsSpeakQueue();
+    }
+
+    // Base64 decode helper for audio chunks
+    function base64ToBlob(b64, mime) {
+      const byteChars = atob(b64);
+      const byteNumbers = new Uint8Array(byteChars.length);
+      for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
+      return new Blob([byteNumbers], { type: mime });
+    }
+    document.getElementById('chips').innerHTML = IDEAS.map(t => `<button onclick="document.getElementById('topicInput').value='${t.replace(/'/g, "\\'")}';compose()" class="text-xs bg-stone-200 hover:bg-stone-300 px-3 py-1.5 rounded-full transition">${t}</button>`).join('');
+
+    async function gemini(user) {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ system_instruction: { parts: [{ text: SYSTEM }] }, contents: [{ parts: [{ text: user }] }], generationConfig: { temperature: 1.0, maxOutputTokens: 300 } })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      return data.candidates[0].content.parts.map(p => p.text || '').join('');
+    }
+
+    async function compose() {
+      const topic = document.getElementById('topicInput').value.trim();
+      const btn = document.getElementById('goBtn'), err = document.getElementById('errorBox'), out = document.getElementById('result');
+      err.classList.add('hidden');
+      if (!topic) { err.textContent = 'Give the sensei a topic.'; err.classList.remove('hidden'); return; }
+      btn.disabled = true; btn.textContent = 'Meditating… 🧘'; out.innerHTML = '';
+      try {
+        const raw = await gemini(`Topic: ${topic}`);
+        const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+        const scoreM = raw.match(/SCORE:\s*(\d+)/i);
+        const score = scoreM ? Math.min(10, +scoreM[1]) : null;
+        const verdictM = raw.match(/VERDICT:\s*(.+)/i);
+        const poem = lines.filter(l => !/^(VERDICT|SCORE):/i.test(l)).slice(0, 3);
+        if (score !== null && score >= 7) {
+          const s = (+localStorage.getItem('haikuStreak') || 0) + 1;
+          localStorage.setItem('haikuStreak', s);
+          document.getElementById('streak').textContent = s;
+        } else if (score !== null) {
+          localStorage.setItem('haikuStreak', 0);
+          document.getElementById('streak').textContent = 0;
+        }
+        out.innerHTML = `<div class="fade-in bg-[#2b2118] text-amber-50 rounded-2xl p-6 text-center shadow-lg">
+          <p class="text-[11px] uppercase tracking-[.3em] text-amber-400/70 mb-3">— ${esc(topic)} —</p>
+          ${poem.map(l => `<p class="text-lg leading-relaxed">${esc(l)}</p>`).join('')}
+          ${verdictM ? `<p class="text-xs italic text-amber-200/70 mt-4">“${esc(verdictM[1])}” — the sensei</p>` : ''}
+          ${score !== null ? `<p class="mt-2 inline-block text-sm font-bold bg-amber-400 text-stone-900 px-4 py-1 rounded-full">${score}/10 ${score >= 7 ? '🎋 Streak kept!' : '🍂 Streak reset'}</p>` : ''}
+        </div>`;
+      } catch (e) { err.textContent = 'Ink dried up: ' + e.message; err.classList.remove('hidden'); }
+      btn.disabled = false; btn.textContent = 'Compose ✍️';
+    }
+  </script>
+</body>
+</html>

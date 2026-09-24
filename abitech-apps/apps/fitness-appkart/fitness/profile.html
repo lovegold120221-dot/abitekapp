@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Outfit:wght@100..900&amp;display=swap.css" rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="fitness outfit-font">
+
+    <!-- loader Start -->
+    <div class="loader loading">
+        <img src="../assets/images/gif/fitness.gif" class="img-fluid" alt="fitness">
+    </div>
+    <!-- loader End -->
+
+    <!--  header section start -->
+    <header class="fitness-header2">
+        <div class="custom-container2">
+            <div class="header-panel">
+                <button class="left-btn" onclick="history.back()">
+                    <i class="iconsax arrow-icon" data-icon="arrow-left"></i>
+                </button>
+                <h3>Profile</h3>
+            </div>
+        </div>
+    </header>
+    <!--  header section end -->
+
+    <!-- mobile menu section start -->
+    <div class="fitness-mobile-menu">
+        <ul>
+            <li>
+                <a href="home.html">
+                    <div class="icon">
+                        <img src="../assets/images/fitness/svg/1.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/fitness/svg/p1.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5>Home</h5>
+                </a>
+            </li>
+            <li>
+                <a href="custom.html">
+                    <div class="icon">
+                        <img src="../assets/images/fitness/svg/2.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/fitness/svg/p2.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5>Custom</h5>
+                </a>
+            </li>
+            <li><a href="chart.html">
+                    <div class="icon">
+                        <img src="../assets/images/fitness/svg/3.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/fitness/svg/p3.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5>Report</h5>
+                </a>
+            </li>
+            <li>
+                <a href="exercise.html">
+                    <div class="icon">
+                        <img src="../assets/images/fitness/svg/4.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/fitness/svg/p4.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5>Exercises</h5>
+                </a>
+            </li>
+            <li class="active">
+                <a href="profile.html">
+                    <div class="icon">
+                        <img src="../assets/images/fitness/svg/5.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/fitness/svg/p5.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5>Profile</h5>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- mobile menu section  end  -->
+
+    <!-- profile section start -->
+    <section class="pt-0 fitness-profile-section">
+        <div class="custom-container2">
+            <div class="body-profile-box ">
+                <img id="output" src="../assets/images/profile/p14.png" class="img-fluid" alt="profile">
+                <h6>Edit</h6>
+                <input id="file" type="file" onchange="loadFile(event)">
+                <div class="fitness-profile-content">
+                    <h5>Jacob Mark</h5>
+                    <a href="profile.html#!">Jacobmark@gmail.com</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- profile section  end  -->
+
+    <!-- setting section start -->
+    <section class="section-t-space1 fitness-setting-section">
+        <div class="custom-container2">
+            <div class="fitness-setting-box">
+                <h4>Setting</h4>
+                <ul>
+                    <li>
+                        <a href="edit-profile.html">
+                            <h5>My Profile</h5>
+                            <i class="iconsax arrow-icon" data-icon="chevron-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="step2.html">
+                            <h5>Restart Progress</h5>
+                            <i class="iconsax arrow-icon" data-icon="chevron-right"></i>
+                        </a>
+                    </li>
+                    <li data-bs-toggle="offcanvas" data-bs-target="#offcanvasShare">
+                        <a href="profile.html#!">
+                            <h5>Share with Friends</h5>
+                            <i class="iconsax arrow-icon" data-icon="chevron-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="language.html">
+                            <h5>Language</h5>
+                            <i class="iconsax arrow-icon" data-icon="chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="fitness-setting-box m_top-21">
+                <ul class="mt-0">
+                    <li>
+                        <a href="profile.html#!">
+                            <h5>Remove Ads</h5>
+                            <i class="iconsax arrow-icon" data-icon="chevron-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="review.html">
+                            <h5>Rate Us</h5>
+                            <i class="iconsax arrow-icon" data-icon="chevron-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Feedback.html">
+                            <h5>Feedback</h5>
+                            <i class="iconsax arrow-icon" data-icon="chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!-- setting section  end  -->
+
+    <!-- share icon offcanvas section start -->
+    <div class="offcanvas offcanvas-bottom  blog-theme-offcanvas fitness-theme" tabindex="-1" id="offcanvasShare">
+        <div class="offcanvas-header blog-theme-header">
+            <h5 class="offcanvas-title" id="offcanvasBottomLabel">Social Share Link</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body small px-0">
+            <div class="blog-link-section">
+                <h5>Share this link via</h5>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane active show" id="facebook-tab-pane" role="tabpanel"
+                        aria-labelledby="facebook-tab">
+                        <div class="share-link-content">
+                            <div class="form-group">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control link" value="https://www.facebook.com/">
+                                </div>
+                                <div class="link-icon" onclick="copyLink(this)">
+                                    Copy
+                                    <i class="iconsax icon" data-icon="link-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="whatsapp-tab-pane" role="tabpanel" aria-labelledby="whatsapp-tab">
+                        <div class="share-link-content">
+                            <div class="form-group">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control link" value="https://www.whatsapp.com/">
+                                </div>
+                                <div class="link-icon" onclick="copyLink(this)">
+                                    Copy
+                                    <i class="iconsax icon" data-icon="link-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="snap-tab-pane" role="tabpanel" aria-labelledby="snap-tab">
+                        <div class="share-link-content">
+                            <div class="form-group">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control link" value="https://www.snapchat.com/">
+                                </div>
+                                <div class="link-icon" onclick="copyLink(this)">
+                                    Copy
+                                    <i class="iconsax icon" data-icon="link-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="google-tab-pane" role="tabpanel" aria-labelledby="google-tab">
+                        <div class="share-link-content">
+                            <div class="form-group">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control link" value="https://www.google.com/">
+                                </div>
+                                <div class="link-icon" onclick="copyLink(this)">
+                                    Copy
+                                    <i class="iconsax icon" data-icon="link-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="instagram-tab-pane" role="tabpanel" aria-labelledby="instagram-tab">
+                        <div class="share-link-content">
+                            <div class="form-group">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control link" value="https://www.instagram.com/">
+                                </div>
+                                <div class="link-icon" onclick="copyLink(this)">
+                                    Copy
+                                    <i class="iconsax icon" data-icon="link-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="youtube-tab-pane" role="tabpanel" aria-labelledby="youtube-tab">
+                        <div class="share-link-content">
+                            <div class="form-group">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control link" value="https://www.youtube.com/">
+                                </div>
+                                <div class="link-icon" onclick="copyLink(this)">
+                                    Copy
+                                    <i class="iconsax icon" data-icon="link-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="facebook-tab" data-bs-toggle="tab"
+                            data-bs-target="#facebook-tab-pane" type="button" role="tab"
+                            aria-controls="facebook-tab-pane" aria-selected="true">
+                            <img src="../assets/images/social/4.svg" class="img" alt="social-image">
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="whatsapp-tab" data-bs-toggle="tab"
+                            data-bs-target="#whatsapp-tab-pane" type="button" role="tab"
+                            aria-controls="whatsapp-tab-pane" aria-selected="false">
+                            <img src="../assets/images/social/10.svg" class="img" alt="social-image">
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="snap-tab" data-bs-toggle="tab" data-bs-target="#snap-tab-pane"
+                            type="button" role="tab" aria-controls="snap-tab-pane" aria-selected="false">
+                            <img src="../assets/images/social/2.svg" class="img" alt="social-image"></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="google-tab" data-bs-toggle="tab" data-bs-target="#google-tab-pane"
+                            type="button" role="tab" aria-controls="google-tab-pane" aria-selected="false">
+                            <img src="../assets/images/social/9.svg" class="img" alt="social-image"></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="instagram-tab" data-bs-toggle="tab"
+                            data-bs-target="#instagram-tab-pane" type="button" role="tab"
+                            aria-controls="instagram-tab-pane" aria-selected="false">
+                            <img src="../assets/images/social/1.svg" class="img" alt="social-image"></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="youtube-tab" data-bs-toggle="tab"
+                            data-bs-target="#youtube-tab-pane" type="button" role="tab" aria-controls="youtube-tab-pane"
+                            aria-selected="false"> <img src="../assets/images/social/3.svg" class="img"
+                                alt="social-image"></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- share icon offcanvas section end -->
+
+    <!-- Bootstrap JS-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax JS-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- Image change JS  -->
+    <script src="../assets/js/image-change.js"></script>
+
+    <!-- script JS -->
+    <script src="../assets/js/script.js"></script>
+
+</body>
+
+</html>

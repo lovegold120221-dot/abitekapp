@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Mulish:ital,wght@0,200..1000%3B1,200..1000&amp;display=swap.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Iconly css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconly.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="grocery mulish-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/grocery.gif" class="img-fluid" alt="grocery">
+    </div>
+    <!-- loader End -->
+
+    <!-- auth section start -->
+    <div class="ecommerce-auth-title">
+        <div class="custom-container">
+            <div class="grocery-logo">
+                <img src="../assets/images/grocery/svg/logo.svg" class="img-fluid" alt="logo">
+                <h2>Appkart</h2>
+            </div>
+            <p>Online grocery store for all of your everyday need. All of your needs are at your doorstep with only one
+                click.</p>
+            <img class="img-fluid apple-img" src="../assets/images/grocery/apple.png" alt="apple">
+            <img class="img-fluid lemon-img" src="../assets/images/grocery/lemon.png" alt="lemon">
+            <img class="img-fluid leaf-img" src="../assets/images/grocery/leaf.png" alt="leaf">
+        </div>
+    </div>
+
+    <div class="grocery-auth-tab">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login-tab-pane"
+                    type="button" role="tab">Login</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="signup-tab" data-bs-toggle="tab" data-bs-target="#signup-tab-pane"
+                    type="button" role="tab">Sign Up</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade p-2 show active" id="login-tab-pane" role="tabpanel" tabindex="0">
+                <div class="custom-container">
+                    <div class="google-buttons">
+                        <a href="https://www.google.com/" target="_blank" class="btn solid-btn w-100 "><img
+                                class="img-fluid icon" src="../assets/images/social-media/google.svg"
+                                alt="google">Continue with
+                            Google</a>
+                        <a href="https://www.facebook.com/" target="_blank" class="btn solid-btn w-100"><img
+                                class="img-fluid icon" src="../assets/images/social-media/facebook.svg"
+                                alt="google">Continue
+                            with Facebook</a>
+                    </div>
+                    <div class="division grocery-division">
+                        <span class="light-bg-color">OR Continue With</span>
+                    </div>
+                    <form class="auth-input-form grocery-form">
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Email">
+                            <i class="iconsax icon" data-icon="mail"></i>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="password">
+                            <i class="iconsax icon" data-icon="lock-2"></i>
+                        </div>
+                        <a href="forgot-password.html" class="forgot">Forgot password</a>
+
+                        <a href="home.html" class="btn solid-btn mt-5 w-100">Login Now</a>
+                    </form>
+                </div>
+            </div>
+            <div class="tab-pane fade p-2" id="signup-tab-pane" role="tabpanel" tabindex="0">
+                <div class="custom-container">
+                    <form class="auth-input-form grocery-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Username">
+                            <i class="iconsax icon" data-icon="user-2"></i>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Email">
+                            <i class="iconsax icon" data-icon="mail"></i>
+                        </div>
+                        <div class="form-group flex-common gap-2">
+                            <select class="form-select auth-select grocery-select">
+                                <option selected>+1-212</option>
+                                <option value="1">+1-213</option>
+                                <option value="2">+1-702</option>
+                                <option value="3">+1-312</option>
+                                <option value="3">+1-617</option>
+                            </select>
+                            <div class="position-relative w-100">
+                                <input type="number" class="form-control" placeholder="Enter your number" required>
+                                <i class="iconsax icon" data-icon="phone"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="form-control" placeholder="Enter password">
+                            <i class="iconsax icon" data-icon="lock-2"></i>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Enter confirm password">
+                            <i class="iconsax icon" data-icon="lock-2"></i>
+                        </div>
+                        <a href="home.html" class="btn solid-btn  mt-5 w-100">Sign Up</a>
+
+                        <h5 class="content-color fw-medium mt-3 text-center"> Already Have an account
+                            <a href="https://themes.pixelstrap.net/pwa/appkart/grocery/login.html" class="title-color fw-semibold">Sign In</a>
+                        </h5>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- auth section end  -->
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- template Settings js-->
+    <script src="../assets/js/template-setting.js"></script>
+
+    <!-- script js-->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

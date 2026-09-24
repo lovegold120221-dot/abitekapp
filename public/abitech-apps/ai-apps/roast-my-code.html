@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roast My Code — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0d1117] text-gray-200">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+    <div class="mt-4">
+      <h1 class="text-3xl font-bold text-white">🔥 Roast My Code</h1>
+      <p class="text-sm text-gray-400 mt-1">Paste your shame. Get roasted, then get the fixed version. No mercy, no survivors.</p>
+    </div>
+
+    <div class="mt-5 bg-[#161b22] rounded-2xl p-4 border border-gray-800">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="w-3 h-3 rounded-full bg-red-500"></span><span class="w-3 h-3 rounded-full bg-yellow-500"></span><span class="w-3 h-3 rounded-full bg-green-500"></span>
+        <select id="langInput" class="ml-auto bg-[#0d1117] text-xs rounded-full px-3 py-1.5 border border-gray-700 outline-none">
+          <option>JavaScript</option><option>Python</option><option>Java</option><option>HTML/CSS</option><option>PHP</option><option>Other</option>
+        </select>
+      </div>
+      <textarea id="codeInput" rows="7" spellcheck="false" placeholder="function doStuff(a,b){ /* good luck */ return a+b; } // TODO: fix later (2019)"
+        class="mono w-full bg-[#0d1117] rounded-xl p-3 text-xs outline-none border border-gray-800 focus:border-green-500 placeholder:text-gray-600"></textarea>
+      <button id="roastBtn" onclick="roast()" class="mt-3 w-full bg-green-600 hover:bg-green-500 text-white font-semibold text-sm py-2.5 rounded-full transition">Roast me 🔥</button>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/10 border border-red-500/40 text-red-300 rounded-xl p-3"></div>
+    <div id="result" class="mt-5 space-y-4"></div>
+  </div>
+
+  <script>
+const GEMINI_KEY = sessionStorage.getItem('abitech_gemini_key') || '';
+    const GEMINI_MODEL = "gemini-3.5-flash-lite";
+    const LIVE_MODEL = "gemini-3.5-flash-live";
+    const SYSTEM = "You are a brutally funny senior engineer roasting code. Be savage but genuinely helpful, never cruel about the person. Format EXACTLY:\nFirst line: SAVAGERY: <number 1-10>/10\nThen the roast (120 words max, specific flaws, jokes).\nThen a line with exactly: === FIXED CODE ===\nThen the corrected code only, no backticks, no explanation after.";
+
+    // Gemini Live API TTS voice state
+    let ttsWs = null;
+    let ttsQueue = [];
+    let ttsSpeaking = false;
+    function ttsSpeakQueue() {
+      if (ttsSpeaking || !ttsWs) return;
+      if (ttsQueue.length === 0) { ttsSpeaking = false; return; }
+      const text = ttsQueue.shift();
+      ttsSpeaking = true;
+      ttsWs.send(JSON.stringify({
+        turns: [{ parts: [{ text: text }] }], turnComplete: true
+      }));
+    }
+    function ttsStop() { try { if (ttsWs) ttsWs.close(); ttsSpeaking = false; ttsQueue = []; } catch (e) {} }
+
+    // Initialise Live API TTS WebSocket
+    function ttsInit() {
+      if (ttsWs) return;
+      const wsUrl = `wss://generativelanguage.googleapis.com/v1beta/models/${LIVE_MODEL}:streamGenerateContent?key=${GEMINI_KEY}`;
+      ttsWs = new WebSocket(wsUrl);
+      ttsWs.onopen = () => ttsSpeakQueue();
+      ttsWs.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        if (data.serverContent && data.serverContent.modelTurn && data.serverContent.modelTurn.parts) {
+          const audioB64 = data.serverContent.modelTurn.parts.find(p => p.inlineData).inlineData.data;
+          const audioBlob = base64ToBlob(audioB64, 'audio/mp3');
+          const url = URL.createObjectURL(audioBlob);
+          const audio = new Audio(url);
+          audio.play().catch(() => {});
+          ttsSpeaking = false;
+          ttsSpeakQueue();
+        }
+      };
+      ttsWs.onerror = () => { ttsSpeaking = false; ttsSpeakQueue(); };
+    }
+
+    // Send text to Gemini Live API for TTS
+    function ttsPlay(text) {
+      try { text = String(text).replace(/[*#_]/g, '').slice(0, 800); } catch (e) {}
+      if (!text) return;
+      ttsQueue.push(text);
+      ttsInit();
+      ttsSpeakQueue();
+    }
+
+    // Base64 decode helper for audio chunks
+    function base64ToBlob(b64, mime) {
+      const byteChars = atob(b64);
+      const byteNumbers = new Uint8Array(byteChars.length);
+      for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
+      return new Blob([byteNumbers], { type: mime });
+    }
+
+    function esc(s) { return s.replace(/[&<>"']/g, c => ({ '&': '&', '<': '<', '>': '>', '"': '"', "'": ''' }[c])); }
+
+    async function gemini(user) {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ system_instruction: { parts: [{ text: SYSTEM }] }, contents: [{ parts: [{ text: user }] }], generationConfig: { temperature: 1.0, maxOutputTokens: 900 } })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      return data.candidates[0].content.parts.map(p => p.text || '').join('');
+    }
+
+    async function roast() {
+      const code = document.getElementById('codeInput').value.trim();
+      const lang = document.getElementById('langInput').value;
+      const btn = document.getElementById('roastBtn'), err = document.getElementById('errorBox'), out = document.getElementById('result');
+      err.classList.add('hidden');
+      if (!code) { err.textContent = 'Paste some code first, coward.'; err.classList.remove('hidden'); return; }
+      btn.disabled = true; btn.textContent = 'Sharpening knives… 🔪'; out.innerHTML = '';
+      stopSpeak();
+      try {
+        const raw = await gemini(`Language: ${lang}\nCode:\n${code}`);
+        const sav = (raw.match(/SAVAGERY:\s*(\d+)/i) || [])[1] || '?';
+        const parts = raw.split('=== FIXED CODE ===');
+        const roastText = esc(parts[0].replace(/SAVAGERY:.*$/gim, '').trim()).replace(/\n/g, '<br>');
+        const fixed = parts[1] ? esc(parts[1].trim()) : '';
+        const sayIdx = spokenTexts.push(parts[0].replace(/SAVAGERY:.*$/gim, '').trim()) - 1;
+        out.innerHTML = `
+          <div class="fade-in bg-[#161b22] rounded-2xl p-5 border border-red-500/30">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🌶️</span>
+              <div class="flex-1 h-2.5 bg-gray-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-yellow-500 to-red-500 rounded-full" style="width:${isNaN(+sav) ? 70 : sav * 10}%"></div></div>
+              <span class="mono text-sm font-semibold text-red-400">${sav}/10</span>
+            </div>
+            <div class="text-sm leading-relaxed mt-3">${roastText}</div>
+            ${hearBtn(sayIdx)}
+          </div>
+          ${fixed ? `<div class="fade-in bg-[#161b22] rounded-2xl p-5 border border-green-500/30">
+            <p class="text-xs uppercase tracking-widest text-green-400 font-semibold mb-2">✅ Redemption arc — fixed code</p>
+            <pre class="mono text-xs bg-[#0d1117] rounded-xl p-3 overflow-x-auto whitespace-pre-wrap">${fixed}</pre></div>` : ''}`;
+      } catch (e) { err.textContent = 'Roast failed: ' + e.message; err.classList.remove('hidden'); }
+      btn.disabled = false; btn.textContent = 'Roast me 🔥';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sentiment Compass — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0f1a12] text-emerald-50">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+    <a href="../index.html" class="text-xs text-emerald-300/80 hover:text-white">← Abitech Apps Store</a>
+
+    <div class="text-center mt-4">
+      <div class="text-5xl">🧭</div>
+      <h1 class="text-3xl font-bold mt-2">Sentiment Compass</h1>
+      <p class="text-sm text-emerald-200/80 mt-1">Paste reviews, feedback or a rant — one line at a time, scored for mood.</p>
+    </div>
+
+    <div class="mt-4 flex justify-center text-[11px]">
+      <span id="modelBadge" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Loading DistilBERT…</span>
+    </div>
+
+    <div class="mt-6 bg-emerald-950/60 rounded-2xl p-5 border border-emerald-800/60">
+      <p class="text-xs text-emerald-300/80 mb-2">One sentence per line</p>
+      <textarea id="text" rows="6"
+        class="w-full bg-black/40 rounded-xl px-3 py-2.5 text-sm outline-none border border-emerald-800/60 focus:border-emerald-400 resize-y placeholder:text-emerald-200/30"
+        placeholder="The delivery was fast and the packaging looked great.&#10;Support never replied to my emails.&#10;It works exactly as advertised."></textarea>
+
+      <button id="runBtn" disabled
+        class="mt-4 w-full bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold text-sm py-2.5 rounded-full transition">
+        Read the mood
+      </button>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/15 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="out" class="mt-5"></div>
+
+    <p class="mt-6 text-[11px] text-emerald-200/50 text-center leading-relaxed">
+      Uses <b>Xenova/distilbert-base-uncased-finetuned-sst-2-english</b> through <b>transformers.js</b>.
+      The model runs in this tab; your text is never sent anywhere.
+    </p>
+  </div>
+
+  <script type="module">
+    import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0";
+
+    const modelBadge = document.getElementById('modelBadge');
+    const runBtn = document.getElementById('runBtn');
+    const errBox = document.getElementById('errorBox');
+    const out = document.getElementById('out');
+    let classifier = null;
+
+    function esc(value) {
+      return String(value || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function showError(msg) { errBox.textContent = msg; errBox.classList.remove('hidden'); }
+    function clearError() { errBox.classList.add('hidden'); }
+
+    async function boot() {
+      try {
+        classifier = await pipeline('sentiment-analysis', 'Xenova/distilbert-base-uncased-finetuned-sst-2-english');
+        modelBadge.textContent = 'DistilBERT SST-2 ready';
+        modelBadge.className = 'px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30';
+        runBtn.disabled = false;
+      } catch (e) {
+        modelBadge.textContent = 'Model failed to load';
+        modelBadge.className = 'px-3 py-1 rounded-full bg-red-500/15 text-red-300 border border-red-500/30';
+        showError('Could not load the model: ' + (e && e.message ? e.message : e));
+      }
+    }
+
+    async function run() {
+      clearError();
+      const lines = document.getElementById('text').value
+        .split('\n').map(l => l.trim()).filter(Boolean).slice(0, 25);
+      if (!lines.length) return showError('Add at least one line to analyse.');
+      if (!classifier) return showError('The model is still loading.');
+
+      runBtn.disabled = true;
+      const original = runBtn.textContent;
+      runBtn.textContent = 'Scoring…';
+      out.innerHTML = '';
+
+      try {
+        let positive = 0;
+        const rows = [];
+        for (const line of lines) {
+          const res = await classifier(line);
+          const top = res[0];
+          const isPos = top.label === 'POSITIVE';
+          const confidence = Math.round(top.score * 100);
+          if (isPos) positive += 1;
+          rows.push({ line, isPos, confidence });
+        }
+
+        const share = Math.round((positive / rows.length) * 100);
+        const mood = share >= 70 ? ['Positive', 'text-emerald-300']
+          : share >= 40 ? ['Mixed', 'text-amber-300']
+          : ['Negative', 'text-red-300'];
+
+        out.innerHTML = `
+          <div class="fade-in bg-emerald-950/60 rounded-2xl border border-emerald-700/50 overflow-hidden">
+            <div class="p-4 border-b border-emerald-800/50">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs text-emerald-300/70">Overall mood across ${rows.length} line${rows.length === 1 ? '' : 's'}</p>
+                  <p class="text-2xl font-bold ${mood[1]}">${mood[0]}</p>
+                </div>
+                <p class="text-3xl font-black ${mood[1]}">${share}%</p>
+              </div>
+              <div class="mt-3 h-2 rounded-full bg-black/40 overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-red-400 via-amber-400 to-emerald-400 transition-all" style="width:${share}%"></div>
+              </div>
+            </div>
+            <ul class="divide-y divide-emerald-900/50">
+              ${rows.map(r => `
+                <li class="p-3.5 flex items-start gap-3">
+                  <span class="mt-0.5 text-lg">${r.isPos ? '🙂' : '🙁'}</span>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm text-emerald-50/90">${esc(r.line)}</p>
+                    <div class="flex items-center gap-2 mt-1.5">
+                      <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${r.isPos ? 'bg-emerald-500/20 text-emerald-300' : 'bg-red-500/20 text-red-300'}">${r.isPos ? 'POSITIVE' : 'NEGATIVE'}</span>
+                      <div class="flex-1 h-1.5 rounded-full bg-black/40 overflow-hidden">
+                        <div class="h-full ${r.isPos ? 'bg-emerald-400' : 'bg-red-400'}" style="width:${r.confidence}%"></div>
+                      </div>
+                      <span class="text-[10px] text-emerald-200/60 w-8 text-right">${r.confidence}%</span>
+                    </div>
+                  </div>
+                </li>`).join('')}
+            </ul>
+          </div>`;
+      } catch (e) {
+        showError('Analysis failed: ' + (e && e.message ? e.message : e));
+      } finally {
+        runBtn.disabled = false;
+        runBtn.textContent = original;
+      }
+    }
+
+    runBtn.addEventListener('click', run);
+    boot();
+  </script>
+</body>
+</html>

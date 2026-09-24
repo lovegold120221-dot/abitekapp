@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="../../../../fonts.googleapis.com/css2%3Ffamily=Poppins:ital,wght@0,100%3B0,200%3B0,300%3B0,400%3B0,500%3B0,600%3B0,700%3B0,800%3B0,900%3B1,100%3B1,200%3B1,300%3B1,400%3B1,500%3B1,600%3B1,700%3B1,800%3B1,900&amp;display=swap.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="furniture poppins-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/Furniture.gif" class="img-fluid" alt="furniture">
+    </div>
+    <!-- loader End -->
+
+    <!-- header start -->
+    <header class="furniture-header">
+        <div class="custom-container2">
+            <div class="header-panel">
+                <button class="left-btn" onclick="history.back()">
+                    <i class="iconsax arrow-icon" data-icon="arrow-left"></i>
+                </button>
+                <h3>My Cart</h3>
+            </div>
+        </div>
+    </header>
+    <!-- header  end  -->
+
+    <!-- cart section start -->
+    <section class="pt-0 furniture-cart-section">
+        <div class="custom-container2">
+            <ul class="furniture-cart-list">
+                <li>
+                    <a href="my-cart.html">
+                        <img src="../assets/images/furniture/shopping/1.png" class="img-fluid" alt="png">
+                    </a>
+                    <div class="cart-details">
+                        <div class="cart-content">
+                            <div>
+                                <h4>Round Flower Pots</h4>
+                                <h5>Modern saddle chairs...</h5>
+                            </div>
+                            <i class="iconsax close-icon" data-icon="add"></i>
+                        </div>
+                        <div class="cart-count-price">
+                            <h6>$25</h6>
+                            <div class="plus-minus">
+                                <i class="iconsax icon sub" data-icon="minus"></i>
+                                <input type="number" disabled="" value="1" min="1" max="10">
+                                <i class="iconsax icon add" data-icon="add"></i>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="my-cart.html">
+                        <img src="../assets/images/furniture/shopping/2.png" class="img-fluid" alt="png">
+                    </a>
+                    <div class="cart-details">
+                        <div class="cart-content">
+                            <div>
+                                <h4>Tripod Floor Lamp</h4>
+                                <h5>Modern saddle arms...</h5>
+                            </div>
+                            <i class="iconsax close-icon" data-icon="add"></i>
+                        </div>
+                        <div class="cart-count-price">
+                            <h6>$999</h6>
+                            <div class="plus-minus">
+                                <i class="iconsax icon sub" data-icon="minus"></i>
+                                <input type="number" disabled="" value="1" min="1" max="10">
+                                <i class="iconsax icon add" data-icon="add"></i>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="my-cart.html">
+                        <img src="../assets/images/furniture/shopping/3.png" class="img-fluid" alt="png">
+                    </a>
+                    <div class="cart-details">
+                        <div class="cart-content">
+                            <div>
+                                <h4>Wingback Chair</h4>
+                                <h5>Modern saddle arms...</h5>
+                            </div>
+                            <i class="iconsax close-icon" data-icon="add"></i>
+                        </div>
+                        <div class="cart-count-price">
+                            <h6>$37</h6>
+                            <div class="plus-minus">
+                                <i class="iconsax icon sub" data-icon="minus"></i>
+                                <input type="number" disabled="" value="1" min="1" max="10">
+                                <i class="iconsax icon add" data-icon="add"></i>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- cart section  end -->
+
+    <!-- footer bottom start-->
+    <div class="furniture-cart-total">
+        <div class="cart-price-box">
+            <h6>Total price</h6>
+            <h5>$304.00</h5>
+        </div>
+        <a href="my-cart.html" class="btn checkout-btn">Checkout</a>
+
+    </div>
+    <!-- footer bottom  end -->
+
+
+
+    <!-- Bootstrap JS-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax JS-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- quantity js -->
+    <script src="../assets/js/quantity.js"></script>
+
+    <!-- script JS -->
+    <script src="../assets/js/script.js"></script>
+
+</body>
+
+</html>

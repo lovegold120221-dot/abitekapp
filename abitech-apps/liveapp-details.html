@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>App Preview — Abitech Apps Store</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="app-icons.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Roboto', 'sans-serif'] },
+          colors: {
+            play: {
+              green: '#01875f',
+              greenHover: '#016d4d',
+              greenLight: '#e6f4ea',
+              surface: '#f8fafd',
+              card: '#ffffff',
+              border: '#e0e3e7',
+              textPrimary: '#1f1f1f',
+              textSecondary: '#5f6368'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .squircle { border-radius: 22%; }
+    .soft-shadow { box-shadow: 0 1px 3px rgba(60,64,67,.12), 0 1px 2px rgba(60,64,67,.08); }
+    .phone-shadow { box-shadow: 0 25px 60px rgba(0,0,0,.35), 0 0 0 10px #101418, 0 0 0 12px #2a323b; }
+    .preview-header { padding-top: env(safe-area-inset-top); }
+    .preview-toolbar { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 4px 12px; }
+    .preview-back { min-height: 44px; white-space: nowrap; }
+    .preview-toggle { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .preview-toggle button { min-height: 40px; justify-content: center; white-space: nowrap; }
+    #webWrap, #previewLayout > div { min-width: 0; }
+    /* Fullscreen mockup: phone height fills the viewport, width follows the screen ratio. */
+    #phoneScreen { height: clamp(540px, calc(100dvh - 250px), 860px); aspect-ratio: 9 / 19; }
+    #phoneFrame { width: auto; max-width: calc(100vw - 32px); }
+    #webView { height: clamp(540px, calc(100dvh - 300px), 860px); }
+    #previewLayout { min-height: calc(100dvh - 200px); }
+    @media (min-width: 768px) {
+      .preview-toolbar { grid-template-columns: auto minmax(0, 1fr) auto; gap: 24px; }
+      .preview-toggle { grid-column: auto; }
+    }
+  </style>
+</head>
+<body class="bg-play-surface text-play-textPrimary font-sans antialiased min-h-screen">
+
+  <!-- Top bar -->
+  <header class="preview-header sticky top-0 z-40 bg-white border-b border-play-border/60">
+    <div class="preview-toolbar max-w-6xl mx-auto px-4 md:px-8 pt-1 pb-3 md:py-2">
+    <a href="index.html" aria-label="Back to Store" class="preview-back flex items-center gap-2 text-sm font-medium text-play-textSecondary hover:text-play-green">
+      <img src="assets/logo-abitech.png" alt="Abitech" class="h-6 w-6 object-contain shrink-0"><i data-lucide="arrow-left" class="w-4 h-4 shrink-0 hidden sm:block"></i><span class="md:hidden">Store</span><span class="hidden md:inline">Back to Store</span>
+    </a>
+    <h1 id="pageTitle" class="min-w-0 text-sm md:text-base font-bold truncate">App Preview</h1>
+    <!-- Android / iOS / Webview toggle -->
+    <div role="group" aria-label="Preview device" class="preview-toggle items-center bg-gray-100 rounded-full p-1 text-xs font-semibold">
+      <button id="osAndroid" onclick="setOS('android')" class="px-3.5 py-1.5 rounded-full flex items-center gap-1.5 transition">
+        <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> Android
+      </button>
+      <button id="osIos" onclick="setOS('ios')" class="px-3.5 py-1.5 rounded-full flex items-center gap-1.5 transition">
+        <i data-lucide="apple" class="w-3.5 h-3.5"></i> iOS
+      </button>
+      <button id="osWeb" onclick="setOS('webview')" class="px-3.5 py-1.5 rounded-full flex items-center gap-1.5 transition">
+        <i data-lucide="globe" class="w-3.5 h-3.5"></i> Webview
+      </button>
+    </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 md:px-8 py-6 md:py-8">
+    <div id="errorBox" class="hidden text-center py-16 text-play-textSecondary text-sm"></div>
+
+    <div id="previewLayout" class="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-8">
+      <!-- Phone mockup -->
+      <div id="phoneWrap" class="shrink-0">
+      <div id="phoneFrame" class="phone-shadow bg-black rounded-[2.5rem] p-2.5 w-[300px] sm:w-[330px] shrink-0">
+        <div id="phoneScreen" class="relative bg-white rounded-[2rem] overflow-hidden h-[620px] sm:h-[660px] flex flex-col">
+          <!-- OS chrome injected here -->
+          <div id="statusBar"></div>
+          <!-- Fullscreen app view -->
+          <div id="appView" class="flex-1 overflow-y-auto hide-scrollbar"></div>
+          <div id="navBar"></div>
+        </div>
+      </div>
+      </div>
+
+      <!-- Webview (browser) mockup -->
+      <div id="webWrap" class="hidden w-full max-w-5xl shrink">
+        <div class="bg-white rounded-2xl soft-shadow border border-play-border/60 overflow-hidden">
+          <!-- Browser chrome (no URL shown) -->
+          <div class="flex items-center gap-2 px-4 py-2.5 bg-gray-50 border-b border-gray-200">
+            <span class="flex gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+            </span>
+            <span class="flex-1"></span>
+            <i data-lucide="rotate-cw" class="w-3.5 h-3.5 text-gray-400"></i>
+          </div>
+          <!-- Web app view -->
+          <div id="webView" class="h-[620px] sm:h-[660px] overflow-y-auto hide-scrollbar"></div>
+        </div>
+      </div>
+
+      <!-- Full details panel (hidden in Webview mode so the browser takes the screen) -->
+      <div id="detailPanel" class="w-full max-w-xl bg-white rounded-3xl soft-shadow border border-play-border/60 p-4 sm:p-6">
+        <div class="flex gap-4 items-start">
+          <div id="detailIcon" class="w-16 h-16 squircle shrink-0 overflow-hidden"></div>
+          <div class="min-w-0">
+            <h2 id="detailName" class="text-xl font-bold leading-tight"></h2>
+            <p id="detailDev" class="text-sm font-semibold text-play-green"></p>
+            <p id="detailMeta" class="text-xs text-play-textSecondary mt-0.5"></p>
+          </div>
+        </div>
+        <div id="detailStats" class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5 text-center"></div>
+        <p id="detailDesc" class="text-sm text-play-textSecondary leading-relaxed mt-5"></p>
+        <div id="detailTags" class="mt-4 flex flex-wrap gap-2"></div>
+        <button id="detailDlBtn" onclick="simulateDetailDownload()" class="mt-6 w-full py-2.5 rounded-full bg-play-green hover:bg-play-greenHover text-white font-medium text-sm transition flex items-center justify-center gap-2">
+          <i data-lucide="download" class="w-4 h-4"></i><span>Download APK</span>
+        </button>
+        <button id="detailOpenBtn" type="button" onclick="openFullApp()" class="hidden mt-2 w-full py-2.5 rounded-full bg-gray-100 hover:bg-play-greenLight hover:text-play-green text-gray-700 font-medium text-sm transition flex items-center justify-center gap-2 cursor-pointer">
+          <i data-lucide="maximize-2" class="w-4 h-4"></i><span>View Full App</span>
+        </button>
+        <div id="detailDlProgress" class="hidden mt-3">
+          <div class="flex justify-between text-xs text-play-textSecondary font-medium">
+            <span id="detailDlStatus">Downloading APK...</span><span id="detailDlPct">0%</span>
+          </div>
+          <div class="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden mt-1">
+            <div id="detailDlBar" class="h-full bg-play-green transition-all duration-200" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyA6tub1WpBRJA-WmlQapJnQlLbFQ3ISzBM",
+      authDomain: "hpanel-7a898.firebaseapp.com",
+      databaseURL: "https://hpanel-7a898-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "hpanel-7a898",
+      storageBucket: "hpanel-7a898.firebasestorage.app",
+      messagingSenderId: "1017808548297",
+      appId: "1:1017808548297:web:0c8c620d1560767fc1f818",
+      measurementId: "G-K4E1EST5H6"
+    };
+
+    const appId = new URLSearchParams(location.search).get('id');
+    let app = null;
+    let currentOS = 'android';
+    let activeFrameUrl = '';
+
+    function logoImg(a, cls) {
+      return AppIcons.render(a, cls);
+    }
+
+    function safeFrameUrl(value) {
+      if (typeof value !== 'string' || !value.trim()) return '';
+      try {
+        const url = new URL(value, window.location.href);
+        return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : '';
+      } catch (e) {
+        return '';
+      }
+    }
+
+    function escapeAttribute(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function loadApp() {
+      // 1) Instant path: index.html stashed the app in sessionStorage.
+      try {
+        const cached = JSON.parse(sessionStorage.getItem('abitech_preview_app') || 'null');
+        if (cached && (!appId || cached.id === appId)) { app = cached; render(); return; }
+        const list = JSON.parse(sessionStorage.getItem('abitech_preview_list') || 'null');
+        if (list && appId) {
+          const found = list.find(a => a.id === appId);
+          if (found) { app = found; render(); return; }
+        }
+      } catch (e) {}
+      // 2) Fallback: fetch single record from Firebase RTDB.
+      try {
+        if (typeof firebase !== 'undefined') {
+          if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+          firebase.database().ref('apps/' + appId).once('value').then(snap => {
+            if (snap.val()) { app = { ...snap.val(), id: appId }; render(); }
+            else showError();
+          }).catch(showError);
+          return;
+        }
+      } catch (e) {}
+      showError();
+    }
+
+    function showError() {
+      document.getElementById('previewLayout').classList.add('hidden');
+      const box = document.getElementById('errorBox');
+      box.classList.remove('hidden');
+      box.innerHTML = `<i data-lucide="smartphone" class="w-10 h-10 mx-auto mb-2"></i>
+        <p>Couldn't load this app preview. Open it from the store instead.</p>
+        <a href="index.html" class="text-play-green font-semibold hover:underline">← Back to Store</a>`;
+      lucide.createIcons();
+    }
+
+    function osChrome() {
+      const sb = document.getElementById('statusBar');
+      const nb = document.getElementById('navBar');
+      const frame = document.getElementById('phoneFrame');
+      const screen = document.getElementById('phoneScreen');
+      if (currentOS === 'ios') {
+        frame.className = 'phone-shadow bg-black rounded-[3rem] p-2.5 w-[300px] sm:w-[330px] shrink-0';
+        screen.className = 'relative bg-white rounded-[2.5rem] overflow-hidden h-[620px] sm:h-[660px] flex flex-col';
+        sb.innerHTML = `
+          <div class="relative flex items-center justify-between px-6 pt-3 pb-1 text-xs font-semibold text-gray-900">
+            <span>9:41</span>
+            <span class="absolute left-1/2 -translate-x-1/2 top-2 w-24 h-6 bg-black rounded-full"></span>
+            <span class="flex items-center gap-1"><i data-lucide="signal" class="w-3.5 h-3.5"></i><i data-lucide="wifi" class="w-3.5 h-3.5"></i><i data-lucide="battery-full" class="w-4 h-4"></i></span>
+          </div>`;
+        nb.innerHTML = `<div class="flex justify-center py-2 bg-white"><span class="w-28 h-1 rounded-full bg-gray-900"></span></div>`;
+      } else {
+        frame.className = 'phone-shadow bg-black rounded-[2.5rem] p-2.5 w-[300px] sm:w-[330px] shrink-0';
+        screen.className = 'relative bg-white rounded-[2rem] overflow-hidden h-[620px] sm:h-[660px] flex flex-col';
+        sb.innerHTML = `
+          <div class="flex items-center justify-between px-5 pt-3 pb-1 text-xs font-medium text-gray-900">
+            <span>9:41</span>
+            <span class="absolute left-1/2 -translate-x-1/2 top-3.5 w-3 h-3 bg-black rounded-full"></span>
+            <span class="flex items-center gap-1"><i data-lucide="signal" class="w-3.5 h-3.5"></i><i data-lucide="wifi" class="w-3.5 h-3.5"></i><i data-lucide="battery-full" class="w-4 h-4"></i></span>
+          </div>`;
+        nb.innerHTML = `
+          <div class="flex items-center justify-around py-2.5 bg-white border-t border-gray-100 text-gray-700">
+            <i data-lucide="triangle" class="w-4 h-4 -rotate-90"></i>
+            <i data-lucide="circle" class="w-4 h-4"></i>
+            <i data-lucide="square" class="w-4 h-4"></i>
+          </div>`;
+      }
+    }
+
+    // Live embed: every catalog app is a real bundled PWA opened in an iframe.
+    function liveFrameHTML() {
+      const frameUrl = safeFrameUrl(activeFrameUrl || app.previewUrl);
+      if (!frameUrl) return '<div class="h-full grid place-items-center p-6 text-sm text-play-textSecondary">Preview unavailable.</div>';
+      return `<iframe src="${escapeAttribute(frameUrl)}" title="${escapeAttribute(app.title)} live preview" loading="lazy" referrerpolicy="no-referrer" class="block w-full h-full border-0 bg-white"></iframe>`;
+    }
+    // Mockup screen content is always the live app (mock data removed).
+    function screenHTML() {
+      return liveFrameHTML();
+    }
+
+    function detailPanelHTML() {
+      document.getElementById('pageTitle').textContent = app.title + ' — Preview';
+      document.getElementById('pageTitle').title = app.title + ' — Preview';
+      document.getElementById('detailIcon').innerHTML = logoImg(app, 'w-8 h-8');
+      document.getElementById('detailName').textContent = app.title;
+      document.getElementById('detailDev').textContent = app.developer || '';
+      document.getElementById('detailMeta').textContent =
+        [app.category, app.badge].filter(Boolean).join(' • ');
+      const stats = [
+        ['tag', app.category || '—', 'Category'],
+        ['award', app.badge || 'Live Demo', 'Collection'],
+        ['user', app.developer || '—', 'Developer'],
+        ['monitor-smartphone', 'Android • iOS • Web', 'Preview on']
+      ];
+      document.getElementById('detailStats').innerHTML = stats.map(([icon, v, l]) => `
+        <div class="rounded-xl bg-gray-50 border border-gray-100 p-2.5">
+          <i data-lucide="${icon}" class="w-4 h-4 mx-auto text-play-green"></i>
+          <p class="text-xs font-bold mt-1 truncate">${v}</p>
+          <p class="text-[10px] text-gray-500 truncate">${l}</p>
+        </div>`).join('');
+      document.getElementById('detailDesc').textContent = app.description || '';
+      const tags = [app.badge, app.category,
+        app.containsAds === true ? 'Contains ads' : app.containsAds === false ? 'No ads' : 'Ads not verified',
+        app.inAppPurchases === true ? 'In-app purchases' : app.inAppPurchases === false ? 'No in-app purchases' : 'Purchases not verified'].filter(Boolean);
+      document.getElementById('detailTags').innerHTML = tags.map(t =>
+        `<span class="text-[11px] bg-gray-100 px-2.5 py-1 rounded-md text-gray-600 font-medium">#${t}</span>`).join('');
+      const openBtn = document.getElementById('detailOpenBtn');
+      openBtn.classList.remove('hidden');
+      document.getElementById('detailDlBtn').classList.toggle('hidden', Boolean(app.externalUrl));
+    }
+
+    function openFullApp() {
+      if (!app) return;
+      const nextUrl = safeFrameUrl(app.externalUrl || app.previewUrl);
+      if (!nextUrl) return;
+      activeFrameUrl = nextUrl;
+      setOS(currentOS);
+    }
+
+    function paintToggle() {
+      const on = 'px-3.5 py-1.5 rounded-full flex items-center gap-1.5 transition bg-white shadow text-play-green';
+      const off = 'px-3.5 py-1.5 rounded-full flex items-center gap-1.5 transition text-play-textSecondary';
+      document.getElementById('osAndroid').className = currentOS === 'android' ? on : off;
+      document.getElementById('osIos').className = currentOS === 'ios' ? on : off;
+      document.getElementById('osWeb').className = currentOS === 'webview' ? on : off;
+      ['osAndroid', 'osIos', 'osWeb'].forEach((id, index) => {
+        document.getElementById(id).setAttribute('aria-pressed', String(currentOS === ['android', 'ios', 'webview'][index]));
+      });
+    }
+
+    function paintWraps() {
+      const isWeb = currentOS === 'webview';
+      document.getElementById('phoneWrap').classList.toggle('hidden', isWeb);
+      document.getElementById('webWrap').classList.toggle('hidden', !isWeb);
+      // Webview owns the screen: hide the side details panel.
+      document.getElementById('detailPanel').classList.toggle('hidden', isWeb);
+      if (isWeb && app) {
+        document.getElementById('webView').innerHTML = screenHTML();
+      }
+    }
+
+    function setOS(os) {
+      currentOS = os;
+      paintToggle();
+      paintWraps();
+      if (currentOS !== 'webview') {
+        osChrome();
+        if (app) document.getElementById('appView').innerHTML = screenHTML();
+      }
+      lucide.createIcons();
+    }
+
+    function render() {
+      if (!app) return showError();
+      const initialUrl = safeFrameUrl(app.previewUrl);
+      if (!initialUrl) return showError();
+      activeFrameUrl = initialUrl;
+      paintToggle();
+      osChrome();
+      document.getElementById('appView').innerHTML = screenHTML();
+      paintWraps();
+      detailPanelHTML();
+      lucide.createIcons();
+    }
+
+    let detailTimer = null;
+    function simulateDetailDownload() {
+      const bar = document.getElementById('detailDlBar');
+      const pct = document.getElementById('detailDlPct');
+      const status = document.getElementById('detailDlStatus');
+      const box = document.getElementById('detailDlProgress');
+      const btn = document.getElementById('detailDlBtn');
+      clearInterval(detailTimer);
+      btn.classList.add('hidden');
+      box.classList.remove('hidden');
+      let p = 0;
+      detailTimer = setInterval(() => {
+        p = Math.min(100, p + Math.floor(Math.random() * 15) + 8);
+        bar.style.width = p + '%';
+        pct.textContent = p + '%';
+        status.textContent = p < 100 ? 'Downloading APK...' : 'Download complete';
+        if (p >= 100) clearInterval(detailTimer);
+      }, 250);
+    }
+
+    document.addEventListener('DOMContentLoaded', loadApp);
+  </script>
+</body>
+</html>

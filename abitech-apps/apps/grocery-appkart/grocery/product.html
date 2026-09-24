@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Mulish:ital,wght@0,200..1000%3B1,200..1000&amp;display=swap.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Iconly css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconly.css">
+
+    <!-- swiper css -->
+    <link rel="stylesheet" href="../assets/css/vendors/swiper/swiper.min.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="grocery mulish-font light-bg-color">
+    <!-- header starts -->
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/grocery.gif" class="img-fluid" alt="grocery">
+    </div>
+    <!-- loader End -->
+
+    <!-- header start -->
+    <header class="main-header grocery-main-header light-bg-color">
+        <div class="custom-container">
+            <div class="header-panel">
+                <a href="product.html#" onclick="history.back()">
+                    <i class="iconsax icon-btn" data-icon="chevron-left"> </i>
+                </a>
+                <h3>Product Details</h3>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+    <!-- product details section starts -->
+    <section class="section-lg-t-space light-bg-color position-relative">
+        <div class="swiper grocery-product-image">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img class="img-fluid product" src="../assets/images/grocery/product/5-1.png" alt="product">
+                </div>
+                <div class="swiper-slide">
+                    <img class="img-fluid product" src="../assets/images/grocery/product/5-2.png" alt="product">
+                </div>
+                <div class="swiper-slide">
+                    <img class="img-fluid product" src="../assets/images/grocery/product/5-3.png" alt="product">
+                </div>
+                <div class="swiper-slide">
+                    <img class="img-fluid product" src="../assets/images/grocery/product/5-4.png" alt="product">
+                </div>
+            </div>
+        </div>
+
+        <div class="swiper grocery-product-thumbnail">
+            <div class="swiper-wrapper flex-center">
+                <div class="swiper-slide product-thumbnail">
+                    <img class="img-fluid product-thumbnail-img" src="../assets/images/grocery/product/5-1.png"
+                        alt="product">
+                </div>
+                <div class="swiper-slide product-thumbnail">
+                    <img class="img-fluid product-thumbnail-img" src="../assets/images/grocery/product/5-2.png"
+                        alt="product">
+                </div>
+                <div class="swiper-slide product-thumbnail">
+                    <img class="img-fluid product-thumbnail-img" src="../assets/images/grocery/product/5-3.png"
+                        alt="product">
+                </div>
+                <div class="swiper-slide product-thumbnail">
+                    <img class="img-fluid product-thumbnail-img" src="../assets/images/grocery/product/5-4.png"
+                        alt="product">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="grocery-product-details-content section-b-space">
+        <div class="custom-container">
+            <div class="product-details">
+                <span class="product-tag">Fruits</span>
+                <div class="flex-space">
+                    <h3 class="product-name">Fresh Strawberry <span> (1kg) </span></h3>
+
+                </div>
+
+                <div class="flex-common gap-2 mt-1">
+                    <ul class="ratings">
+                        <li>
+                            <img class="img-fluid star" src="../assets/images/svg/star-fill.svg" alt="star">
+                        </li>
+                        <li>
+                            <img class="img-fluid star" src="../assets/images/svg/star-fill.svg" alt="star">
+                        </li>
+                        <li>
+                            <img class="img-fluid star" src="../assets/images/svg/star-fill.svg" alt="star">
+                        </li>
+                        <li>
+                            <img class="img-fluid star" src="../assets/images/svg/star-fill.svg" alt="star">
+                        </li>
+                        <li>
+                            <img class="img-fluid star" src="../assets/images/svg/star-outline.svg" alt="star">
+                        </li>
+                    </ul>
+                    <span class="rating-count"> (4.0)</span>
+                </div>
+                <div class="flex-space">
+                    <h4 class="price">$32.00 <del> $35.00 </del></h4>
+                    <div class="plus-minus">
+                        <i class="iconsax icon sub" data-icon="minus"></i>
+                        <input type="number" disabled="" value="1" min="1" max="10">
+                        <i class="iconsax icon add" data-icon="add"></i>
+                    </div>
+                </div>
+                <div class="title mt-3 mb-1">
+                    <h3>Product Details</h3>
+                </div>
+
+                <p class="product-description">
+                    A strawberry is the edible fruit of a number of trees, known for its juicy, green, or red fruits.
+                    The tree is grown worldwide. Its fruit is low-cost, popular, and common all over the earth. Trees
+                    and fruit are <span class="theme-color">Read More</span>
+                </p>
+
+                <div class="title plant-title mt-4">
+                    <h3>Customer Reviews</h3>
+                </div>
+
+                <ul class="review-list">
+                    <li class="review-box">
+                        <div class="media">
+                            <img class="img-fluid profile-icon" src="../assets/images/profile/p4.png" alt="p1">
+                            <div class="media-body">
+                                <div class="flex-space">
+                                    <h4>Mark Jacob </h4>
+                                    <span>2 Aug, 2025</span>
+                                </div>
+                                <ul class="ratings bg-transparent p-0">
+                                    <li><img class="star" src="../assets/images/ecommerce/svg/star-fill.svg" alt="">
+                                    </li>
+                                    <li><img class="star" src="../assets/images/ecommerce/svg/star-fill.svg" alt="">
+                                    </li>
+                                    <li><img class="star" src="../assets/images/ecommerce/svg/star-fill.svg" alt="">
+                                    </li>
+                                    <li><img class="star" src="../assets/images/ecommerce/svg/star-fill.svg" alt="">
+                                    </li>
+                                    <li><img class="star" src="../assets/images/ecommerce/svg/star-outline.svg" alt="">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <h4 class="review-content">It's a really cute skirt! I didn't expect to feel so good in a
+                            polyester material. The print is slightly less bright than what is shown in the product
+                            description.
+                        </h4>
+
+                    </li>
+                    <li class="review-box">
+                        <div class="media">
+                            <img class="img-fluid profile-icon" src="../assets/images/profile/p1.png" alt="p2">
+                            <div class="media-body">
+                                <div class="flex-space">
+                                    <h4>Kuban Guba</h4>
+                                    <span>28 Aug, 2025</span>
+                                </div>
+                                <ul class="ratings bg-transparent p-0">
+                                    <li><img class="star" src="../assets/images/ecommerce/svg/star-fill.svg" alt="">
+                                    </li>
+                                    <li><img class="star" src="../assets/images/ecommerce/svg/star-fill.svg" alt="">
+                                    </li>
+                                    <li><img class="star" src="../assets/images/ecommerce/svg/star-fill.svg" alt="">
+                                    </li>
+                                    <li><img class="star" src="../assets/images/ecommerce/svg/star-fill.svg" alt="">
+                                    </li>
+                                    <li><img class="star" src="../assets/images/ecommerce/svg/star-outline.svg" alt="">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <h4 class="review-content">It's a really cute skirt! I didn't expect to feel so good in a
+                            polyester material. The print is slightly less bright than what is shown in the product
+                            description.
+                        </h4>
+                    </li>
+                </ul>
+            </div>
+            <div class="title plant-title mt-3">
+                <h3>Related Product</h3>
+                <a href="shop.html">See All</a>
+            </div>
+            <div class="swiper grocery-product">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="product-box grocery-product-box">
+                            <div class="img-part">
+                                <a href="product.html" class="product-image"><img
+                                        src="../assets/images/grocery/product/1.png" alt=""
+                                        class="img-fluid product"></a>
+                            </div>
+                            <div class="product-content">
+
+                                <a href="product.html" class="product-name">
+                                    Organic Nature’s Fresh Mulberry
+                                </a>
+                                <h6>1 kg</h6>
+
+                                <div class="flex-space mt-2">
+                                    <h4 class="price">$15<del> $20</del></h4>
+                                    <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="product-box grocery-product-box">
+                            <div class="img-part">
+                                <a href="product.html" class="product-image"><img
+                                        src="../assets/images/grocery/product/2.png" alt=""
+                                        class="img-fluid product"></a>
+                            </div>
+
+                            <div class="product-content">
+                                <a href="product.html" class="product-name">
+                                    Nature’s Green Gems of Goodness </a>
+                                <h6>2 kg</h6>
+
+                                <div class="flex-space mt-2">
+                                    <h4 class="price">$20<del> $30</del></h4>
+                                    <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="product-box grocery-product-box">
+                            <div class="img-part">
+                                <a href="product.html" class="product-image"><img
+                                        src="../assets/images/grocery/product/3.png" alt=""
+                                        class="img-fluid product"></a>
+                            </div>
+                            <div class="product-content">
+
+                                <a href="product.html" class="product-name">
+                                    Potato Organically Grown
+                                </a>
+                                <h6>1 kg</h6>
+
+                                <div class="flex-space mt-2">
+                                    <h4 class="price">$15<del> $20</del></h4>
+                                    <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="product-box grocery-product-box">
+                            <div class="img-part">
+                                <a href="product.html" class="product-image"><img
+                                        src="../assets/images/grocery/product/4.png" alt=""
+                                        class="img-fluid product"></a>
+                            </div>
+                            <div class="product-content">
+
+                                <a href="product.html" class="product-name">
+                                    gourmet garden Organic Onion
+
+                                </a>
+                                <h6>1 kg</h6>
+
+                                <div class="flex-space mt-2">
+                                    <h4 class="price">$12<del> $15</del></h4>
+                                    <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- product details section end -->
+
+    <!-- fixed-panel start -->
+    <div class="fixed-panel grocery-fixed-panel">
+        <div class="custom-container">
+            <div class="fixed-panel-content">
+                <div>
+                    <h6>1 Items</h6>
+                    <h5>$32.00</h5>
+                </div>
+                <a href="cart.html" class="btn fixed-btn">View Cart <i class="iconsax"
+                        data-icon="chevron-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <!-- fixed-panel end -->
+
+    <!-- panel-space start -->
+    <div class="panel-space-sm"></div>
+    <!-- panel-space end -->
+
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- swiper js -->
+    <script src="../assets/js/vendors/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/js/custom-swiper.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- quantity js -->
+    <script src="../assets/js/quantity.js"></script>
+
+    <!-- template Settings js-->
+    <script src="../assets/js/template-setting.js"></script>
+
+    <!-- script js-->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

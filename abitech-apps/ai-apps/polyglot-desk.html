@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Polyglot Desk — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0d1526] text-blue-50">
+  <div class="max-w-3xl mx-auto px-4 py-8">
+    <a href="../index.html" class="text-xs text-blue-300/80 hover:text-white">← Abitech Apps Store</a>
+
+    <div class="text-center mt-4">
+      <div class="text-5xl">🌍</div>
+      <h1 class="text-3xl font-bold mt-2">Polyglot Desk</h1>
+      <p class="text-sm text-blue-200/80 mt-1">Neural machine translation that downloads the language pair you need, then runs offline.</p>
+    </div>
+
+    <div class="mt-4 flex justify-center text-[11px]">
+      <span id="modelBadge" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Pick a direction to load a model</span>
+    </div>
+
+    <div class="mt-6 bg-blue-950/40 rounded-2xl p-5 border border-blue-900/60">
+      <label class="block text-xs text-blue-300/80">Direction
+        <select id="pair" class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2 text-sm border border-blue-900/60 outline-none focus:border-blue-400"></select>
+      </label>
+
+      <div class="grid md:grid-cols-2 gap-3 mt-4">
+        <div>
+          <div class="flex items-center justify-between">
+            <label class="text-xs text-blue-300/80">Source</label>
+            <button id="swapBtn" class="text-[11px] text-blue-300 hover:text-white font-semibold">⇄ Swap</button>
+          </div>
+          <textarea id="source" rows="8"
+            class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2.5 text-sm outline-none border border-blue-900/60 focus:border-blue-400 resize-y placeholder:text-blue-200/30"
+            placeholder="Type or paste the text to translate…">My name is Wolfgang and I live in Berlin.</textarea>
+        </div>
+        <div>
+          <label class="text-xs text-blue-300/80">Translation</label>
+          <div id="target" class="mt-1 w-full min-h-[13.5rem] bg-black/30 rounded-xl px-3 py-2.5 text-sm border border-blue-900/60 text-blue-50/90 whitespace-pre-wrap">
+            <span class="text-blue-200/40">The translated text appears here…</span>
+          </div>
+        </div>
+      </div>
+
+      <button id="runBtn" disabled
+        class="mt-4 w-full bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold text-sm py-2.5 rounded-full transition">
+        Translate
+      </button>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/15 border border-red-400/40 rounded-xl p-3"></div>
+
+    <p class="mt-6 text-[11px] text-blue-200/50 text-center leading-relaxed">
+      Powered by Marian <b>opus-mt</b> models converted for <b>transformers.js</b>. One model per language direction,
+      loaded on demand and cached by the browser after the first run.
+    </p>
+  </div>
+
+  <script type="module">
+    import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0";
+
+    const PAIRS = [
+      ['en-es', 'Xenova/opus-mt-en-es', 'English → Spanish'],
+      ['en-fr', 'Xenova/opus-mt-en-fr', 'English → French'],
+      ['en-de', 'Xenova/opus-mt-en-de', 'English → German'],
+      ['en-zh', 'Xenova/opus-mt-en-zh', 'English → Chinese'],
+      ['es-en', 'Xenova/opus-mt-es-en', 'Spanish → English'],
+      ['fr-en', 'Xenova/opus-mt-fr-en', 'French → English'],
+      ['de-en', 'Xenova/opus-mt-de-en', 'German → English'],
+      ['zh-en', 'Xenova/opus-mt-zh-en', 'Chinese → English']
+    ];
+
+    const modelBadge = document.getElementById('modelBadge');
+    const pairSel = document.getElementById('pair');
+    const runBtn = document.getElementById('runBtn');
+    const errBox = document.getElementById('errorBox');
+    const target = document.getElementById('target');
+    const sourceEl = document.getElementById('source');
+
+    const cache = new Map();   // pair code -> pipeline
+    let loading = null;
+
+    function esc(value) {
+      return String(value || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function showError(msg) { errBox.textContent = msg; errBox.classList.remove('hidden'); }
+    function clearError() { errBox.classList.add('hidden'); }
+
+    PAIRS.forEach(([code, , label]) => {
+      const o = document.createElement('option');
+      o.value = code;
+      o.textContent = label;
+      pairSel.appendChild(o);
+    });
+
+    function pairInfo(code) { return PAIRS.find(p => p[0] === code); }
+    function setLoadingBadge(msg, tone) {
+      modelBadge.textContent = msg;
+      modelBadge.className = 'px-3 py-1 rounded-full border ' + (tone === 'ok'
+        ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+        : tone === 'error'
+          ? 'bg-red-500/15 text-red-300 border-red-500/30'
+          : 'bg-amber-500/15 text-amber-300 border-amber-500/30');
+    }
+
+    async function loadPair(code) {
+      if (cache.has(code)) return cache.get(code);
+      if (loading === code) return null;
+      loading = code;
+      const info = pairInfo(code);
+      setLoadingBadge('Downloading ' + info[2].replace(' → ', '→') + '…');
+      runBtn.disabled = true;
+      try {
+        const pipe = await pipeline('translation', info[1]);
+        cache.set(code, pipe);
+        setLoadingBadge(info[2] + ' ready', 'ok');
+        runBtn.disabled = false;
+        return pipe;
+      } catch (e) {
+        setLoadingBadge('Model failed to load', 'error');
+        showError('Could not load ' + info[2] + ': ' + (e && e.message ? e.message : e));
+        return null;
+      } finally {
+        loading = null;
+      }
+    }
+
+    async function translate() {
+      clearError();
+      const text = sourceEl.value.trim();
+      if (!text) return showError('Type something to translate.');
+      const code = pairSel.value;
+      const pipe = cache.get(code) || await loadPair(code);
+      if (!pipe) return;
+
+      runBtn.disabled = true;
+      const original = runBtn.textContent;
+      runBtn.textContent = 'Translating…';
+      try {
+        const res = await pipe(text, { max_new_tokens: 400 });
+        const output = (res[0] && (res[0].translation_text || res[0].generated_text)) || '';
+        target.innerHTML = `<span class="fade-in">${esc(output) || '<span class="text-blue-200/40">No output.</span>'}</span>`;
+      } catch (e) {
+        showError('Translation failed: ' + (e && e.message ? e.message : e));
+      } finally {
+        runBtn.disabled = false;
+        runBtn.textContent = original;
+      }
+    }
+
+    pairSel.addEventListener('change', () => {
+      target.innerHTML = '<span class="text-blue-200/40">The translated text appears here…</span>';
+      const code = pairSel.value;
+      if (cache.has(code)) setLoadingBadge(pairInfo(code)[2] + ' ready', 'ok');
+      else setLoadingBadge('Model not downloaded yet', 'warn');
+    });
+
+    document.getElementById('swapBtn').addEventListener('click', () => {
+      const [from, to] = pairSel.value.split('-');
+      const swapped = to + '-' + from;
+      if (cache.has(swapped) || pairInfo(swapped)) {
+        pairSel.value = swapped;
+        pairSel.dispatchEvent(new Event('change'));
+      } else {
+        setLoadingBadge('No model for that direction', 'error');
+      }
+    });
+
+    runBtn.addEventListener('click', translate);
+    setLoadingBadge('Model not downloaded yet', 'warn');
+  </script>
+</body>
+</html>

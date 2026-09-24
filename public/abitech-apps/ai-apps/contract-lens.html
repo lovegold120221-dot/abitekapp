@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contract Lens — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .mono { font-family: 'Roboto Mono', monospace; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0f1319] text-slate-100">
+  <div class="max-w-3xl mx-auto px-4 py-8">
+    <a href="../index.html" class="text-xs text-sky-300/80 hover:text-white">← Abitech Apps Store</a>
+
+    <div class="text-center mt-4">
+      <div class="text-5xl">📑</div>
+      <h1 class="text-3xl font-bold mt-2">Contract Lens</h1>
+      <p class="text-sm text-sky-200/80 mt-1">Pull the parties, dates and money out of an agreement, summarise it, then interrogate the clauses.</p>
+    </div>
+
+    <div class="mt-4 flex flex-wrap items-center justify-center gap-2 text-[11px]">
+      <span id="bNer" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Entities: loading…</span>
+      <span id="bQa" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Reader: idle</span>
+      <span id="bSum" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Summary: idle</span>
+    </div>
+
+    <div class="mt-6 bg-slate-900/70 rounded-2xl p-5 border border-slate-800">
+      <div class="flex items-center justify-between">
+        <label class="text-xs text-slate-400">Agreement text</label>
+        <button id="sampleBtn" class="text-[11px] text-sky-300 hover:text-white font-semibold">Load sample</button>
+      </div>
+      <textarea id="doc" rows="9" class="mt-1 w-full bg-slate-950 rounded-xl px-3 py-2.5 text-sm outline-none border border-slate-700 focus:border-sky-400 resize-y" placeholder="Paste the contract or terms…"></textarea>
+      <label class="flex items-center gap-2 mt-2 text-xs text-slate-400">
+        <input id="doSum" type="checkbox" checked class="accent-sky-500" /> Also summarise (slower — loads DistilBART)
+      </label>
+      <button id="runBtn" disabled class="mt-3 w-full bg-sky-600 hover:bg-sky-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold text-sm py-2.5 rounded-full transition">Review document</button>
+      <p id="status" class="mt-2 text-xs text-slate-500"></p>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/15 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="out" class="mt-5"></div>
+
+    <p class="mt-6 text-[11px] text-slate-500 text-center leading-relaxed">
+      <b>bert-base-NER</b> finds the parties, <b>distilbart-cnn-6-6</b> summarises, <b>distilbert-squad</b> answers
+      your questions clause by clause. <b>Not legal advice</b> — models misread contracts, so verify anything that matters.
+    </p>
+  </div>
+
+  <script type="module">
+    import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0';
+
+    const NER = 'Xenova/bert-base-NER';
+    const QA = 'Xenova/distilbert-base-cased-distilled-squad';
+    const SUM = 'Xenova/distilbart-cnn-6-6';
+    const PRESETS = [
+      'What is the notice period for termination?',
+      'How much must be paid and when?',
+      'Who are the parties to this agreement?',
+      'What happens if either party breaches the agreement?',
+      'What law governs this agreement?',
+      'Can this agreement be assigned to someone else?'
+    ];
+    const SAMPLE = `MASTER SERVICES AGREEMENT
+
+This Master Services Agreement is entered into on 14 March 2026 between Northwind Logistics Ltd, a company registered in England (the "Supplier"), and Beacon Retail Group plc, whose registered office is at 8 Harbour Street, Manchester (the "Customer").
+
+1. Term. The agreement begins on 1 April 2026 and continues for an initial term of 24 months. Either party may terminate for convenience by giving 90 days written notice.
+
+2. Fees. The Customer shall pay a monthly service fee of GBP 12,500, invoiced in advance on the first working day of each month, payable within 30 days of the invoice date. Late payments accrue interest at 4% above the Bank of England base rate.
+
+3. Service levels. The Supplier shall maintain 99.9% monthly availability. If availability falls below this figure, the Customer is entitled to service credits of 10% of the monthly fee for each 0.1% shortfall, capped at 50% of the monthly fee.
+
+4. Termination for breach. Either party may terminate immediately on written notice if the other party commits a material breach and fails to remedy it within 30 days of being notified.
+
+5. Assignment. Neither party may assign this agreement without the prior written consent of the other party, except to an affiliate.
+
+6. Governing law. This agreement is governed by the laws of England and Wales, and the parties submit to the exclusive jurisdiction of the courts of London.`;
+
+    const bNer = document.getElementById('bNer'), bQa = document.getElementById('bQa'), bSum = document.getElementById('bSum');
+    const runBtn = document.getElementById('runBtn');
+    const errBox = document.getElementById('errorBox');
+    const out = document.getElementById('out');
+    const docEl = document.getElementById('doc');
+    const statusEl = document.getElementById('status');
+    const cache = new Map();
+
+    function esc(v) {
+      return String(v || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function showError(m) { errBox.textContent = m; errBox.classList.remove('hidden'); }
+    function clearError() { errBox.classList.add('hidden'); }
+    function badge(el, text, tone) {
+      el.textContent = text;
+      const t = { wait: 'bg-amber-500/15 text-amber-300 border-amber-500/30', ok: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30', err: 'bg-red-500/15 text-red-300 border-red-500/30', idle: 'bg-slate-800 text-slate-400 border-slate-700' };
+      el.className = 'px-3 py-1 rounded-full border ' + (t[tone] || t.idle);
+    }
+    async function model(task, id) {
+      const key = task + '|' + id;
+      if (!cache.has(key)) {
+        const p = pipeline(task, id).catch(e => { cache.delete(key); throw e; });
+        cache.set(key, p);
+      }
+      return cache.get(key);
+    }
+    function passages(text) {
+      const blocks = text.split(/\n\s*\n+/).map(b => b.trim()).filter(Boolean);
+      const out = [];
+      for (const b of blocks) {
+        if (b.length <= 520) { out.push(b); continue; }
+        const sents = b.split(/(?<=[.!?])\s+/);
+        let cur = '';
+        for (const s of sents) {
+          if ((cur + ' ' + s).length > 520 && cur) { out.push(cur.trim()); cur = s; }
+          else cur += (cur ? ' ' : '') + s;
+        }
+        if (cur.trim()) out.push(cur.trim());
+      }
+      return out.slice(0, 24);
+    }
+
+    // Regex side of the extraction — deterministic, no model.
+    const FACTS = [
+      ['Money', /(?:GBP|EUR|USD|CHF|\$|€|£)\s?\d[\d,]*(?:\.\d{2})?/gi],
+      ['Date', /\b\d{1,2}\s+(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{4}\b|\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}\b|\b\d{4}-\d{2}-\d{2}\b/gi],
+      ['Duration', /\b\d+\s*(?:calendar\s+)?(?:days?|weeks?|months?|years?)\b/gi],
+      ['Rate', /\b\d+(?:\.\d+)?\s*%/g]
+    ];
+    function extractFacts(text) {
+      const found = {};
+      for (const [type, re] of FACTS) {
+        re.lastIndex = 0;
+        const hits = new Set();
+        let m;
+        while ((m = re.exec(text)) !== null) { hits.add(m[0].trim()); if (hits.size > 12) break; }
+        if (hits.size) found[type] = [...hits];
+      }
+      return found;
+    }
+
+    async function boot() {
+      try {
+        await model('token-classification', NER);
+        badge(bNer, 'Entities: ready', 'ok');
+        runBtn.disabled = false;
+      } catch (e) {
+        badge(bNer, 'Entities: failed', 'err');
+        showError('Could not load the entity model: ' + (e.message || e));
+      }
+    }
+
+    async function run() {
+      clearError(); out.innerHTML = '';
+      const text = docEl.value.trim();
+      if (text.split(/\s+/).filter(Boolean).length < 40) return showError('Paste at least a paragraph of agreement text.');
+      runBtn.disabled = true;
+      const original = runBtn.textContent;
+      const parts = passages(text);
+      try {
+        // 1. parties + entities
+        runBtn.textContent = 'Extracting entities…';
+        statusEl.textContent = 'Finding parties and places…';
+        const ner = await model('token-classification', NER);
+        const ents = await ner(text.slice(0, 4000), { aggregation_strategy: 'simple' });
+        const parties = [];
+        for (const e of ents) {
+          const g = String(e.entity_group || e.entity || '').replace(/^[BI]-/, '').toUpperCase();
+          if (g !== 'ORG' && g !== 'PER') continue;
+          const w = String(e.word || '').replace(/^##/, '').trim();
+          if (w.length < 3) continue;
+          if (!parties.some(p => p.name.toLowerCase() === w.toLowerCase())) parties.push({ name: w, kind: g });
+        }
+        const facts = extractFacts(text);
+
+        // 2. answer the preset questions clause-by-clause, keep the best span
+        runBtn.textContent = 'Reading clauses…';
+        const qa = await model('question-answering', QA);
+        badge(bQa, 'Reader: working…', 'wait');
+        const answers = [];
+        for (let i = 0; i < PRESETS.length; i++) {
+          statusEl.textContent = `Question ${i + 1}/${PRESETS.length}…`;
+          let best = null;
+          for (const p of parts.slice(0, 8)) {
+            try {
+              const r = await qa(PRESETS[i], p);
+              if (r && r.score && (!best || r.score > best.score)) best = { ...r, passage: p };
+            } catch (e) { /* skip unanswerable chunk */ }
+          }
+          answers.push({ q: PRESETS[i], best });
+        }
+        badge(bQa, 'Reader: ready', 'ok');
+
+        // 3. optional summary
+        let summary = '';
+        if (document.getElementById('doSum').checked) {
+          runBtn.textContent = 'Summarising…';
+          statusEl.textContent = 'Summarising the agreement…';
+          badge(bSum, 'Summary: working…', 'wait');
+          const sum = await model('summarization', SUM);
+          const pieces = [];
+          for (const p of parts.slice(0, 5)) {
+            try {
+              const r = await sum(p, { max_new_tokens: 110, min_new_tokens: 25 });
+              pieces.push(((r[0] && r[0].summary_text) || '').trim());
+            } catch (e) { /* skip */ }
+          }
+          summary = pieces.join(' ');
+          badge(bSum, 'Summary: ready', 'ok');
+        }
+
+        statusEl.textContent = '✅ Review complete.';
+        out.innerHTML = `
+          <div class="fade-in space-y-4">
+            <section class="bg-slate-900/70 rounded-2xl p-5 border border-sky-700/40">
+              <p class="text-xs uppercase tracking-widest text-sky-300 font-semibold">Parties named in the text</p>
+              ${parties.length ? `<div class="flex flex-wrap gap-2 mt-2">${parties.map(p =>
+                `<span class="text-[11px] px-2.5 py-1 rounded-full bg-black/40 border border-sky-900/60">${esc(p.name)} <span class="text-sky-400/70">· ${p.kind === 'ORG' ? 'organisation' : 'person'}</span></span>`).join('')}</div>`
+                : '<p class="mt-2 text-sm text-slate-400">No organisation or person names detected.</p>'}
+            </section>
+
+            ${Object.keys(facts).length ? `
+              <section class="bg-slate-900/70 rounded-2xl p-5 border border-slate-800">
+                <p class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Numbers, dates and durations</p>
+                <div class="mt-3 space-y-2">
+                  ${Object.entries(facts).map(([type, vals]) => `
+                    <div class="flex gap-3">
+                      <span class="text-[11px] text-slate-400 w-20 shrink-0 pt-0.5">${esc(type)}</span>
+                      <div class="flex flex-wrap gap-1.5">
+                        ${vals.map(v => `<span class="mono text-[10px] px-2 py-0.5 rounded bg-black/40 border border-slate-700 text-slate-200">${esc(v)}</span>`).join('')}
+                      </div>
+                    </div>`).join('')}
+                </div>
+                <p class="text-[10px] text-slate-500 mt-3">Pattern matching, so it also catches numbers that are not obligations.</p>
+              </section>` : ''}
+
+            <section class="bg-slate-900/70 rounded-2xl p-5 border border-slate-800">
+              <p class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Clause answers</p>
+              <ul class="mt-3 space-y-4">
+                ${answers.map(a => `
+                  <li class="border-l-2 ${a.best && a.best.score > 0.15 ? 'border-sky-500/60' : 'border-slate-700'} pl-3">
+                    <p class="text-xs text-slate-400">${esc(a.q)}</p>
+                    ${a.best && a.best.score > 0.15
+                      ? `<p class="text-sm font-semibold text-sky-100 mt-0.5">${esc(a.best.answer)}</p>
+                         <p class="text-[11px] text-slate-500 mt-0.5">from: “${esc(a.best.passage.slice(0, 150))}${a.best.passage.length > 150 ? '…' : ''}” · ${Math.round(a.best.score * 100)}%</p>`
+                      : '<p class="text-sm text-slate-500 mt-0.5">Not found in this document.</p>'}
+                  </li>`).join('')}
+              </ul>
+            </section>
+
+            ${summary ? `
+              <section class="bg-slate-900/70 rounded-2xl p-5 border border-slate-800">
+                <p class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Summary</p>
+                <p class="mt-2 text-sm leading-relaxed text-slate-200/90">${esc(summary)}</p>
+              </section>` : ''}
+          </div>`;
+      } catch (e) {
+        statusEl.textContent = 'Review failed.';
+        showError('Could not review that document: ' + (e.message || e));
+      } finally {
+        runBtn.disabled = false;
+        runBtn.textContent = original;
+      }
+    }
+
+    document.getElementById('sampleBtn').addEventListener('click', () => { docEl.value = SAMPLE; });
+    runBtn.addEventListener('click', run);
+    boot();
+  </script>
+</body>
+</html>

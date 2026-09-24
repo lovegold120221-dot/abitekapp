@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fridge Alchemist — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .5s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-[#241305] to-[#3d2208] text-amber-100">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+    <div class="text-center mt-4">
+      <div class="text-5xl">🧪</div>
+      <h1 class="text-3xl font-bold mt-2 text-white">Fridge Alchemist</h1>
+      <p class="text-sm text-amber-300/80 mt-1">Dump your sad leftovers here. Receive three magical recipes.</p>
+    </div>
+
+    <div class="mt-6 bg-black/40 rounded-2xl p-5 border border-amber-600/40">
+      <textarea id="ingInput" rows="3" placeholder="eggs, rice, soy sauce, half an onion, questionable cheese…"
+        class="w-full bg-black/40 rounded-xl p-3 text-sm outline-none border border-amber-700/40 focus:border-amber-400 placeholder:text-amber-200/30"></textarea>
+      <div class="flex gap-2 mt-3">
+        <select id="dietInput" class="bg-black/40 rounded-full px-4 py-2.5 text-sm border border-amber-700/40 outline-none">
+          <option value="anything">🍽️ Anything goes</option>
+          <option value="vegetarian">🥬 Vegetarian</option>
+          <option value="vegan">🌱 Vegan</option>
+          <option value="high-protein">💪 High-protein</option>
+          <option value="15-minutes">⚡ 15 minutes max</option>
+        </select>
+        <button id="brewBtn" onclick="brew()" class="flex-1 bg-amber-600 hover:bg-amber-500 text-white font-semibold text-sm py-2.5 rounded-full transition">Brew recipes 🍲</button>
+      </div>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/20 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="result" class="mt-5 space-y-4"></div>
+  </div>
+
+  <script>
+const GEMINI_KEY = sessionStorage.getItem('abitech_gemini_key') || '';
+    const GEMINI_MODEL = "gemini-3.5-flash-lite";
+    const LIVE_MODEL = "gemini-3.5-flash-live";
+    const SYSTEM = "You are the Fridge Alchemist. Given ingredients, invent exactly 3 recipes. Format EXACTLY, repeat 3x:\nDISH: <fun name>\nTIME: <e.g. 20 min>\nLEVEL: <Easy|Medium|Wizard>\nSTEPS: <numbered steps, compact>\nSeparate recipes with a line containing only ---. No intro, no outro.";
+    function esc(s) { return s.replace(/[&<>"']/g, c => ({ '&': '&', '<': '<', '>': '>', '"': '"', "'": ''' }[c])); }
+    function field(block, name) { const m = block.match(new RegExp('^' + name + ':\\s*([\\s\\S]*?)(?=\\n[A-Z]+:|$)', 'm')); return m ? m[1].trim() : ''; }
+
+    // Gemini Live API TTS voice state
+    let ttsWs = null;
+    let ttsQueue = [];
+    let ttsSpeaking = false;
+    function ttsSpeakQueue() {
+      if (ttsSpeaking || !ttsWs) return;
+      if (ttsQueue.length === 0) { ttsSpeaking = false; return; }
+      const text = ttsQueue.shift();
+      ttsSpeaking = true;
+      ttsWs.send(JSON.stringify({
+        turns: [{ parts: [{ text: text }] }], turnComplete: true
+      }));
+    }
+    function ttsStop() { try { if (ttsWs) ttsWs.close(); ttsSpeaking = false; ttsQueue = []; } catch (e) {} }
+
+    // Initialise Live API TTS WebSocket
+    function ttsInit() {
+      if (ttsWs) return;
+      const wsUrl = `wss://generativelanguage.googleapis.com/v1beta/models/${LIVE_MODEL}:streamGenerateContent?key=${GEMINI_KEY}`;
+      ttsWs = new WebSocket(wsUrl);
+      ttsWs.onopen = () => ttsSpeakQueue();
+      ttsWs.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        if (data.serverContent && data.serverContent.modelTurn && data.serverContent.modelTurn.parts) {
+          const audioB64 = data.serverContent.modelTurn.parts.find(p => p.inlineData).inlineData.data;
+          const audioBlob = base64ToBlob(audioB64, 'audio/mp3');
+          const url = URL.createObjectURL(audioBlob);
+          const audio = new Audio(url);
+          audio.play().catch(() => {});
+          ttsSpeaking = false;
+          ttsSpeakQueue();
+        }
+      };
+      ttsWs.onerror = () => { ttsSpeaking = false; ttsSpeakQueue(); };
+    }
+
+    // Send text to Gemini Live API for TTS
+    function ttsPlay(text) {
+      try { text = String(text).replace(/[*#_]/g, '').slice(0, 800); } catch (e) {}
+      if (!text) return;
+      ttsQueue.push(text);
+      ttsInit();
+      ttsSpeakQueue();
+    }
+
+    // Base64 decode helper for audio chunks
+    function base64ToBlob(b64, mime) {
+      const byteChars = atob(b64);
+      const byteNumbers = new Uint8Array(byteChars.length);
+      for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
+      return new Blob([byteNumbers], { type: mime });
+    }
+
+    async function gemini(user) {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ system_instruction: { parts: [{ text: SYSTEM }] }, contents: [{ parts: [{ text: user }] }], generationConfig: { temperature: 0.9, maxOutputTokens: 900 } })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      return data.candidates[0].content.parts.map(p => p.text || '').join('');
+    }
+
+    async function brew() {
+      const ing = document.getElementById('ingInput').value.trim();
+      const diet = document.getElementById('dietInput').value;
+      const btn = document.getElementById('brewBtn'), err = document.getElementById('errorBox'), out = document.getElementById('result');
+      err.classList.add('hidden');
+      if (!ing) { err.textContent = 'List at least one ingredient.'; err.classList.remove('hidden'); return; }
+      btn.disabled = true; btn.textContent = 'Bubbling… 🫧'; out.innerHTML = '';
+      try {
+        const raw = await gemini(`Ingredients: ${ing}\nConstraint: ${diet}. Use mostly what I have; tiny extras allowed.`);
+        const cards = raw.split(/^\s*---\s*$/m).map(s => s.trim()).filter(Boolean);
+        out.innerHTML = cards.map((c, i) => {
+          const steps = esc(field(c, 'STEPS')).replace(/\n/g, '<br>');
+          return `<div class="fade-in bg-black/40 rounded-2xl p-5 border border-amber-600/40">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">${['🍳', '🥘', '🍰'][i % 3]}</span>
+              <h3 class="font-bold text-lg">${esc(field(c, 'DISH')) || 'Mystery Dish'}</h3>
+            </div>
+            <div class="flex gap-2 mt-2 text-[11px] font-semibold">
+              <span class="bg-amber-600/30 px-2.5 py-1 rounded-full">⏱️ ${esc(field(c, 'TIME')) || '?'}</span>
+              <span class="bg-purple-600/30 px-2.5 py-1 rounded-full">🎚️ ${esc(field(c, 'LEVEL')) || 'Easy'}</span>
+            </div>
+            <div class="text-sm leading-relaxed mt-3">${steps || esc(c).replace(/\n/g, '<br>')}</div>
+          </div>`;
+        }).join('') || `<div class="bg-black/40 rounded-2xl p-5 text-sm">${esc(raw).replace(/\n/g, '<br>')}</div>`;
+      } catch (e) { err.textContent = 'Potion fizzled: ' + e.message; err.classList.remove('hidden'); }
+      btn.disabled = false; btn.textContent = 'Brew recipes 🍲';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caption Canvas — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#1a1408] text-amber-50">
+  <div class="max-w-3xl mx-auto px-4 py-8">
+    <a href="../index.html" class="text-xs text-amber-300/80 hover:text-white">← Abitech Apps Store</a>
+
+    <div class="text-center mt-4">
+      <div class="text-5xl">🖋️</div>
+      <h1 class="text-3xl font-bold mt-2">Caption Canvas</h1>
+      <p class="text-sm text-amber-200/80 mt-1">Show it a picture, it writes the sentence — alt text in one tap.</p>
+    </div>
+
+    <div class="mt-4 flex justify-center text-[11px]">
+      <span id="modelBadge" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Loading ViT-GPT2…</span>
+    </div>
+
+    <div class="mt-6 grid md:grid-cols-2 gap-4">
+      <div>
+        <label for="file" class="flex items-center justify-center h-64 rounded-2xl border-2 border-dashed border-amber-800/60 hover:border-amber-500/70 cursor-pointer transition overflow-hidden bg-black/25">
+          <img id="preview" alt="" class="hidden w-full h-full object-contain" />
+          <div id="dropHint" class="text-center px-4">
+            <div class="text-4xl mb-2">📷</div>
+            <p class="text-sm text-amber-200/70">Click to choose a photo</p>
+            <p class="text-[11px] text-amber-200/40 mt-1">The image never leaves your device</p>
+          </div>
+        </label>
+        <input id="file" type="file" accept="image/*" class="hidden" />
+
+        <div class="grid grid-cols-3 gap-2 mt-2">
+          <label class="text-xs text-amber-300/80 col-span-2">Caption length
+            <select id="length" class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2 text-sm border border-amber-900/60 outline-none focus:border-amber-400">
+              <option value="24">Short</option>
+              <option value="40" selected>Medium</option>
+              <option value="64">Detailed</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="bg-amber-950/30 rounded-2xl p-4 border border-amber-900/60">
+        <div id="out" class="text-sm text-amber-200/50">Pick an image and a caption will appear here.</div>
+        <div id="errorBox" class="hidden mt-3 text-sm bg-red-500/15 border border-red-400/40 rounded-xl p-3"></div>
+      </div>
+    </div>
+
+    <p class="mt-6 text-[11px] text-amber-200/50 text-center leading-relaxed">
+      Runs <b>Xenova/vit-gpt2-image-captioning</b> via <b>transformers.js</b>. Use it to draft alt text for
+      screenshots, product shots and memes — then give the wording a human pass.
+    </p>
+  </div>
+
+  <script type="module">
+    import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0";
+
+    const modelBadge = document.getElementById('modelBadge');
+    const out = document.getElementById('out');
+    const errBox = document.getElementById('errorBox');
+    const preview = document.getElementById('preview');
+    const dropHint = document.getElementById('dropHint');
+    const fileInput = document.getElementById('file');
+    let captioner = null;
+    let busy = false;
+
+    function esc(value) {
+      return String(value || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function showError(msg) { errBox.textContent = msg; errBox.classList.remove('hidden'); }
+    function clearError() { errBox.classList.add('hidden'); }
+
+    async function boot() {
+      try {
+        captioner = await pipeline('image-to-text', 'Xenova/vit-gpt2-image-captioning');
+        modelBadge.textContent = 'ViT-GPT2 ready';
+        modelBadge.className = 'px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30';
+      } catch (e) {
+        modelBadge.textContent = 'Model failed to load';
+        modelBadge.className = 'px-3 py-1 rounded-full bg-red-500/15 text-red-300 border border-red-500/30';
+        showError('Could not load the model: ' + (e && e.message ? e.message : e));
+      }
+    }
+
+    async function describe(file) {
+      if (busy) return;
+      clearError();
+      if (!file || !file.type.startsWith('image/')) return showError('That file is not an image.');
+      if (!captioner) return showError('The model is still loading.');
+
+      preview.src = URL.createObjectURL(file);
+      preview.classList.remove('hidden');
+      dropHint.classList.add('hidden');
+
+      busy = true;
+      out.innerHTML = '<p class="text-amber-200/60 animate-pulse">Looking at your image…</p>';
+      try {
+        const maxTokens = parseInt(document.getElementById('length').value, 10);
+        const started = performance.now();
+        const res = await captioner(preview.src, { max_new_tokens: maxTokens });
+        const caption = (res[0] && res[0].generated_text ? res[0].generated_text : '').replace(/^\s*\.\s*/, '').trim();
+        const secs = ((performance.now() - started) / 1000).toFixed(1);
+
+        out.innerHTML = `
+          <div class="fade-in">
+            <p class="text-xs text-amber-300/70">Generated caption</p>
+            <p class="text-lg font-semibold leading-snug text-amber-50 capitalize">${esc(caption) || '<span class="text-amber-200/40">No caption produced.</span>'}</p>
+            <p class="text-[11px] text-amber-200/50 mt-2">${caption.split(/\s+/).filter(Boolean).length} words · ${secs}s on-device</p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <button id="copyBtn" class="text-xs font-semibold bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition">Copy caption</button>
+              <button id="speakBtn" class="text-xs font-semibold bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition">🔊 Read aloud</button>
+            </div>
+          </div>`;
+
+        const copyBtn = document.getElementById('copyBtn');
+        if (copyBtn) copyBtn.addEventListener('click', () => navigator.clipboard.writeText(caption));
+        const speakBtn = document.getElementById('speakBtn');
+        if (speakBtn) speakBtn.addEventListener('click', () => {
+          try {
+            if (speechSynthesis.speaking) { speechSynthesis.cancel(); return; }
+            const u = new SpeechSynthesisUtterance(caption);
+            speechSynthesis.speak(u);
+          } catch (e) { /* speech synthesis unavailable */ }
+        });
+      } catch (e) {
+        out.innerHTML = '<p class="text-amber-200/50">Captioning failed.</p>';
+        showError('Captioning failed: ' + (e && e.message ? e.message : e));
+      } finally {
+        busy = false;
+      }
+    }
+
+    fileInput.addEventListener('change', e => {
+      const f = e.target.files && e.target.files[0];
+      if (f) describe(f);
+      e.target.value = '';
+    });
+
+    boot();
+  </script>
+</body>
+</html>

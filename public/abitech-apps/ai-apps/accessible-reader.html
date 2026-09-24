@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accessible Reader — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .reading { font-size: 1.0625rem; line-height: 1.85; letter-spacing: .01em; }
+  </style>
+</head>
+<body class="min-h-screen bg-[#12100e] text-amber-50">
+  <div class="max-w-3xl mx-auto px-4 py-8">
+    <a href="../index.html" class="text-xs text-amber-300/80 hover:text-white">← Abitech Apps Store</a>
+
+    <div class="text-center mt-4">
+      <div class="text-5xl">📖</div>
+      <h1 class="text-3xl font-bold mt-2">Accessible Reader</h1>
+      <p class="text-sm text-amber-200/80 mt-1">Long article in, plain summary out — and a real neural voice to read either one aloud.</p>
+    </div>
+
+    <div class="mt-4 flex flex-wrap items-center justify-center gap-2 text-[11px]">
+      <span id="bSum" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Summariser: loading…</span>
+      <span id="bTts" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Voice: idle</span>
+    </div>
+
+    <div class="mt-6 bg-[#1b1815] rounded-2xl p-5 border border-amber-900/50">
+      <label class="text-xs text-amber-300/80">Article text</label>
+      <textarea id="text" rows="9"
+        class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2.5 text-sm outline-none border border-amber-900/50 focus:border-amber-400 resize-y placeholder:text-amber-200/30"
+        placeholder="Paste the article, report or chapter you need to get through…"></textarea>
+      <div class="flex items-center justify-between mt-2">
+        <span id="stats" class="text-[11px] text-amber-200/50">0 words</span>
+        <button id="sampleBtn" class="text-[11px] text-amber-300 hover:text-white font-semibold">Load sample</button>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-3 mt-3">
+        <label class="text-xs text-amber-300/80">Summary length
+          <select id="length" class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2 text-sm border border-amber-900/50 outline-none focus:border-amber-400">
+            <option value="60">Very short — key idea only</option>
+            <option value="120" selected>Standard</option>
+            <option value="220">Detailed</option>
+          </select>
+        </label>
+        <label class="text-xs text-amber-300/80">Reading voice
+          <select id="voice" class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2 text-sm border border-amber-900/50 outline-none focus:border-amber-400"></select>
+        </label>
+      </div>
+
+      <div class="flex flex-wrap gap-2 mt-4">
+        <button id="sumBtn" disabled class="flex-1 min-w-[160px] bg-amber-600 hover:bg-amber-500 disabled:opacity-40 text-white font-semibold text-sm py-2.5 rounded-full transition">Simplify text</button>
+        <button id="readBtn" class="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-sm font-semibold rounded-full transition">🔊 Read original</button>
+      </div>
+      <p id="status" class="mt-2 text-xs text-amber-200/60"></p>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/15 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="out" class="mt-5"></div>
+
+    <p class="mt-6 text-[11px] text-amber-200/50 text-center leading-relaxed">
+      <b>Xenova/distilbart-cnn-6-6</b> compresses the text; <b>onnx-community/Kokoro-82M</b> voices it.
+      Speech is capped at 2,000 characters per run so it stays manageable on a phone.
+    </p>
+  </div>
+
+  <script type="module">
+    import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0";
+    import { KokoroTTS } from "https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm";
+
+    const SUMMARISER = 'Xenova/distilbart-cnn-6-6';
+    const TTS_MODEL = 'onnx-community/Kokoro-82M-v1.0-ONNX';
+    const TTS_LIMIT = 2000;
+    const VOICES = [
+      ['af_heart', 'Heart · US female'], ['af_bella', 'Bella · US female'],
+      ['am_michael', 'Michael · US male'], ['am_fenrir', 'Fenrir · US male'],
+      ['bf_emma', 'Emma · UK female'], ['bm_george', 'George · UK male']
+    ];
+    const SAMPLE = `Sleep researchers have spent the last decade dismantling the idea that everyone needs exactly eight hours. What matters more, the evidence now suggests, is consistency and the number of complete ninety-minute cycles you finish. Adults who sleep the same window seven nights a week report better attention scores than those who average eight hours but shift their bedtime around. Light exposure in the first hour after waking appears to anchor the whole system, which is why morning walks outperform evening supplements in nearly every trial. Caffeine has a half-life of roughly five hours, so an afternoon coffee still has a quarter of its punch at midnight. The most reliable intervention in the literature is not a gadget, a supplement or a mattress: it is going to bed at the same time on Saturday as you do on Tuesday.`;
+
+    const bSum = document.getElementById('bSum'), bTts = document.getElementById('bTts');
+    const sumBtn = document.getElementById('sumBtn'), readBtn = document.getElementById('readBtn');
+    const errBox = document.getElementById('errorBox');
+    const out = document.getElementById('out');
+    const textEl = document.getElementById('text');
+    const statsEl = document.getElementById('stats');
+    const statusEl = document.getElementById('status');
+    const lengthSel = document.getElementById('length');
+    const voiceSel = document.getElementById('voice');
+    const cache = new Map();
+    let tts = null;
+
+    function esc(v) {
+      return String(v || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function showError(m) { errBox.textContent = m; errBox.classList.remove('hidden'); }
+    function clearError() { errBox.classList.add('hidden'); }
+    function badge(el, text, tone) {
+      el.textContent = text;
+      const t = { wait: 'bg-amber-500/15 text-amber-300 border-amber-500/30', ok: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30', err: 'bg-red-500/15 text-red-300 border-red-500/30', idle: 'bg-slate-800 text-slate-400 border-slate-700' };
+      el.className = 'px-3 py-1 rounded-full border ' + (t[tone] || t.idle);
+    }
+    async function model(task, id) {
+      const key = task + '|' + id;
+      if (!cache.has(key)) {
+        const p = pipeline(task, id).catch(e => { cache.delete(key); throw e; });
+        cache.set(key, p);
+      }
+      return cache.get(key);
+    }
+    function chunkText(text, maxChars = 1100) {
+      const sents = text.replace(/\s+/g, ' ').trim().split(/(?<=[.!?])\s+/);
+      const res = []; let cur = '';
+      for (const s of sents) {
+        if ((cur + ' ' + s).length > maxChars && cur) { res.push(cur.trim()); cur = s; }
+        else cur += (cur ? ' ' : '') + s;
+      }
+      if (cur.trim()) res.push(cur.trim());
+      return res.slice(0, 6);
+    }
+    function updateStats() {
+      const t = textEl.value.trim();
+      const words = t.split(/\s+/).filter(Boolean).length;
+      const sents = t.split(/[.!?]+/).filter(s => s.trim()).length || 1;
+      statsEl.textContent = words ? `${words} words · ~${(words / 200).toFixed(1)} min read · ${(words / sents).toFixed(1)} words/sentence` : '0 words';
+    }
+
+    VOICES.forEach(([id, label]) => {
+      const o = document.createElement('option'); o.value = id; o.textContent = label; voiceSel.appendChild(o);
+    });
+
+    async function boot() {
+      try {
+        await model('summarization', SUMMARISER);
+        badge(bSum, 'Summariser: ready', 'ok');
+        sumBtn.disabled = false;
+      } catch (e) {
+        badge(bSum, 'Summariser: failed', 'err');
+        showError('Could not load the summariser: ' + (e.message || e));
+      }
+    }
+
+    async function summarise() {
+      clearError(); out.innerHTML = '';
+      const text = textEl.value.trim();
+      if (text.split(/\s+/).filter(Boolean).length < 30) return showError('Give me at least ~30 words to simplify.');
+      sumBtn.disabled = true;
+      const original = sumBtn.textContent;
+      try {
+        const sum = await model('summarization', SUMMARISER);
+        const parts = chunkText(text);
+        const pieces = [];
+        for (let i = 0; i < parts.length; i++) {
+          sumBtn.textContent = `Simplifying ${i + 1}/${parts.length}…`;
+          const r = await sum(parts[i], { max_new_tokens: parseInt(lengthSel.value, 10), min_new_tokens: 20 });
+          pieces.push(((r[0] && r[0].summary_text) || '').trim());
+        }
+        const summary = pieces.join(' ');
+        const before = text.split(/\s+/).filter(Boolean).length;
+        const after = summary.split(/\s+/).filter(Boolean).length;
+
+        statusEl.textContent = '✅ Simplified — now you can read it aloud.';
+        out.innerHTML = `
+          <div class="fade-in bg-[#1b1815] rounded-2xl p-6 border border-amber-700/50">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <p class="text-xs uppercase tracking-widest text-amber-300 font-semibold">Plain summary</p>
+              <p class="text-[11px] text-amber-200/50">${before} → ${after} words (${Math.max(0, Math.round((1 - after / before) * 100))}% shorter)</p>
+            </div>
+            <p class="reading mt-3 text-amber-50/95">${esc(summary)}</p>
+            <div class="flex flex-wrap gap-2 mt-5">
+              <button id="readSum" class="text-xs font-semibold bg-amber-600 hover:bg-amber-500 px-4 py-2 rounded-full transition">🔊 Read this summary</button>
+              <button id="copySum" class="text-xs font-semibold bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition">Copy</button>
+            </div>
+          </div>`;
+        document.getElementById('readSum').addEventListener('click', () => speak(summary));
+        document.getElementById('copySum').addEventListener('click', () => navigator.clipboard.writeText(summary));
+      } catch (e) {
+        statusEl.textContent = 'Simplification failed.';
+        showError('Could not simplify: ' + (e.message || e));
+      } finally {
+        sumBtn.disabled = false;
+        sumBtn.textContent = original;
+      }
+    }
+
+    async function speak(text) {
+      clearError();
+      const clean = text.trim();
+      if (!clean) return showError('There is nothing to read yet.');
+      if (clean.length > TTS_LIMIT) {
+        return showError(`That passage is ${clean.length} characters — capped at ${TTS_LIMIT} for phone-sized memory. Simplify it first, or read a shorter section.`);
+      }
+      readBtn.disabled = true; sumBtn.disabled = true;
+      try {
+        if (!tts) {
+          badge(bTts, 'Voice: loading Kokoro…', 'wait');
+          statusEl.textContent = 'Downloading the voice model (~90 MB, first time only)…';
+          tts = await KokoroTTS.from_pretrained(TTS_MODEL, { dtype: 'q8', device: 'wasm' });
+          badge(bTts, 'Voice: ready', 'ok');
+        }
+        statusEl.textContent = 'Synthesising speech…';
+        const audio = await tts.generate(clean, { voice: voiceSel.value });
+        const url = URL.createObjectURL(audio.toBlob());
+        statusEl.textContent = '✅ Audio ready.';
+        out.insertAdjacentHTML('afterbegin', `
+          <div class="fade-in bg-[#1b1815] rounded-2xl p-5 border border-emerald-700/40 mb-4">
+            <p class="text-xs uppercase tracking-widest text-emerald-300 font-semibold mb-3">Audio</p>
+            <audio controls src="${url}" class="w-full"></audio>
+            <a href="${url}" download="reader.wav" class="mt-3 inline-flex text-xs font-semibold bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition">⬇️ Download WAV</a>
+          </div>`);
+      } catch (e) {
+        statusEl.textContent = 'Speech failed.';
+        badge(bTts, 'Voice: failed', 'err');
+        showError('Could not synthesise speech: ' + (e.message || e));
+      } finally {
+        readBtn.disabled = false; sumBtn.disabled = false;
+      }
+    }
+
+    textEl.addEventListener('input', updateStats);
+    document.getElementById('sampleBtn').addEventListener('click', () => { textEl.value = SAMPLE; updateStats(); });
+    sumBtn.addEventListener('click', summarise);
+    readBtn.addEventListener('click', () => speak(textEl.value));
+    updateStats();
+    boot();
+  </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Outfit:wght@100..900&amp;display=swap.css" rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="learning outfit-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/learning.gif" class="img-fluid" alt="learning">
+    </div>
+    <!-- loader End -->
+
+    <!-- login auth  start -->
+    <section class="learning-login-section">
+        <a href="otp.html#!" onclick="history.back()" class="back-arrow">
+            <i class="iconsax icon" data-icon="arrow-left"></i>
+        </a>
+        <div class="login-header-img">
+            <img src="../assets/images/learning/background/2.png" class="img-fluid image1" alt="computer">
+            <img src="../assets/images/learning/svg/1.svg" class="img-fluid image2" alt="">
+        </div>
+        <div class="custom-container2">
+            <div class="learning-auth-title">
+                <h3>Verify OTP</h3>
+                <h4>Enter the verification code</h4>
+            </div>
+            <form class="plant-otp-form learn-otp">
+                <div class="form-group">
+                    <input type="number" class="form-control active" placeholder="0" id="five1"
+                        onkeyup="onKeyUpEvent(1, event)" onfocus="onFocusEvent(1)">
+
+                    <input type="number" class="form-control" placeholder="0" id="five2"
+                        onkeyup="onKeyUpEvent(2, event)" onfocus="onFocusEvent(2)">
+
+                    <input type="number" class="form-control" placeholder="0" id="five3"
+                        onkeyup="onKeyUpEvent(3, event)" onfocus="onFocusEvent(3)">
+
+                    <input type="number" class="form-control" placeholder="0" id="five4"
+                        onkeyup="onKeyUpEvent(4, event)" onfocus="onFocusEvent(4)">
+
+                    <input type="number" class="form-control" placeholder="0" id="five5"
+                        onkeyup="onKeyUpEvent(5, event)" onfocus="onFocusEvent(5)">
+                </div>
+            </form>
+            <a href="home.html" class="btn learning-btn m_top-44">Verify & Sign in</a>
+            <h5 class="learn-account"><a href="otp.html">Resend code ?</a></h5>
+        </div>
+    </section>
+    <!-- login auth  end  -->
+
+    <!-- Bootstrap JS-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax JS-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- OTP JS -->
+    <script src="../assets/js/otp.js"></script>
+
+    <!-- script JS -->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

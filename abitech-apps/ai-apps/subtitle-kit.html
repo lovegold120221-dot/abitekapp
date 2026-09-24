@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subtitle Kit — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .mono { font-family: 'Roboto Mono', monospace; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0b1116] text-slate-100">
+  <div class="max-w-3xl mx-auto px-4 py-8">
+    <a href="../index.html" class="text-xs text-cyan-300/80 hover:text-white">← Abitech Apps Store</a>
+
+    <div class="text-center mt-4">
+      <div class="text-5xl">💬</div>
+      <h1 class="text-3xl font-bold mt-2">Subtitle Kit</h1>
+      <p class="text-sm text-cyan-200/80 mt-1">Whisper hears the words and times them; a Marian translator rewrites them. Out comes a subtitle file.</p>
+    </div>
+
+    <div class="mt-4 flex flex-wrap items-center justify-center gap-2 text-[11px]">
+      <span id="bAsr" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Whisper: loading…</span>
+      <span id="bMt" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Translator: not needed yet</span>
+    </div>
+
+    <div class="mt-6 bg-slate-900/70 rounded-2xl p-5 border border-slate-800">
+      <label class="block text-xs text-slate-400">Audio / video file
+        <input id="file" type="file" accept="audio/*,video/*"
+          class="mt-1 w-full text-xs file:mr-3 file:px-4 file:py-2 file:rounded-full file:border-0 file:bg-cyan-600 file:text-white file:text-xs file:font-semibold hover:file:bg-cyan-500 bg-slate-950 rounded-xl border border-slate-700 px-3 py-2" />
+      </label>
+
+      <div class="grid sm:grid-cols-2 gap-3 mt-3">
+        <label class="text-xs text-slate-400">Spoken language
+          <select id="src" class="mt-1 w-full bg-slate-950 rounded-xl px-3 py-2 text-sm border border-slate-700 outline-none focus:border-cyan-400">
+            <option value="en" selected>English</option>
+            <option value="es">Spanish</option><option value="fr">French</option>
+            <option value="de">German</option><option value="zh">Chinese</option>
+          </select>
+        </label>
+        <label class="text-xs text-slate-400">Subtitle language
+          <select id="dst" class="mt-1 w-full bg-slate-950 rounded-xl px-3 py-2 text-sm border border-slate-700 outline-none focus:border-cyan-400"></select>
+        </label>
+      </div>
+      <p id="pairNote" class="mt-2 text-[11px] text-slate-500"></p>
+
+      <button id="runBtn" disabled class="mt-4 w-full bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold text-sm py-2.5 rounded-full transition">Transcribe &amp; build subtitles</button>
+      <p id="status" class="mt-2 text-xs text-slate-500"></p>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/15 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="out" class="mt-5"></div>
+
+    <p class="mt-6 text-[11px] text-slate-500 text-center leading-relaxed">
+      <b>onnx-community/whisper-base</b> with timestamp chunks, then one <b>Xenova/opus-mt-*</b> pair per direction.
+      Files are decoded locally — your recording is never uploaded.
+    </p>
+  </div>
+
+  <script type="module">
+    import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0";
+
+    const ASR = 'onnx-community/whisper-base';
+    // Only these directions have a converted opus-mt model on the Hub.
+    const MT = {
+      'en-es': 'Xenova/opus-mt-en-es', 'en-fr': 'Xenova/opus-mt-en-fr',
+      'en-de': 'Xenova/opus-mt-en-de', 'en-zh': 'Xenova/opus-mt-en-zh',
+      'es-en': 'Xenova/opus-mt-es-en', 'fr-en': 'Xenova/opus-mt-fr-en',
+      'de-en': 'Xenova/opus-mt-de-en', 'zh-en': 'Xenova/opus-mt-zh-en'
+    };
+    const LANGS = { en: 'English', es: 'Spanish', fr: 'French', de: 'German', zh: 'Chinese' };
+
+    const bAsr = document.getElementById('bAsr'), bMt = document.getElementById('bMt');
+    const runBtn = document.getElementById('runBtn');
+    const errBox = document.getElementById('errorBox');
+    const out = document.getElementById('out');
+    const srcSel = document.getElementById('src');
+    const dstSel = document.getElementById('dst');
+    const fileInput = document.getElementById('file');
+    const statusEl = document.getElementById('status');
+    const pairNote = document.getElementById('pairNote');
+    const cache = new Map();
+
+    function esc(v) {
+      return String(v || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function showError(m) { errBox.textContent = m; errBox.classList.remove('hidden'); }
+    function clearError() { errBox.classList.add('hidden'); }
+    function badge(el, text, tone) {
+      el.textContent = text;
+      const t = { wait: 'bg-amber-500/15 text-amber-300 border-amber-500/30', ok: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30', err: 'bg-red-500/15 text-red-300 border-red-500/30', idle: 'bg-slate-800 text-slate-400 border-slate-700' };
+      el.className = 'px-3 py-1 rounded-full border ' + (t[tone] || t.idle);
+    }
+    async function model(task, id) {
+      const key = task + '|' + id;
+      if (!cache.has(key)) {
+        const p = pipeline(task, id).catch(e => { cache.delete(key); throw e; });
+        cache.set(key, p);
+      }
+      return cache.get(key);
+    }
+    function resample16k(input, inRate) {
+      if (!inRate || inRate === 16000) return input;
+      const ratio = inRate / 16000;
+      const len = Math.max(1, Math.round(input.length / ratio));
+      const o = new Float32Array(len);
+      for (let i = 0; i < len; i++) {
+        const pos = i * ratio, i0 = Math.floor(pos), i1 = Math.min(i0 + 1, input.length - 1), f = pos - i0;
+        o[i] = input[i0] * (1 - f) + input[i1] * f;
+      }
+      return o;
+    }
+    async function decode(blob) {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      const ctx = new Ctx();
+      const buf = await ctx.decodeAudioData(await blob.arrayBuffer());
+      const mix = buf.numberOfChannels > 1
+        ? (() => { const a = buf.getChannelData(0), b = buf.getChannelData(1), m = new Float32Array(a.length); for (let i = 0; i < a.length; i++) m[i] = (a[i] + b[i]) / 2; return m; })()
+        : buf.getChannelData(0);
+      const audio = resample16k(mix, buf.sampleRate);
+      ctx.close();
+      return audio;
+    }
+    const pad = (n, w = 2) => String(Math.floor(n)).padStart(w, '0');
+    function srtTime(t) {
+      const s = Math.max(0, t || 0);
+      return `${pad(s / 3600)}:${pad((s % 3600) / 60)}:${pad(s % 60)},${pad((s * 1000) % 1000, 3)}`;
+    }
+    function vttTime(t) {
+      const s = Math.max(0, t || 0);
+      return `${pad(s / 3600)}:${pad((s % 3600) / 60)}:${pad(s % 60)}.${pad((s * 1000) % 1000, 3)}`;
+    }
+    const toSrt = cues => cues.map((c, i) => `${i + 1}\n${srtTime(c.start)} --> ${srtTime(c.end)}\n${c.text}\n`).join('\n');
+    const toVtt = cues => 'WEBVTT\n\n' + cues.map((c, i) => `${i + 1}\n${vttTime(c.start)} --> ${vttTime(c.end)}\n${c.text}\n`).join('\n');
+    function download(name, text, type = 'text/plain') {
+      const url = URL.createObjectURL(new Blob([text], { type }));
+      const a = document.createElement('a'); a.href = url; a.download = name; a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+    }
+    function refreshTargets() {
+      const src = srcSel.value;
+      dstSel.innerHTML = `<option value="">Keep ${LANGS[src]} (no translation)</option>`;
+      Object.keys(MT).filter(k => k.startsWith(src + '-')).forEach(k => {
+        const o = document.createElement('option');
+        o.value = k.slice(3);
+        o.textContent = LANGS[k.slice(3)];
+        dstSel.appendChild(o);
+      });
+      const reachable = Object.keys(MT).some(k => k.startsWith(src + '-'));
+      pairNote.textContent = dstSel.options.length === 1 && !reachable
+        ? `No translator model converts ${LANGS[src]} into another language yet — subtitles will stay in ${LANGS[src]}.`
+        : `Translated subtitles available from ${LANGS[src]} (opus-mt pairs only exist for a few directions).`;
+    }
+
+    async function boot() {
+      try {
+        await model('automatic-speech-recognition', ASR);
+        badge(bAsr, 'Whisper: ready', 'ok');
+        runBtn.disabled = false;
+        statusEl.textContent = 'Ready — choose a file.';
+      } catch (e) {
+        badge(bAsr, 'Whisper: failed', 'err');
+        showError('Could not load Whisper: ' + (e.message || e));
+      }
+    }
+
+    async function run(blob) {
+      clearError(); out.innerHTML = '';
+      runBtn.disabled = true;
+      const original = runBtn.textContent;
+      try {
+        runBtn.textContent = 'Decoding…';
+        statusEl.textContent = 'Decoding media…';
+        const audio = await decode(blob);
+        const mins = (audio.length / 16000 / 60).toFixed(1);
+
+        runBtn.textContent = 'Transcribing…';
+        statusEl.textContent = `Transcribing ${mins} min — timestamps on…`;
+        const asr = await model('automatic-speech-recognition', ASR);
+        const res = await asr(audio, {
+          task: 'transcribe', language: srcSel.value,
+          chunk_length_s: 30, stride_length_s: 5, return_timestamps: true
+        });
+
+        const chunks = (res.chunks || []).filter(c => c.text && c.text.trim());
+        const cues = chunks.length
+          ? chunks.map(c => ({
+              start: (c.timestamp && c.timestamp[0]) || 0,
+              end: (c.timestamp && c.timestamp[1]) || ((c.timestamp && c.timestamp[0]) || 0) + 3,
+              text: c.text.trim()
+            }))
+          : [{ start: 0, end: Math.max(3, audio.length / 16000), text: (res.text || '').trim() }];
+        if (!cues[0].text) throw new Error('No speech detected in that file.');
+
+        let finalCues = cues;
+        const dst = dstSel.value;
+        if (dst) {
+          const key = srcSel.value + '-' + dst;
+          const id = MT[key];
+          badge(bMt, `Translator: loading ${id.split('/')[1]}…`, 'wait');
+          runBtn.textContent = 'Translating subtitles…';
+          const mt = await model('translation', id);
+          badge(bMt, 'Translator: ready', 'ok');
+          const translated = [];
+          for (let i = 0; i < cues.length; i++) {
+            statusEl.textContent = `Translating cue ${i + 1}/${cues.length}…`;
+            try {
+              const r = await mt(cues[i].text, { max_new_tokens: 200 });
+              translated.push({ ...cues[i], text: (r[0] && (r[0].translation_text || r[0].generated_text)) || cues[i].text });
+            } catch (e) { translated.push(cues[i]); }
+          }
+          finalCues = translated;
+        } else {
+          badge(bMt, 'Translator: not needed', 'idle');
+        }
+
+        const srt = toSrt(finalCues), vtt = toVtt(finalCues);
+        statusEl.textContent = `✅ ${finalCues.length} cues ready.`;
+        runBtn.textContent = original;
+
+        out.innerHTML = `
+          <div class="fade-in bg-slate-900/70 rounded-2xl border border-cyan-700/40 overflow-hidden">
+            <div class="p-4 border-b border-cyan-900/50 flex flex-wrap items-center gap-3">
+              <div>
+                <p class="text-xs text-cyan-300/70">${finalCues.length} cues · ${LANGS[srcSel.value]}${dst ? ' → ' + LANGS[dst] : ''}</p>
+                <p class="text-sm font-semibold">${mins} minutes of audio</p>
+              </div>
+              <div class="flex-1"></div>
+              <button id="dlSrt" class="text-[11px] font-semibold bg-cyan-600 hover:bg-cyan-500 px-3 py-1.5 rounded-full transition">Download .srt</button>
+              <button id="dlVtt" class="text-[11px] font-semibold bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full transition">Download .vtt</button>
+            </div>
+            <div class="max-h-96 overflow-y-auto p-4 space-y-3">
+              ${finalCues.map(c => `
+                <div class="flex gap-3">
+                  <span class="mono text-[10px] text-cyan-400/70 shrink-0 pt-0.5">${srtTime(c.start).slice(3, 12)}</span>
+                  <p class="text-sm text-slate-200/90">${esc(c.text)}</p>
+                </div>`).join('')}
+            </div>
+          </div>`;
+        document.getElementById('dlSrt').addEventListener('click', () => download('subtitles.srt', srt, 'application/x-subrip'));
+        document.getElementById('dlVtt').addEventListener('click', () => download('subtitles.vtt', vtt, 'text/vtt'));
+      } catch (e) {
+        statusEl.textContent = 'Failed.';
+        badge(bMt, 'Translator: idle', 'idle');
+        showError('Subtitle build failed: ' + (e.message || e));
+      } finally {
+        runBtn.disabled = false;
+        runBtn.textContent = original;
+      }
+    }
+
+    srcSel.addEventListener('change', refreshTargets);
+    fileInput.addEventListener('change', e => {
+      const f = e.target.files && e.target.files[0];
+      if (f) run(f);
+      e.target.value = '';
+    });
+
+    refreshTargets();
+    boot();
+  </script>
+</body>
+</html>

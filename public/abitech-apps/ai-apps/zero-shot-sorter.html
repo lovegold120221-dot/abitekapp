@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zero-Shot Sorter — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#141020] text-violet-50">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+    <a href="../index.html" class="text-xs text-violet-300/80 hover:text-white">← Abitech Apps Store</a>
+
+    <div class="text-center mt-4">
+      <div class="text-5xl">🏷️</div>
+      <h1 class="text-3xl font-bold mt-2">Zero-Shot Sorter</h1>
+      <p class="text-sm text-violet-200/80 mt-1">Invent your own categories — the model sorts a message into them without any training.</p>
+    </div>
+
+    <div class="mt-4 flex justify-center text-[11px]">
+      <span id="modelBadge" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Loading MobileBERT-MNLI…</span>
+    </div>
+
+    <div class="mt-6 bg-violet-950/50 rounded-2xl p-5 border border-violet-800/50">
+      <label class="text-xs text-violet-300/80">Message</label>
+      <textarea id="text" rows="4"
+        class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2.5 text-sm outline-none border border-violet-800/60 focus:border-violet-400 resize-y placeholder:text-violet-200/30"
+        placeholder="e.g. My invoice was charged twice and nobody replied to my ticket.">My invoice was charged twice and nobody replied to my ticket.</textarea>
+
+      <label class="text-xs text-violet-300/80 block mt-3">Your labels (comma separated)</label>
+      <input id="labels" type="text"
+        class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2.5 text-sm outline-none border border-violet-800/60 focus:border-violet-400 placeholder:text-violet-200/30"
+        placeholder="billing, technical problem, praise, feature request"
+        value="billing issue, technical problem, praise, feature request" />
+
+      <div class="flex flex-wrap gap-2 mt-3" id="presets"></div>
+
+      <button id="runBtn" disabled
+        class="mt-4 w-full bg-violet-600 hover:bg-violet-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold text-sm py-2.5 rounded-full transition">
+        Sort it
+      </button>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/15 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="out" class="mt-5"></div>
+
+    <p class="mt-6 text-[11px] text-violet-200/50 text-center leading-relaxed">
+      Runs <b>Xenova/mobilebert-uncased-mnli</b> with <b>transformers.js</b>. Because it is zero-shot, the labels you
+      type are the only thing it knows about — try inventing silly ones.
+    </p>
+  </div>
+
+  <script type="module">
+    import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0";
+
+    const PRESETS = [
+      ['Support triage', 'billing issue, technical problem, praise, feature request'],
+      ['Spam filter', 'spam, newsletter, personal message, urgent work'],
+      ['Mood', 'happy, angry, neutral, confused'],
+      ['Topic', 'sports, politics, technology, entertainment']
+    ];
+
+    const modelBadge = document.getElementById('modelBadge');
+    const runBtn = document.getElementById('runBtn');
+    const errBox = document.getElementById('errorBox');
+    const out = document.getElementById('out');
+    const presets = document.getElementById('presets');
+    let classifier = null;
+
+    function esc(value) {
+      return String(value || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function showError(msg) { errBox.textContent = msg; errBox.classList.remove('hidden'); }
+    function clearError() { errBox.classList.add('hidden'); }
+
+    PRESETS.forEach(([name, labels]) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'text-[11px] px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 transition';
+      b.textContent = name;
+      b.addEventListener('click', () => { document.getElementById('labels').value = labels; });
+      presets.appendChild(b);
+    });
+
+    async function boot() {
+      try {
+        classifier = await pipeline('zero-shot-classification', 'Xenova/mobilebert-uncased-mnli');
+        modelBadge.textContent = 'MobileBERT-MNLI ready';
+        modelBadge.className = 'px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30';
+        runBtn.disabled = false;
+      } catch (e) {
+        modelBadge.textContent = 'Model failed to load';
+        modelBadge.className = 'px-3 py-1 rounded-full bg-red-500/15 text-red-300 border border-red-500/30';
+        showError('Could not load the model: ' + (e && e.message ? e.message : e));
+      }
+    }
+
+    function bar(score, winner) {
+      const pct = Math.round(score * 100);
+      return `
+        <div class="flex items-center gap-3">
+          <div class="flex-1 h-2 rounded-full bg-black/40 overflow-hidden">
+            <div class="h-full ${winner ? 'bg-violet-400' : 'bg-violet-700'}" style="width:${pct}%"></div>
+          </div>
+          <span class="text-[11px] w-9 text-right ${winner ? 'text-violet-200 font-bold' : 'text-violet-200/50'}">${pct}%</span>
+        </div>`;
+    }
+
+    async function run() {
+      clearError();
+      const text = document.getElementById('text').value.trim();
+      const labels = document.getElementById('labels').value
+        .split(',').map(l => l.trim()).filter(Boolean).slice(0, 12);
+      if (!text) return showError('Type a message to sort.');
+      if (labels.length < 2) return showError('Add at least two labels, separated by commas.');
+      if (!classifier) return showError('The model is still loading.');
+
+      runBtn.disabled = true;
+      const original = runBtn.textContent;
+      runBtn.textContent = 'Sorting…';
+      out.innerHTML = '';
+
+      try {
+        const res = await classifier(text, labels, { hypothesis_template: 'This example is {}.' });
+        const ranked = res.labels.map((label, i) => ({ label, score: res.scores[i] }));
+        const best = ranked[0];
+
+        out.innerHTML = `
+          <div class="fade-in bg-violet-950/50 rounded-2xl p-5 border border-violet-700/50">
+            <p class="text-xs text-violet-300/70">Best match</p>
+            <p class="text-xl font-bold text-violet-100">${esc(best.label)} <span class="text-violet-300 font-medium">· ${Math.round(best.score * 100)}%</span></p>
+            <div class="mt-4 space-y-3">
+              ${ranked.map((r, i) => `
+                <div>
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="text-xs ${i === 0 ? 'text-violet-200 font-semibold' : 'text-violet-200/60'}">${esc(r.label)}</span>
+                  </div>
+                  ${bar(r.score, i === 0)}
+                </div>`).join('')}
+            </div>
+          </div>`;
+      } catch (e) {
+        showError('Classification failed: ' + (e && e.message ? e.message : e));
+      } finally {
+        runBtn.disabled = false;
+        runBtn.textContent = original;
+      }
+    }
+
+    runBtn.addEventListener('click', run);
+    boot();
+  </script>
+</body>
+</html>

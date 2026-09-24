@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/metropolis-font.css">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="food">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/FoodApp.gif" class="img-fluid" alt="food">
+    </div>
+    <!-- loader End -->
+
+    <!-- header starts -->
+    <div class="custom-container">
+        <header class="main-header food-main-header">
+            <div class="custom-container">
+                <div class="header-panel">
+                    <a href="profile.html#" onclick="history.back()">
+                        <i class="iconsax back-icon" data-icon="chevron-left"></i>
+                    </a>
+                    <h3>Account</h3>
+                    <a href="profile.html#!" class="sidebar-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+                        <i class="iconsax  left" data-icon="text-align-left"></i></a>
+                </div>
+            </div>
+        </header>
+    </div>
+    <!-- header end -->
+
+    <!-- mobile bottom section start-->
+    <div class="food-mobile-menu">
+        <ul>
+            <li>
+                <a href="home.html">
+                    <div class="icon">
+                        <img src="../assets/images/food/svg/1.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/food/svg/2.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5>Home</h5>
+                </a>
+            </li>
+            <li>
+                <a href="coupon.html">
+                    <div class="icon">
+                        <img src="../assets/images/food/svg/3.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/food/svg/4.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5>Offer</h5>
+                </a>
+            </li>
+            <li>
+                <a href="cart.html">
+                    <div class="icon">
+                        <img src="../assets/images/food/svg/5.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/food/svg/6.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5>Cart</h5>
+                </a>
+            </li>
+            <li class="active">
+                <a href="profile.html">
+                    <div class="icon">
+                        <img src="../assets/images/food/svg/7.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/food/svg/8.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5 class="active">Profile</h5>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- mobile bottom section end -->
+
+    <!-- profile section start -->
+    <section class="section-lg-t-space">
+        <div class="custom-container">
+            <div class="food-profile-background">
+                <div class="profile-part">
+                    <div class="profile-image">
+                        <img class="img-fluid profile-pic" src="../assets/images/food/profile/3.png" alt="3">
+                    </div>
+                    <h3>Savannah Nguyen</h3>
+                    <h4>savanah3@krank.com</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- profile section end -->
+    <!-- profile account section start -->
+    <section class="section-t-space">
+        <div class="custom-container">
+            <div class="title setting-title">
+                <h3>Settings</h3>
+            </div>
+            <ul class="account-list food-account-list">
+                <li class="profile-listing">
+                    <a href="profile-setting.html" class="setting-box">
+                        <div class="setting-icon">
+                            <i class="iconsax main-icon" data-icon="user-2-circle"> </i>
+                        </div>
+                        <div class="setting-content">
+                            <h5>Edit Profile</h5>
+                            <i class="iconsax arrow-icon" data-icon="chevron-right"> </i>
+                        </div>
+                    </a>
+                </li>
+                <li class="profile-listing">
+                    <a href="order-history.html" class="setting-box">
+                        <div class="setting-icon">
+                            <i class="iconsax main-icon" data-icon="box"> </i>
+                        </div>
+                        <div class="setting-content">
+                            <h5>Orders</h5>
+                            <i class="iconsax arrow-icon" data-icon="chevron-right"> </i>
+                        </div>
+                    </a>
+                </li>
+                <li class="profile-listing">
+                    <a href="wishlist.html" class="setting-box">
+                        <div class="setting-icon">
+                            <i class="iconsax main-icon" data-icon="heart"> </i>
+                        </div>
+                        <div class="setting-content">
+                            <h5> Your Wishlist</h5>
+                            <i class="iconsax arrow-icon" data-icon="chevron-right"> </i>
+
+                        </div>
+                    </a>
+                </li>
+                <li class="profile-listing">
+                    <a href="address.html" class="setting-box">
+                        <div class="setting-icon">
+                            <i class="iconsax main-icon" data-icon="location"> </i>
+                        </div>
+                        <div class="setting-content">
+                            <h5>Address</h5>
+                            <i class="iconsax arrow-icon" data-icon="chevron-right"> </i>
+                        </div>
+                    </a>
+                </li>
+                <li class="profile-listing">
+                    <a href="payment.html" class="setting-box">
+                        <div class="setting-icon">
+                            <i class="iconsax main-icon" data-icon="bank-card-diagonal"> </i>
+                        </div>
+                        <div class="setting-content">
+                            <h5>Payment</h5>
+                            <i class="iconsax arrow-icon" data-icon="chevron-right"> </i>
+                        </div>
+                    </a>
+                </li>
+                <li class="profile-listing">
+                    <a href="non-notification.html" class="setting-box">
+                        <div class="setting-icon">
+                            <i class="iconsax main-icon" data-icon="bell-2"> </i>
+                        </div>
+                        <div class="setting-content">
+                            <h5>Notification</h5>
+                            <i class="iconsax arrow-icon" data-icon="chevron-right"> </i>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="title setting-title">
+                <h3>Other settings</h3>
+            </div>
+            <ul class="account-list food-account-list">
+                <li class="profile-listing">
+                    <a href="language.html" class="setting-box">
+                        <div class="setting-icon">
+                            <i class="iconsax main-icon" data-icon="language-circle"> </i>
+                        </div>
+                        <div class="setting-content">
+                            <h5>Select Language</h5>
+                            <i class="iconsax arrow-icon" data-icon="chevron-right"> </i>
+                        </div>
+                    </a>
+                </li>
+                <li class="profile-listing">
+                    <a href="curreny.html" class="setting-box">
+                        <div class="setting-icon">
+                            <i class="iconsax main-icon" data-icon="transaction"> </i>
+                        </div>
+                        <div class="setting-content">
+                            <h5>Change Currency</h5>
+                            <i class="iconsax arrow-icon" data-icon="chevron-right"> </i>
+                        </div>
+                    </a>
+                </li>
+                <li class="profile-listing">
+                    <div class="setting-box">
+                        <div class="setting-icon">
+                            <i class="iconsax main-icon" data-icon="money-change"> </i>
+                        </div>
+                        <div class="setting-content">
+                            <h5>RTL</h5>
+                            <div class="theme-toggle-button">
+                                <input type="checkbox" id="rtlToggle">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="profile-listing">
+                    <div class="setting-box">
+                        <div class="setting-icon">
+                            <i class="iconsax main-icon" data-icon="bell-2"> </i>
+                        </div>
+                        <div class="setting-content">
+                            <h5>Notification setting</h5>
+                            <div class="theme-toggle-button">
+                                <input type="checkbox">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="profile-listing">
+                    <a href="login.html" class="setting-box">
+                        <div class="setting-icon">
+                            <i class="iconsax main-icon" data-icon="logout-2"> </i>
+                        </div>
+                        <div class="setting-content">
+                            <h5>Logout</h5>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- profile account section  end  -->
+
+    <!-- Bottom panel space Start  -->
+    <div class="panel-space"></div>
+    <!-- Bottom panel space End  -->
+
+    <!-- offcanvas section start -->
+    <div class="offcanvas offcanvas-end food-profile-offcanvas" tabindex="-1" id="offcanvasRight">
+        <div class="offcanvas-body p-0">
+            <div class="right-profile-box">
+                <div class="right-profile-image">
+                    <img src="../assets/images/food/profile/3.png" class="img-fluid" alt="png">
+                </div>
+                <div class="right-profile-content">
+                    <h3>Savannah Nguyen</h3>
+                    <h4>savanah3@krank.com</h4>
+                    <a href="profile.html#!">Edit Profile</a>
+                </div>
+            </div>
+
+            <ul class="right-profile-list">
+                <li>
+                    <a href="order-history.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="box"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Orders</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="address.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="location"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Manage Address</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="wishlist.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="heart"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>My Wishlist</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="wallet.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="wallet-open"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Wallets</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="train.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="driving"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Order on Train</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="order-history.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="receipt-3"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>My Orders History</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html#!" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom1">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="mask-2"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Appearance</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="notification.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="bell-2"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Notification Setting</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="nut"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Other Setting</h5>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <!-- bottom sidebar start -->
+            <div class="bottom-sidebar-btn">
+                <a href="login.html" class=" btn food-btn">
+                    <i class="iconsax logout-icon" data-icon="logout-2"></i> Log Out</a>
+            </div>
+            <!-- bottom sidebar end -->
+        </div>
+    </div>
+    <!-- offcanvas section end -->
+
+    <!-- theme-box offcanvas section start  -->
+    <div class="offcanvas offcanvas-bottom theme-offcanvas" tabindex="-1" id="offcanvasBottom1">
+        <div class="offcanvas-header theme-header">
+            <a href="profile.html#" onclick="history.back()">
+                <i class="iconsax back-icon" data-icon="chevron-left"></i>
+            </a>
+            <h3>Filter</h3>
+            <button type="button" class="btn-close offcanvas-close" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="custom-container">
+            <ul class="theme-box">
+                <li>
+                    <label class="custom-checkbox">Light Theme
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="custom-checkbox "> Dark Theme
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="custom-checkbox">Use Device Theme
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                </li>
+            </ul>
+            <div class="food-button">
+                <a href="home.html" class="food-send-button m_bottom-20">Save Preference</a>
+            </div>
+        </div>
+    </div>
+    <!-- theme-box offcanvas section end  -->
+
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- image change js -->
+    <script src="../assets/js/image-change.js"></script>
+
+    <!-- Script Js -->
+    <script src="../assets/js/script.js"></script>
+
+</body>
+
+</html>

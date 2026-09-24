@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Realtime OCR — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0d1117] text-gray-200">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+    <div class="text-center mt-4">
+      <div class="text-5xl">👁️</div>
+      <h1 class="text-3xl font-bold text-white">Realtime OCR</h1>
+      <p class="text-sm text-gray-400 mt-1">Upload an image and extract text using YOLO-based detection.</p>
+    </div>
+
+    <div class="mt-6 bg-[#161b22] rounded-2xl p-4 border border-gray-800">
+      <div class="flex items-center gap-2">
+        <input type="file" id="imageInput" accept="image/*" class="w-48 bg-gray-700 text-white rounded-full px-3 py-2 text-sm outline-none border border-gray-600">
+        <button id="processBtn" class="bg-green-600 hover:bg-green-500 text-white font-semibold text-sm py-2 rounded-full transition">Process Image</button>
+      </div>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/20 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="result" class="mt-5"></div>
+  </div>
+
+  <script>
+    const GEMINI_KEY = sessionStorage.getItem('abitech_gemini_key') || '';
+    const GEMINI_MODEL = "gemini-3.5-flash-lite";
+    const SYSTEM = "You are an OCR AI. Given an image (base64), extract all visible text and return it as clean text. Preserve layout as best as possible.";
+    function esc(s) { return s.replace(/[&<>"']/g, function(c) { return { '&': '&', '<': '<', '>': '>', '"': '"', "'": ''' }[c]; }); }
+
+    async function gemini(user) {
+      var res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent?key=" + GEMINI_KEY, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ system_instruction: { parts: [{ text: SYSTEM }] }, contents: [{ parts: [{ text: user }] }], generationConfig: { temperature: 0.5, maxOutputTokens: 1000 } })
+      });
+      var data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      return data.candidates[0].content.parts.map(function(p) { return p.text || ''; }).join("");
+    }
+
+    document.getElementById("imageInput").addEventListener("change", function() {
+      var file = this.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var base64 = e.target.result.split(",")[1];
+        document.getElementById("base64Input").value = base64;
+      }
+      reader.readAsDataURL(file);
+    });
+
+    async function process() {
+      var base64 = document.getElementById("base64Input").value;
+      var btn = document.getElementById("processBtn"), err = document.getElementById("errorBox"), out = document.getElementById("result");
+      err.classList.add("hidden");
+      if (!base64) { err.textContent = "Select an image first."; err.classList.remove("hidden"); return; }
+      btn.disabled = true; btn.textContent = "Processing…"; out.innerHTML = "";
+      try {
+        var text = await gemini("Image base64: " + base64);
+        out.innerHTML = "<div class=\"fade-in bg-white/10 backdrop-blur rounded-2xl p-5 border border-emerald-500/30 shadow-lg shadow-emerald-900/40\"><p class=\"text-xs uppercase tracking-widest text-emerald-300 font-semibold mb-2\">👁️ Extracted text</p><div class=\"text-sm leading-relaxed\" id=\"ocrText\">" + text + "</div></div>";
+      } catch (e) {
+        err.textContent = "OCR failed: " + e.message; err.classList.remove("hidden");
+      }
+      btn.disabled = false; btn.textContent = "Process Image ▶️";
+    }
+  </script>
+</body>
+</html>

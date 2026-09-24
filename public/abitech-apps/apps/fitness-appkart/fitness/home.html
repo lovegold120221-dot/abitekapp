@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Outfit:wght@100..900&amp;display=swap.css" rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Apex chart CSS -->
+    <link rel="stylesheet" href="../assets/css/apexcharts.min.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="fitness outfit-font">
+
+    <!-- loader Start -->
+    <div class="loader loading">
+        <img src="../assets/images/gif/fitness.gif" class="img-fluid" alt="fitness">
+    </div>
+    <!-- loader End -->
+
+    <!--  header section start -->
+    <header class="fitness-main-header">
+        <div class="custom-container2">
+            <div class="body-main-header">
+                <img src="../assets/images/profile/p13.png" class="img-fluid" alt="profile">
+                <div class="fitness-main-content">
+                    <div>
+                        <h4>Hello Albert</h4>
+                        <h5>Monday, 06 March </h5>
+                    </div>
+                    <div class="flex-common gap-2">
+                        <a href="search.html">
+                            <i class="iconsax icon" data-icon="search-normal-2"></i>
+                        </a>
+                        <a href="notification.html">
+                            <i class="iconsax icon" data-icon="bell-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--  header section end -->
+
+    <!-- mobile menu section start -->
+    <div class="fitness-mobile-menu">
+        <ul>
+            <li class="active">
+                <a href="home.html">
+                    <div class="icon">
+                        <img src="../assets/images/fitness/svg/1.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/fitness/svg/p1.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5>Home</h5>
+                </a>
+            </li>
+            <li>
+                <a href="custom.html">
+                    <div class="icon">
+                        <img src="../assets/images/fitness/svg/2.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/fitness/svg/p2.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5>Custom</h5>
+                </a>
+            </li>
+            <li><a href="chart.html">
+                    <div class="icon">
+                        <img src="../assets/images/fitness/svg/3.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/fitness/svg/p3.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5>Report</h5>
+                </a>
+            </li>
+            <li><a href="exercise.html">
+                    <div class="icon">
+                        <img src="../assets/images/fitness/svg/4.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/fitness/svg/p4.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5>Exercises</h5>
+                </a>
+            </li>
+            <li><a href="profile.html">
+                    <div class="icon">
+                        <img src="../assets/images/fitness/svg/5.svg" class="img-fluid inactive" alt="svg">
+                        <img src="../assets/images/fitness/svg/p5.svg" class="img-fluid active" alt="svg">
+                    </div>
+                    <h5>Profile</h5>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- mobile menu section  end  -->
+
+    <!-- hero section start -->
+    <section class="pt-0 fitness-hero-section">
+        <div class="custom-container2">
+            <div class="fitness-hero-box">
+                <div class="fitness-hero-content">
+                    <div>
+                        <h5>Today’s Challenge</h5>
+                        <h6>Running</h6>
+                    </div>
+                    <div id="UserActivity"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- hero section  end  -->
+
+    <!-- trainer section start -->
+    <section class="section-t-space fitness-trainer-section">
+        <div class="custom-container2">
+            <div class="fitness-title">
+                <h3>Top Trainers</h3>
+                <a href="home.html#!">Edit</a>
+            </div>
+            <ul class="fitness-trainer-list">
+                <li>
+                    <a href="home.html#!">
+                        <img src="../assets/images/fitness/trainer/1.jpg" class="img-fluid" alt="profile">
+                        <span>Esther</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="home.html#!">
+                        <img src="../assets/images/fitness/trainer/2.jpg" class="img-fluid" alt="profile">
+                        <span>Leslie</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="home.html#!">
+                        <img src="../assets/images/fitness/trainer/3.jpg" class="img-fluid" alt="profile">
+                        <span>Jenny</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="home.html#!">
+                        <img src="../assets/images/fitness/trainer/4.jpg" class="img-fluid" alt="profile">
+                        <span>Robert</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="home.html#!">
+                        <img src="../assets/images/fitness/trainer/5.jpg" class="img-fluid" alt="profile">
+                        <span>Kristin</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- trainer section  end  -->
+
+    <!-- trining section start -->
+    <section class="section-t-space training-section">
+        <div class="custom-container2">
+            <div class="fitness-title">
+                <h3>Additional Training</h3>
+                <a href="exercise.html">See All</a>
+            </div>
+            <ul class="fitness-trining-list">
+                <li>
+                    <a href="exercise.html">
+                        <img src="../assets/images/fitness/poster/1.jpg" class="img-fluid" alt="image">
+                    </a>
+                    <h5 class="fitness-coupon">Beginner</h5>
+                    <div class="fitness-trining-content">
+                        <a href="exercise.html">Knee Push Up</a>
+                        <h5>20 Sit up a day</h5>
+                        <div class="fitness-time-kg">
+                            <div>
+                                <img src="../assets/images/fitness/svg/6.svg" class="img-fluid" alt="svg">
+                                <span>300 Kcal</span>
+                            </div>
+                            <div>
+                                <i class="iconsax icon" data-icon="stopwatch"></i>
+                                <span>18 Min</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="exercise.html">
+                        <img src="../assets/images/fitness/poster/2.jpg" class="img-fluid" alt="image">
+                    </a>
+                    <h5 class="fitness-coupon">Beginner</h5>
+                    <div class="fitness-trining-content">
+                        <a href="exercise.html">Sportswear Training</a>
+                        <h5>14 Sit up a day</h5>
+                        <div class="fitness-time-kg">
+                            <div>
+                                <img src="../assets/images/fitness/svg/6.svg" class="img-fluid" alt="svg">
+                                <span>300 Kcal</span>
+                            </div>
+                            <div>
+                                <i class="iconsax icon" data-icon="stopwatch"></i>
+                                <span>13 Min</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="exercise.html">
+                        <img src="../assets/images/fitness/poster/3.jpg" class="img-fluid" alt="image">
+                    </a>
+                    <h5 class="fitness-coupon">Beginner</h5>
+                    <div class="fitness-trining-content">
+                        <a href="exercise.html">Body Pack Training</a>
+                        <h5>20 Sit up a day</h5>
+                        <div class="fitness-time-kg">
+                            <div>
+                                <img src="../assets/images/fitness/svg/6.svg" class="img-fluid" alt="svg">
+                                <span>100 Kcal</span>
+                            </div>
+                            <div>
+                                <i class="iconsax icon" data-icon="stopwatch"></i>
+                                <span>10 Min</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- trining section  end  -->
+
+    <!-- fitness banner section start  -->
+    <section class="section-t-space fitness-banner-section">
+        <div class="custom-container2">
+            <div class="fitness-title">
+                <h3>Unlock your Potential </h3>
+            </div>
+            <div class="fitness-banner-wrapper">
+                <a href="home.html#!">
+                    <img src="../assets/images/fitness/banner/1.jpg" class="img-fluid" alt="banner">
+                </a>
+                <a href="home.html#!">
+                    <img src="../assets/images/fitness/banner/2.jpg" class="img-fluid" alt="banner">
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- fitness banner section  end   -->
+
+    <!-- task section start -->
+    <section class="section-t-space training-section">
+        <div class="custom-container2">
+            <div class="fitness-title">
+                <h3>Daily Task</h3>
+                <a href="exercise.html">See All</a>
+            </div>
+            <ul class="fitness-trining-list">
+                <li>
+                    <a href="exercise.html">
+                        <img src="../assets/images/fitness/poster/4.jpg" class="img-fluid" alt="image">
+                    </a>
+                    <div class="fitness-trining-content">
+                        <div class="task-content">
+                            <div>
+                                <a href="exercise.html">Full Shot Man Push</a>
+                                <h5>Exercise 1</h5>
+                            </div>
+                            <div>
+                                <i class="iconsax icon" data-icon="hourglass"></i>
+                            </div>
+
+                        </div>
+                        <div class="fitness-time-kg">
+                            <div>
+                                <i class="iconsax icon" data-icon="stopwatch"></i>
+                                <span>10 Min</span>
+                            </div>
+                            <div>
+                                <img src="../assets/images/fitness/svg/6.svg" class="img-fluid" alt="svg">
+                                <span>150 Kcal</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="exercise.html">
+                        <img src="../assets/images/fitness/poster/5.jpg" class="img-fluid" alt="image">
+                    </a>
+                    <div class="fitness-trining-content">
+                        <div class="task-content">
+                            <div>
+                                <a href="exercise.html">Weightlifting Training</a>
+                                <h5>Exercise 3</h5>
+                            </div>
+                            <div>
+                                <i class="iconsax icon" data-icon="hourglass"></i>
+                            </div>
+
+                        </div>
+                        <div class="fitness-time-kg">
+                            <div>
+                                <i class="iconsax icon" data-icon="stopwatch"></i>
+                                <span>40 Min</span>
+                            </div>
+                            <div>
+                                <img src="../assets/images/fitness/svg/6.svg" class="img-fluid" alt="svg">
+                                <span>500 Kcal</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- task section  end  -->
+
+    <div class="panel-space"></div>
+
+    <!-- Bootstrap JS-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax JS-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- Apex chart JS -->
+    <script src="../assets/js/apexchart/apexcharts.min.js"></script>
+    <script src="../assets/js/apexchart/custom.js"></script>
+
+    <!-- script JS -->
+    <script src="../assets/js/script.js"></script>
+
+</body>
+
+</html>

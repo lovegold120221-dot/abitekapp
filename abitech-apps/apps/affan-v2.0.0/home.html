@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Affan - PWA Mobile HTML Template">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <meta name="theme-color" content="#0134d4">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <!-- Title -->
+  <title>Affan - PWA Mobile HTML Template</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/img/core-img/favicon.ico">
+  <link rel="apple-touch-icon" href="assets/img/icons/icon-96x96.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/img/icons/icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="assets/img/icons/icon-167x167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icons/icon-180x180.png">
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="spinner-grow text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Header Area -->
+  <div class="header-area" id="headerArea">
+    <div class="container">
+      <!-- Header Content -->
+      <div class="header-content header-style-five position-relative d-flex align-items-center justify-content-between">
+        <!-- Logo Wrapper -->
+        <div class="logo-wrapper">
+          <a href="home.html">
+            <img class="logo-light" src="assets/img/core-img/logo.png" alt="">
+            <img class="logo-dark" src="assets/img/core-img/logo-dark.png" alt="">
+          </a>
+        </div>
+
+        <!-- Navbar Toggler -->
+        <div class="navbar-toggler" id="affanNavbarToggler" data-bs-toggle="offcanvas" data-bs-target="#affanOffcanvas"
+          aria-controls="affanOffcanvas">
+          <span class="d-block"></span>
+          <span class="d-block"></span>
+          <span class="d-block"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- # Sidenav Left -->
+  <div class="offcanvas offcanvas-start" id="affanOffcanvas" data-bs-scroll="true" tabindex="-1"
+    aria-labelledby="affanOffcanvsLabel">
+
+    <button class="btn-close btn-close-white text-reset" type="button" data-bs-dismiss="offcanvas"
+      aria-label="Close"></button>
+
+    <div class="offcanvas-body p-0">
+      <div class="sidenav-wrapper">
+        <!-- Sidenav Profile -->
+        <div class="sidenav-profile bg-gradient">
+          <div class="sidenav-style1"></div>
+
+          <!-- User Thumbnail -->
+          <div class="user-profile">
+            <img src="assets/img/bg-img/2.jpg" alt="">
+          </div>
+
+          <!-- User Info -->
+          <div class="user-info">
+            <h6 class="user-name mb-0">Affan Islam</h6>
+            <span>CEO, Designing World</span>
+          </div>
+        </div>
+
+        <!-- Sidenav Nav -->
+        <ul class="sidenav-nav ps-0">
+          <li>
+            <a href="home.html"><i class="ti ti-smart-home"></i> Home</a>
+          </li>
+          <li>
+            <a href="elements.html"><i class="ti ti-heart"></i> Elements
+              <span class="badge bg-danger rounded-pill">220+</span>
+            </a>
+          </li>
+          <li>
+            <a href="pages.html"><i class="ti ti-folders"></i> Pages
+              <span class="badge bg-success rounded-pill">100+</span>
+            </a>
+          </li>
+          <li>
+            <a href="home.html#"><i class="ti ti-shopping-bag"></i> Shop</a>
+            <ul>
+              <li>
+                <a href="shop-grid.html"> Shop Grid</a>
+              </li>
+              <li>
+                <a href="shop-list.html"> Shop List</a>
+              </li>
+              <li>
+                <a href="shop-details.html"> Shop Details</a>
+              </li>
+              <li>
+                <a href="cart.html"> Cart</a>
+              </li>
+              <li>
+                <a href="checkout.html"> Checkout</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="settings.html"><i class="ti ti-settings"></i> Settings</a>
+          </li>
+          <li>
+            <div class="night-mode-nav">
+              <i class="ti ti-moon"></i> Night Mode
+              <div class="form-check form-switch">
+                <input class="form-check-input form-check-success" id="darkSwitch" type="checkbox">
+              </div>
+            </div>
+          </li>
+          <li>
+            <a href="login.html"><i class="ti ti-logout"></i> Logout</a>
+          </li>
+        </ul>
+
+        <div class="mt-auto">
+          <!-- Social Info -->
+          <div class="social-info-wrap">
+            <a href="home.html#">
+              <i class="ti ti-brand-facebook"></i>
+            </a>
+            <a href="home.html#">
+              <i class="ti ti-brand-x"></i>
+            </a>
+            <a href="home.html#">
+              <i class="ti ti-brand-linkedin"></i>
+            </a>
+          </div>
+
+          <!-- Copyright Info -->
+          <div class="copyright-info">
+            <p>
+              <span id="copyrightYear"></span>
+              &copy; Made by <a href="home.html#"> Designing World</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-content-wrapper">
+
+    <!-- Welcome Toast -->
+    <div class="toast toast-autohide custom-toast-1 home-page-toast shadow" role="alert" aria-live="assertive"
+      aria-atomic="true" data-bs-delay="60000" data-bs-autohide="true" id="installWrap">
+      <div class="toast-body p-0">
+        <div class="toast-text">
+          <h6 class="mb-1">Welcome to Affan!</h6>
+          <span class="d-block mb-2">Click the <strong class="text-primary">Install Now</strong> button & enjoy it just
+            like an
+            app.</span>
+          <button id="installAffan" class="btn btn-sm btn-warning">Install Now</button>
+        </div>
+      </div>
+      <button class="btn btn-close position-relative p-2" type="button" data-bs-dismiss="toast"
+        aria-label="Close"></button>
+    </div>
+
+    <!-- Tiny Slider One Wrapper -->
+    <div class="tiny-slider-one-wrapper" dir="ltr">
+      <div class="tiny-slider-one">
+        <!-- Single Hero Slide -->
+        <div>
+          <div class="single-hero-slide bg-overlay" style="background-image: url('assets/img/bg-img/31.jpg')">
+            <div class="h-100 d-flex align-items-center text-center">
+              <div class="container">
+                <h3 class="text-white mb-1">Built with Bootstrap 5.3</h3>
+                <p class="text-white">Create fast, responsive, and modern mobile experiences.</p>
+                <a class="btn btn-creative btn-warning" href="home.html#">Get Started <i class="ti ti-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Single Hero Slide -->
+        <div>
+          <div class="single-hero-slide bg-overlay" style="background-image: url('assets/img/bg-img/33.jpg')">
+            <div class="h-100 d-flex align-items-center text-center">
+              <div class="container">
+                <h3 class="text-white mb-1">Framework-Free Code</h3>
+                <p class="text-white">Easy to customize and maintain with vanilla JS.</p>
+                <a class="btn btn-creative btn-warning" href="home.html#">Buy Now <i class="ti ti-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Single Hero Slide -->
+        <div>
+          <div class="single-hero-slide bg-overlay" style="background-image: url('assets/img/bg-img/32.jpg')">
+            <div class="h-100 d-flex align-items-center text-center">
+              <div class="container">
+                <h3 class="text-white mb-1">Installable PWA</h3>
+                <p class="text-white">Fast, reliable, and accessible directly from your device.</p>
+                <a class="btn btn-creative btn-warning" href="home.html#">Buy Now <i class="ti ti-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Single Hero Slide -->
+        <div>
+          <div class="single-hero-slide bg-overlay" style="background-image: url('assets/img/bg-img/33.jpg')">
+            <div class="h-100 d-flex align-items-center text-center">
+              <div class="container">
+                <h3 class="text-white mb-1">Everything You Need</h3>
+                <p class="text-white">Build complete websites in days, not months.</p>
+                <a class="btn btn-creative btn-warning" href="home.html#">Buy Now <i class="ti ti-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Single Hero Slide -->
+        <div>
+          <div class="single-hero-slide bg-overlay" style="background-image: url('assets/img/bg-img/1.jpg')">
+            <div class="h-100 d-flex align-items-center text-center">
+              <div class="container">
+                <h3 class="text-white mb-1">Dark &amp; RTL Ready</h3>
+                <p class="text-white">Switch easily between Dark Mode and RTL layouts.</p>
+                <a class="btn btn-creative btn-warning" href="home.html#">Buy Now <i class="ti ti-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-3"></div>
+
+    <div class="container">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-4">
+              <div class="feature-card mx-auto text-center">
+                <div class="card mx-auto bg-gray">
+                  <i class="ti ti-circle-square"></i>
+                </div>
+                <h6 class="mb-0 fz-14">PWA Support</h6>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="feature-card mx-auto text-center">
+                <div class="card mx-auto bg-gray">
+                  <i class="ti ti-brand-bootstrap"></i>
+                </div>
+                <h6 class="mb-0 fz-14">Bootstrap 5.3</h6>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="feature-card mx-auto text-center">
+                <div class="card mx-auto bg-gray">
+                  <i class="ti ti-file-type-js"></i>
+                </div>
+                <h6 class="mb-0 fz-14">Vanilla JavaScript</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="card card-bg-img bg-img bg-overlay mb-3" style="background-image: url('assets/img/bg-img/3.jpg')">
+        <div class="card-body p-4">
+          <h2 class="text-white">Ready to Use Elements</h2>
+          <p class="mb-3 text-white">Unlock a collection of over 220 modern design elements. Simply copy and paste to
+            enhance your page instantly.</p>
+          <a class="btn btn-warning" href="elements.html">Explore Elements <i class="ti ti-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-4">
+              <div class="feature-card mx-auto text-center">
+                <div class="card mx-auto bg-gray">
+                  <i class="ti ti-brand-sass"></i>
+                </div>
+                <h6 class="mb-0 fz-14">SCSS</h6>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="feature-card mx-auto text-center">
+                <div class="card mx-auto bg-gray">
+                  <i class="ti ti-brand-npm"></i>
+                </div>
+                <h6 class="mb-0 fz-14">npm</h6>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="feature-card mx-auto text-center">
+                <div class="card mx-auto bg-gray">
+                  <i class="ti ti-bulb"></i>
+                </div>
+                <h6 class="mb-0 fz-14">Gulp 4</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="card bg-primary mb-3 bg-img" style="background-image: url('assets/img/core-img/1.png')">
+        <div class="card-body p-4">
+          <h2 class="text-white">35+ Pre-Built Pages</h2>
+          <p class="mb-3 text-white">A collection of 35+ fully designed pages, including Authentication, Chats,
+            eCommerce, Blogs, and more—ready to use instantly.</p>
+          <a class="btn btn-warning" href="pages.html">Browse All Pages <i class="ti ti-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-4">
+              <div class="feature-card mx-auto text-center">
+                <div class="card mx-auto bg-gray">
+                  <i class="ti ti-sun-moon"></i>
+                </div>
+                <h6 class="mb-0 fz-14">Dark Mode</h6>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="feature-card mx-auto text-center">
+                <div class="card mx-auto bg-gray">
+                  <i class="ti ti-text-direction-rtl"></i>
+                </div>
+                <h6 class="mb-0 fz-14">RTL Support</h6>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="feature-card mx-auto text-center">
+                <div class="card mx-auto bg-gray">
+                  <i class="ti ti-code"></i>
+                </div>
+                <h6 class="mb-0 fz-14">Clean Code</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="card bg-secondary mb-3">
+        <div class="card-body">
+          <h3>Customer Review</h3>
+
+          <div class="testimonial-slide-three-wrapper" dir="ltr">
+            <div class="testimonial-slide3 testimonial-style3">
+
+              <!-- Single Testimonial Slide -->
+              <div class="single-testimonial-slide">
+                <div class="text-content">
+                  <div class="d-flex gap-1 mb-2">
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                  </div>
+                  <h6 class="mb-2">The code looks clean, and the designs are excellent. I recommend.</h6>
+                  <span class="d-block">Mrrickez, Themeforest</span>
+                </div>
+              </div>
+
+              <!-- Single Testimonial Slide -->
+              <div class="single-testimonial-slide">
+                <div class="text-content">
+                  <div class="d-flex gap-1 mb-2">
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                  </div>
+                  <h6 class="mb-2">All complete, <br> great craft.</h6>
+                  <span class="d-block">Mazatlumm, Themeforest</span>
+                </div>
+              </div>
+
+              <!-- Single Testimonial Slide -->
+              <div class="single-testimonial-slide">
+                <div class="text-content">
+                  <div class="d-flex gap-1 mb-2">
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                  </div>
+                  <h6 class="mb-2">Awesome template! <br> Excellent support!</h6>
+                  <span class="d-block">Vguntars, Themeforest</span>
+                </div>
+              </div>
+
+              <!-- Single Testimonial Slide -->
+              <div class="single-testimonial-slide">
+                <div class="text-content">
+                  <div class="d-flex gap-1 mb-2">
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                  </div>
+                  <h6 class="mb-2">Nice modern design, I love the product.</h6>
+                  <span class="d-block">electroMEZ, Themeforest</span>
+                </div>
+              </div>
+
+              <!-- Single Testimonial Slide -->
+              <div class="single-testimonial-slide">
+                <div class="text-content">
+                  <div class="d-flex gap-1 mb-2">
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                    <i class="ti ti-star-fill text-warning"></i>
+                  </div>
+                  <h6 class="mb-2">Excquisite pixel perfect design, with an abundance of content, well documented.</h6>
+                  <span class="d-block">webpixie, Themeforest</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-4">
+              <div class="feature-card mx-auto text-center">
+                <div class="card mx-auto bg-gray">
+                  <i class="ti ti-carambola"></i>
+                </div>
+                <h6 class="mb-0 fz-14">Top Rated</h6>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="feature-card mx-auto text-center">
+                <div class="card mx-auto bg-gray">
+                  <i class="ti ti-award"></i>
+                </div>
+                <h6 class="mb-0 fz-14">Elegant Design</h6>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="feature-card mx-auto text-center">
+                <div class="card mx-auto bg-gray">
+                  <i class="ti ti-flame"></i>
+                </div>
+                <h6 class="mb-0 fz-14">Innovative & Trendy</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pb-3"></div>
+  </div>
+
+  <!-- Footer Nav -->
+  <div class="footer-nav-area" id="footerNav">
+    <div class="container px-0">
+      <!-- Footer Content -->
+      <div class="footer-nav position-relative">
+        <ul class="h-100 d-flex align-items-center justify-content-between ps-0">
+          <li class="active">
+            <a href="home.html">
+              <i class="ti ti-home"></i>
+              <span>Home</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="pages.html">
+              <i class="ti ti-folders"></i>
+              <span>Pages</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="elements.html">
+              <i class="ti ti-heart"></i>
+              <span>Elements</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="settings.html">
+              <i class="ti ti-settings"></i>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- All JavaScript Files -->
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/slideToggle.min.js"></script>
+  <script src="assets/js/internet-status.js"></script>
+  <script src="assets/js/tiny-slider.js"></script>
+  <script src="assets/js/venobox.min.js"></script>
+  <script src="assets/js/countdown.js"></script>
+  <script src="assets/js/rangeslider.min.js"></script>
+  <script src="assets/js/vanilla-dataTables.min.js"></script>
+  <script src="assets/js/index.js"></script>
+  <script src="assets/js/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/js/isotope.pkgd.min.js"></script>
+  <script src="assets/js/nice-select2.js"></script>
+  <script src="assets/js/dark-rtl.js"></script>
+  <script src="assets/js/active.js"></script>
+  <script src="assets/js/pwa.js"></script>
+</body>
+
+</html>

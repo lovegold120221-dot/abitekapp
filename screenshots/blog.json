@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/blog",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Blog — AI Implementation Notes | ABI Tech",
+      "hasCanvas": false,
+      "bodyTextLen": 1445,
+      "bodyTextHash": "a04eb1c673cd85dabc64cb62e709c4298738ada7458ee76117ae596f8c781bdf",
+      "bodyTextPrefix": "ABI Tech AI Business Implementation Technology Home About Servic",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/blog.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Blog — AI Implementation Notes | ABI Tech",
+      "hasCanvas": false,
+      "bodyTextLen": 1292,
+      "bodyTextHash": "915f7742e283d1409468383d3edb939dc6888cc6aa480b7ef95f1d639a4909ed",
+      "bodyTextPrefix": "ABI Tech Let's Talk BLOG Notes from the implementation floor How",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/blog-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/blog.json"
+}

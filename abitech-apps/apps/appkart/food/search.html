@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/metropolis-font.css">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Iconly css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconly.css">
+
+    <!-- swiper css -->
+    <link rel="stylesheet" href="../assets/css/vendors/swiper/swiper.min.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="food">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/FoodApp.gif" class="img-fluid" alt="food">
+    </div>
+    <!-- loader End -->
+
+    <!-- header starts -->
+    <header class="main-header food-main-header">
+        <div class="custom-container">
+            <div class="header-panel">
+                <a href="search.html#" onclick="history.back()">
+                    <i class="iconsax back-icon" data-icon="chevron-left"></i>
+                </a>
+                <h3>Search</h3>
+                <a href="search.html#!" class="sidebar-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+                    <i class="iconsax  left" data-icon="text-align-left"></i></a>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+    <!-- search section starts -->
+    <section class="section-lg-t-space">
+        <div class="custom-container">
+            <form class="food-input-form">
+                <div class="form-group mt-0">
+                    <input type="search" class="form-control search" id="inputusername" placeholder="search here......">
+                    <i class="iconsax  search-icon" data-icon="search-normal-2"></i>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- search section end -->
+
+    <!-- recent search section start -->
+    <section class="section-t-space">
+        <div class="custom-container">
+            <div class="title plant-title">
+                <h3>Recent Search</h3>
+                <a href="search.html#">Clear all</a>
+            </div>
+
+            <ul class="recent-search-listing food-search">
+                <li>
+                    <a href="restaurant.html">
+                        <i class="iconsax time-icon" data-icon="clock"></i>
+                        <h5>Comfort Kitchen food</h5>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"> </i>
+                </li>
+                <li>
+                    <a href="restaurant.html">
+                        <i class="iconsax time-icon" data-icon="clock"></i>
+                        <h5> Salad Factory food</h5>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"> </i>
+                </li>
+                <li>
+                    <a href="restaurant.html">
+                        <i class="iconsax time-icon" data-icon="clock"></i>
+                        <h5>Chicken Skewers Slices food</h5>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"> </i>
+                </li>
+                <li>
+                    <a href="restaurant.html">
+                        <i class="iconsax time-icon" data-icon="clock"></i>
+                        <h5>Burgers And Fries food</h5>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"> </i>
+                </li>
+                <li>
+                    <a href="restaurant.html">
+                        <i class="iconsax time-icon" data-icon="clock"></i>
+                        <h5>Cooked Italian Pasta food</h5>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"> </i>
+                </li>
+                <li>
+                    <a href="restaurant.html">
+                        <i class="iconsax time-icon" data-icon="clock"></i>
+                        <h5>pizza Italian food</h5>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"> </i>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- recent search section end -->
+
+    <!-- categories section start  -->
+    <section class="food-category-section">
+        <div class="custom-container">
+            <div class="title">
+                <h3>Food Categories</h3>
+                <a href="categories.html" class="all">View All</a>
+            </div>
+            <div class="swiper food-slider">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <a href="categories.html" class="food-category-box">
+                            <img src="../assets/images/food/categories/1.png" class="img-fluid" alt="png">
+                            <h4>Chinese</h4>
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="categories.html" class="food-category-box"><img
+                                src="../assets/images/food/categories/2.png" class="img-fluid" alt="png">
+                            <h4>Noodles</h4>
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="categories.html" class="food-category-box"><img
+                                src="../assets/images/food/categories/3.png" class="img-fluid" alt="png">
+                            <h4>Pizza</h4>
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="categories.html" class="food-category-box"><img
+                                src="../assets/images/food/categories/4.png" class="img-fluid" alt="png">
+                            <h4>Burger</h4>
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="categories.html" class="food-category-box"><img
+                                src="../assets/images/food/categories/1.png" class="img-fluid" alt="png">
+                            <h4>Chinese</h4>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- categories section end  -->
+
+    <!-- product section start  -->
+    <section class="section-t-space">
+        <div class="title px-15">
+            <h3>Top Discount</h3>
+            <a href="restaurant.html" class="all">View All</a>
+        </div>
+        <div class="swiper food-product-slider px-15">
+            <div class="swiper-wrapper p_bottom-30">
+                <div class="swiper-slide food-product-box">
+                    <div class="food-product-image">
+                        <a href="restaurant.html">
+                            <img src="../assets/images/food/product/1.jpg" class="img-fluid w-100" alt="png">
+                        </a>
+                        <h6 class="food-rating">4.5<svg>
+                                <use href="../assets/svg/icon-sprite.svg#star"></use>
+                            </svg>
+                        </h6>
+                    </div>
+                    <div class="food-product-content">
+                        <button class="wishlist-btn btn">
+                            <i class="iconly-Heart icli"></i>
+                            <i class="iconly-Heart icbo"></i>
+                        </button>
+                        <h5>Comfort Kitchen</h5>
+                        <div class="food-shipping">
+                            <div class="food-free-shipping">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#shipping"></use>
+                                </svg>
+                                <h6> Free delivery</h6>
+                            </div>
+                            <div class="food-free-shipping">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#time"></use>
+                                </svg>
+                                <h6>10-15 mins</h6>
+                            </div>
+                        </div>
+                        <ul class="food-option">
+                            <li><a href="shop.html">Taco</a></li>
+                            <li><a href="shop.html">Vag</a></li>
+                            <li><a href="shop.html">Quick Food</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="swiper-slide food-product-box">
+                    <div class="food-product-image">
+                        <a href="restaurant.html">
+                            <img src="../assets/images/food/product/2.jpg" class="img-fluid w-100" alt="png">
+                        </a>
+                        <h6 class="food-rating">3.8<svg>
+                                <use href="../assets/svg/icon-sprite.svg#star"></use>
+                            </svg></h6>
+                    </div>
+                    <div class="food-product-content">
+                        <button class="wishlist-btn btn">
+                            <i class="iconly-Heart icli"></i>
+                            <i class="iconly-Heart icbo"></i>
+                        </button>
+                        <h5>Pizza Kitchen</h5>
+                        <div class="food-shipping">
+                            <div class="food-free-shipping">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#shipping"></use>
+                                </svg>
+                                <h6> Free delivery</h6>
+                            </div>
+                            <div class="food-free-shipping">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#time"></use>
+                                </svg>
+                                <h6>10-15 mins</h6>
+                            </div>
+                        </div>
+                        <ul class="food-option">
+                            <li><a href="shop.html">Taco</a></li>
+                            <li><a href="shop.html">Vag</a></li>
+                            <li><a href="shop.html">Quick Food</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="swiper-slide food-product-box">
+                    <div class="food-product-image">
+                        <a href="restaurant.html">
+                            <img src="../assets/images/food/product/11.jpg" class="img-fluid w-100" alt="png">
+                        </a>
+                        <h6 class="food-rating">4.6<svg>
+                                <use href="../assets/svg/icon-sprite.svg#star"></use>
+                            </svg></h6>
+                    </div>
+                    <div class="food-product-content">
+                        <button class="wishlist-btn btn">
+                            <i class="iconly-Heart icli"></i>
+                            <i class="iconly-Heart icbo"></i>
+                        </button>
+                        <h5>Cooked Italian Pasta</h5>
+                        <div class="food-shipping">
+                            <div class="food-free-shipping">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#shipping"></use>
+                                </svg>
+                                <h6> Free delivery</h6>
+                            </div>
+                            <div class="food-free-shipping">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#time"></use>
+                                </svg>
+                                <h6>10-15 mins</h6>
+                            </div>
+                        </div>
+                        <ul class="food-option">
+                            <li><a href="shop.html">Taco</a></li>
+                            <li><a href="shop.html">Vag</a></li>
+                            <li><a href="shop.html">Quick Food</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="swiper-slide food-product-box">
+                    <div class="food-product-image">
+                        <a href="restaurant.html">
+                            <img src="../assets/images/food/product/10.jpg" class="img-fluid w-100" alt="png">
+                        </a>
+                        <h6 class="food-rating">4.8 <svg>
+                                <use href="../assets/svg/icon-sprite.svg#star"></use>
+                            </svg></h6>
+                    </div>
+                    <div class="food-product-content">
+                        <button class="wishlist-btn btn">
+                            <i class="iconly-Heart icli"></i>
+                            <i class="iconly-Heart icbo"></i>
+                        </button>
+                        <h5>Burgers And Fries</h5>
+                        <div class="food-shipping">
+                            <div class="food-free-shipping">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#shipping"></use>
+                                </svg>
+                                <h6> Free delivery</h6>
+                            </div>
+                            <div class="food-free-shipping">
+                                <svg>
+                                    <use href="../assets/svg/icon-sprite.svg#time"></use>
+                                </svg>
+                                <h6>10-15 mins</h6>
+                            </div>
+                        </div>
+                        <ul class="food-option">
+                            <li><a href="shop.html">Taco</a></li>
+                            <li><a href="shop.html">Vag</a></li>
+                            <li><a href="shop.html">Quick Food</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- product section end  -->
+
+
+    <!-- offcanvas section start -->
+    <div class="offcanvas offcanvas-end food-profile-offcanvas" tabindex="-1" id="offcanvasRight">
+        <div class="offcanvas-body p-0">
+            <div class="right-profile-box">
+                <div class="right-profile-image">
+                    <img src="../assets/images/food/profile/3.png" class="img-fluid" alt="png">
+                </div>
+                <div class="right-profile-content">
+                    <h3>Savannah Nguyen</h3>
+                    <h4>savanah3@krank.com</h4>
+                    <a href="search.html#!">Edit Profile</a>
+                </div>
+            </div>
+
+            <ul class="right-profile-list">
+                <li>
+                    <a href="order-history.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="box"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Orders</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="address.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="location"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Manage Address</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="wishlist.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="heart"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>My Wishlist</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="wallet.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="wallet-open"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Wallets</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="train.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="driving"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Order on Train</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="order-history.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="receipt-3"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>My Orders History</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="search.html#!" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom1">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="mask-2"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Appearance</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="notification.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="bell-2"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Notification Setting</h5>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html">
+                        <div class="link-icon">
+                            <i class="iconsax menu-icon" data-icon="nut"></i>
+                        </div>
+                        <div class="right-profile-list-contant">
+                            <h5>Other Setting</h5>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <!-- bottom sidebar start -->
+            <div class="bottom-sidebar-btn">
+                <a href="login.html" class=" btn food-btn">
+                    <i class="iconsax logout-icon" data-icon="logout-2"></i> Log Out</a>
+            </div>
+            <!-- bottom sidebar end -->
+        </div>
+    </div>
+    <!-- offcanvas section end -->
+
+    <!-- theme-box offcanvas section start  -->
+    <div class="offcanvas offcanvas-bottom theme-offcanvas" tabindex="-1" id="offcanvasBottom1">
+        <div class="offcanvas-header theme-header">
+            <a href="search.html#" onclick="history.back()">
+                <i class="iconsax back-icon" data-icon="chevron-left"></i>
+            </a>
+            <h3>Filter</h3>
+            <button type="button" class="btn-close offcanvas-close" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="custom-container">
+            <ul class="theme-box">
+                <li>
+                    <label class="custom-checkbox mt-0">
+                        Light Theme
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="custom-checkbox">Dark Theme
+                        <input type="checkbox" id="toggleDarkMode">
+                        <span class="checkmark"></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="custom-checkbox">
+                        Use Device Theme
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                </li>
+            </ul>
+            <a href="home.html" class="btn food-btn m_bottom-20">Save Preference</a>
+        </div>
+    </div>
+    <!-- theme-box offcanvas section end  -->
+
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>.
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- Swiper slider Js -->
+    <script src="../assets/js/vendors/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/js/custom-swiper.js"></script>
+
+    <!-- Script Js -->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

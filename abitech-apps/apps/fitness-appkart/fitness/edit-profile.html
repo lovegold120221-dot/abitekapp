@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Outfit:wght@100..900&amp;display=swap.css" rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="fitness outfit-font">
+
+    <!-- loader Start -->
+    <div class="loader loading">
+        <img src="../assets/images/gif/fitness.gif" class="img-fluid" alt="fitness">
+    </div>
+    <!-- loader End -->
+
+    <!--  header section start -->
+    <header class="fitness-header2">
+        <div class="custom-container2">
+            <div class="header-panel">
+                <button class="left-btn" onclick="history.back()">
+                    <i class="iconsax arrow-icon" data-icon="arrow-left"></i>
+                </button>
+                <h3>Edit Profile</h3>
+            </div>
+        </div>
+    </header>
+    <!--  header section end -->
+
+    <!-- profile section start -->
+    <section class="pt-0 fitness-profile-section">
+        <div class="custom-container2">
+            <div class="body-profile-box ">
+                <img id="output" src="../assets/images/profile/p14.png" class="img-fluid" alt="profile">
+                <h6>Edit</h6>
+                <input id="file" type="file" onchange="loadFile(event)">
+                <div class="fitness-profile-content">
+                    <h5>Jacob Mark</h5>
+                    <a href="edit-profile.html#!">Jacobmark@gmail.com</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- profile section  end  -->
+
+    <!-- auth section start -->
+    <section class="section-t-space-2 fitness-auth-section">
+        <div class="custom-container2">
+            <form class="fitness-auth-form mt-0">
+                <div class="form-group">
+                    <label class="form-check-label" for="name">First name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label" for="user">User name</label>
+                    <input type="text" class="form-control" id="user" placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-check-label" for="Email">Email</label>
+                    <input type="email" class="form-control" id="Email" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label" for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="..........">
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label" for="number">Phone Number</label>
+                    <input type="number" class="form-control" id="number" placeholder="Enter your number">
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label" for="date">Date Of Birth</label>
+                    <input type="date" class="form-control" id="date">
+                </div>
+            </form>
+            <div class="fitness-body-button">
+                <a href="profile.html" class="btn fitness-btn">Done</a>
+            </div>
+        </div>
+    </section>
+    <!-- auth section  end  -->
+
+    <div class="panel-space"></div>
+
+    <!-- Bootstrap JS-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax JS-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- script JS -->
+    <script src="../assets/js/script.js"></script>
+
+</body>
+
+</html>

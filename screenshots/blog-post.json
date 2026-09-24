@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/blog/ai-automations-in-hospitals",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "AI Automations in Hospitals (2026 Guide) | ABI Tech",
+      "hasCanvas": false,
+      "bodyTextLen": 11303,
+      "bodyTextHash": "9fd503c6aeb7223df8a2a585fa9adc30c2b042ac129daa9bc0177752e4c202b0",
+      "bodyTextPrefix": "ABI Tech AI Business Implementation Technology Home About Servic",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/blog-post.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "AI Automations in Hospitals (2026 Guide) | ABI Tech",
+      "hasCanvas": false,
+      "bodyTextLen": 11150,
+      "bodyTextHash": "e79533476ea5edb8537047bd59e04b74081b3ea52603562a45d1350d41b42c57",
+      "bodyTextPrefix": "ABI Tech Let's Talk ← All articles HEALTHCARE · AI AUTOMATION · ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/blog-post-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/blog-post.json"
+}

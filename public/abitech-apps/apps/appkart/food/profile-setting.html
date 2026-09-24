@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/metropolis-font.css">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="food">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/FoodApp.gif" class="img-fluid" alt="food">
+    </div>
+    <!-- loader End -->
+
+    <!-- header starts -->
+    <header class="main-header food-main-header">
+        <div class="custom-container">
+            <div class="header-panel">
+                <a href="profile-setting.html#" onclick="history.back()">
+                    <i class="iconsax back-icon" data-icon="chevron-left"></i>
+                </a>
+                <h3>Profile Account</h3>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+    <!-- profile image section end  -->
+    <section class="section-lg-t-space">
+        <div class="custom-container">
+            <div class="profile-img">
+                <img id="output" class="img-fluid profile rounded-circle" src="../assets/images/food/profile/3.png"
+                    alt="png">
+                <i class="iconsax edit-icon rounded-circle" data-icon="edit-2"></i>
+                <input id="file" type="file" onchange="loadFile(event)">
+            </div>
+        </div>
+    </section>
+    <!-- profile image section end  -->
+
+    <!-- account section start -->
+    <section class="section-t-space profile-setting-section">
+        <div class="custom-container">
+            <div class="profile-setting-details border-0 ">
+                <form class="food-input-form">
+                    <div class="form-group">
+                        <label class="form-check-label" for="name">Username</label>
+                        <input type="text" class="form-control wo-icon" id="name" placeholder="Username">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-check-label" for="number">Phone Number</label>
+                        <input type="number" class="form-control wo-icon" id="number" placeholder="Phone number">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-check-label" for="email">Email</label>
+                        <input type="email" class="form-control wo-icon" id="email" placeholder="hello123@gmail.com">
+                        <div class="email-error">
+                            <p>Please check this email. This email will be used to reset your password and you will
+                                receive essential notifications.</p>
+                            <button class="email-button" type="button" data-bs-toggle="modal"
+                                data-bs-target="#email-model">Verify
+                                Email</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-check-label" for="name">Password</label>
+                        <div class="password-box">
+                            <input type="password" class="form-control wo-icon" placeholder="Password">
+                            <a href="change-password.html">Change <i class="iconsax" data-icon="chevron-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-check-label" for="name">Birth Of Date</label>
+                        <input type="date" class="form-control wo-icon">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-check-label" for="name">Gender</label>
+                        <select class="form-select auth-select w-100">
+                            <option selected>Male</option>
+                            <option value="1">Female</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <a href="profile.html" class="btn food-btn m_top-20 m_bottom-15">Update Account</a>
+        </div>
+    </section>
+    <!-- account section end -->
+
+    <!-- email model section start  -->
+    <div class="modal fade food-model-content" id="email-model">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content ">
+                <img src="../assets/images/food/icon/6.png" class="img-fluid" alt="email">
+                <h5>We have emailed you!</h5>
+                <p>Please check your mailbox and complete the verification process within 48 hours.</p>
+                <button class="verify-button ">Ok</button>
+            </div>
+        </div>
+    </div>
+    <!-- email model section end  -->
+
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- model js -->
+    <script src="../assets/js/model.js"></script>
+
+    <!-- image change Js -->
+    <script src="../assets/js/image-change.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- Script Js  -->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

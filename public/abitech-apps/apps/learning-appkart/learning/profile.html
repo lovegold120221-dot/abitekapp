@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Outfit:wght@100..900&amp;display=swap.css" rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="learning outfit-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/learning.gif" class="img-fluid" alt="learning">
+    </div>
+    <!-- loader End -->
+
+    <!-- header  start -->
+    <header class="learning-main-header">
+        <div class="custom-container2">
+            <div class="header-panel">
+                <a href="profile.html#" onclick="history.back()">
+                    <i class="iconsax icon-btn" data-icon="arrow-left"></i>
+                </a>
+                <h3>Profile</h3>
+            </div>
+        </div>
+    </header>
+    <!-- header  end  -->
+
+    <!-- learning mobile menu section start -->
+    <div class="learning-mobile-menu">
+        <ul>
+            <li>
+                <a href="home.html" class="icon">
+                    <img src="../assets/images/learning/icon/1.svg" class="img-fluid inactive" alt="icon">
+                    <img src="../assets/images/learning/icon/h1.svg" class="img-fluid active" alt="icon">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="search.html" class="icon">
+                    <img src="../assets/images/learning/icon/2.svg" class="img-fluid inactive" alt="icon">
+                    <img src="../assets/images/learning/icon/s1.svg" class="img-fluid active" alt="icon">
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="coures.html" class="icon">
+                    <div class="icon">
+                        <img src="../assets/images/learning/icon/3.svg" class="img-fluid inactive" alt="icon">
+                        <img src="../assets/images/learning/icon/v1.svg" class="img-fluid active" alt="icon">
+                    </div>
+                    <span>My Courses</span>
+                </a>
+            </li>
+            <li>
+                <a href="wishlist.html" class="icon">
+                    <div class="icon">
+                        <img src="../assets/images/learning/icon/4.svg" class="img-fluid inactive" alt="icon">
+                        <img src="../assets/images/learning/icon/d1.svg" class="img-fluid active" alt="icon">
+                    </div>
+                    <span>Wishlist</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="profile.html" class="icon">
+                    <div class="icon">
+                        <img src="../assets/images/learning/icon/5.svg" class="img-fluid inactive" alt="icon">
+                        <div class="bottom-icon">
+                            <img src="../assets/images/learning/icon/p1.svg" class="img-fluid active" alt="icon">
+                        </div>
+                    </div>
+                    <span>Profile</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- learning mobile menu section  end  -->
+
+    <!-- user profile section start -->
+    <section class="section-lg-t-space user-profile-section">
+        <div class="custom-container2">
+            <div class="learning-profile-wrapper">
+                <img id="output" src="../assets/images/profile/p9.png" class="img-fluid" alt="profile">
+                <h6>Edit</h6>
+                <input id="file" type="file" onchange="loadFile(event)">
+                <div class="learning-profile-content">
+                    <h5>Leslie Alexander</h5>
+                    <a href="profile.html#!"><i class="iconsax icon" data-icon="mail"></i>lesliealexander12@gmail.com</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- user profile section  end  -->
+
+    <!-- profile section start -->
+    <section class="section-t-space learn-profile-section">
+        <div class="custom-container2">
+            <ul class="learn-profile-list">
+                <li>
+                    <a href="personal-profile.html">
+                        <i class="iconsax icon" data-icon="user-1"></i>
+                        <h5>Your Profile</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="payment.html">
+                        <i class="iconsax icon" data-icon="bank-card"></i>
+                        <h5>Payment Method</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="setting.html">
+                        <i class="iconsax icon" data-icon="nut"></i>
+                        <h5>Personal Setting</h5>
+                    </a>
+                </li>
+                <li data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom">
+                    <a href="profile.html#!">
+                        <i class="iconsax icon" data-icon="document-download"></i>
+                        <h5>Download Option</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="account-security.html">
+                        <i class="iconsax icon" data-icon="lock-2"></i>
+                        <h5>Account Security</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="team.html">
+                        <i class="iconsax icon" data-icon="info-circle"></i>
+                        <h5>Team & Condition</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="customer-chat.html">
+                        <i class="iconsax icon" data-icon="phone-calling"></i>
+                        <h5>Help/Customer Care</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html#!" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                        <i class="iconsax icon rotate" data-icon="logout-1"></i>
+                        <h5>Log Out</h5>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- profile section  end  -->
+
+    <!-- logout model start-->
+    <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="logout-section">
+                        <i class="iconsax icon" data-icon="info-circle"></i>
+                        <div class="logout-contant">
+                            <h3>Logout Account ?</h3>
+                            <p>Do you really want to log off ? You must log in again after logging out.Are you alright?
+                            </p>
+                        </div>
+                        <div class="modal-button">
+                            <a href="profile.html#!" class="no-btn" data-bs-dismiss="modal" aria-label="Close">Clean</a>
+                            <a href="login.html" class="yes-btn">Yes,Logout!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- logout model end-->
+
+    <!-- offcanvas start -->
+    <div class="offcanvas offcanvas-bottom learn-bottom-offcanvas" tabindex="-1" id="offcanvasBottom">
+        <div class="offcanvas-header learn-header">
+            <h5 class="offcanvas-title" id="offcanvasBottomLabel">Upload Files</h5>
+        </div>
+        <div class="offcanvas-body small">
+            <div class="learning-title">
+                <h3>Download Options:</h3>
+            </div>
+            <ul class="download-image-list">
+                <li>
+                    <img src="../assets/images/learning/pdf/1.png" class="img-fluid" alt="pdf">
+                    <div class="download-img-content">
+                        <h4>PDF</h4>
+                        <input type="radio" name="option">
+                    </div>
+                </li>
+                <li>
+                    <img src="../assets/images/learning/pdf/2.png" class="img-fluid" alt="pdf">
+                    <div class="download-img-content">
+                        <h4>PNG</h4>
+                        <input type="radio" name="option" checked>
+                    </div>
+                </li>
+                <li>
+                    <img src="../assets/images/learning/pdf/3.png" class="img-fluid" alt="pdf">
+                    <div class="download-img-content">
+                        <h4>JPG</h4>
+                        <input type="radio" name="option">
+                    </div>
+                </li>
+                <li>
+                    <img src="../assets/images/learning/pdf/4.png" class="img-fluid" alt="pdf">
+                    <div class="download-img-content">
+                        <h4>MP4</h4>
+                        <input type="radio" name="option">
+                    </div>
+                </li>
+                <li>
+                    <img src="../assets/images/learning/pdf/5.png" class="img-fluid" alt="pdf">
+                    <div class="download-img-content">
+                        <h4>ZIP</h4>
+                        <input type="radio" name="option">
+                    </div>
+                </li>
+                <li>
+                    <img src="../assets/images/learning/pdf/6.png" class="img-fluid" alt="pdf">
+                    <div class="download-img-content">
+                        <h4>EPS</h4>
+                        <input type="radio" name="option">
+                    </div>
+                </li>
+            </ul>
+            <div class="panel-space-sm"></div>
+            <div class="bottom-button d-flex gap-1 border-0">
+                <a href="profile.html#!" class="learning-btn" data-bs-dismiss="offcanvas" aria-label="Close">Download Now</a>
+                <a href="profile.html#!" class="learning-btn" data-bs-dismiss="offcanvas" aria-label="Close">Cancel</a>
+            </div>
+        </div>
+    </div>
+    <!-- offcanvas  end  -->
+
+    <!-- Bootstrap JS-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax JS-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- Image change JS -->
+    <script src="../assets/js/image-change.js"></script>
+
+
+    <!-- script JS -->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

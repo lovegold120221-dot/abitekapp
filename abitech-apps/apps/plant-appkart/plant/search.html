@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="../../../../fonts.googleapis.com/css2%3Ffamily=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000%3B1,6..12,200..1000&amp;display=swap.css"
+        rel="stylesheet">
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Iconly css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconly.css">
+
+    <!-- swiper css -->
+    <link rel="stylesheet" href="../assets/css/vendors/swiper/swiper.min.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="plant nunito-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/plant.gif" class="img-fluid" alt="plant">
+    </div>
+    <!-- loader End -->
+
+    <!-- header starts -->
+    <header class="main-header plant-main-header">
+        <div class="custom-container">
+            <div class="header-panel">
+                <a href="search.html#" onclick="history.back()">
+                    <i class="iconsax icon-btn" data-icon="chevron-left"> </i>
+                </a>
+                <h3>Search</h3>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+    <!-- search section starts -->
+    <section class="section-lg-t-space">
+        <div class="custom-container">
+            <form class="auth-input-form">
+                <div class="form-group mt-0">
+                    <input type="search" class="form-control search" id="inputusername" placeholder="Search here.....">
+                    <i class="iconsax search-icon" data-icon="search-normal-2"> </i>
+                    <a href="search.html#filter" class="filter-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilter">
+                        <i class="iconsax" data-icon="setting-3"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- search section end -->
+
+    <!-- recent search section start -->
+    <section>
+        <div class="custom-container">
+            <div class="title plant-title">
+                <h3>Recent Search</h3>
+                <a href="product.html">Clear all</a>
+            </div>
+            <ul class="recent-search-listing">
+                <li>
+                    <a href="product.html">
+                        <h5>Aloe Vera Plant</h5>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"> </i>
+                </li>
+                <li>
+                    <a href="product.html">
+                        <h5>Echinacea Plant</h5>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"> </i>
+                </li>
+                <li>
+                    <a href="product.html">
+                        <h5>Chamomile Plant</h5>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"> </i>
+                </li>
+                <li>
+                    <a href="product.html">
+                        <h5>Lemongrass Plant</h5>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"> </i>
+                </li>
+                <li>
+                    <a href="product.html">
+                        <h5>Sandalwood Plant</h5>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"> </i>
+                </li>
+                <li>
+                    <a href="product.html">
+                        <h5>Patchouli Plant</h5>
+                    </a>
+                    <i class="iconsax close-icon" data-icon="add"> </i>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- recent search section end -->
+
+    <!-- product section starts -->
+    <section class="section-b-space">
+        <div class="custom-container">
+            <div class="title plant-title">
+                <h3>Suggested Products</h3>
+            </div>
+
+            <div class="swiper plant-product">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class=" plant-product-box">
+                            <div class="img-part">
+                                <a href="product.html" class="product-image"><img
+                                        src="../assets/images/plant/product/1.png" alt="" class="img-fluid product"></a>
+                                <button class="wishlist-btn btn">
+                                    <i class="iconly-Heart icli"></i>
+                                    <i class="iconly-Heart icbo"></i>
+                                </button>
+                            </div>
+                            <div class="product-content">
+
+                                <a href="product.html" class="product-name">
+                                    Lucky Jade Plant
+                                </a>
+                                <h6>Indirect Light</h6>
+
+                                <div class="flex-space mt-2">
+                                    <h4 class="price">$15<del> $20</del></h4>
+                                    <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="plant-product-box">
+                            <div class="img-part">
+                                <a href="product.html" class="product-image"><img
+                                        src="../assets/images/plant/product/2.png" alt="" class="img-fluid product"></a>
+                                <button class="wishlist-btn btn">
+                                    <i class="iconly-Heart icli"></i>
+                                    <i class="iconly-Heart icbo"></i>
+                                </button>
+                            </div>
+                            <div class="product-content">
+
+                                <a href="product.html" class="product-name">
+                                    Golden Money Plant
+                                </a>
+                                <h6>Fast Growing</h6>
+
+                                <div class="flex-space mt-2">
+                                    <h4 class="price">$20<del> $30</del></h4>
+                                    <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="plant-product-box">
+                            <div class="img-part">
+                                <a href="product.html" class="product-image"><img
+                                        src="../assets/images/plant/product/3.png" alt="" class="img-fluid product"></a>
+                                <button class="wishlist-btn btn">
+                                    <i class="iconly-Heart icli"></i>
+                                    <i class="iconly-Heart icbo"></i>
+                                </button>
+                            </div>
+                            <div class="product-content">
+
+                                <a href="product.html" class="product-name">
+                                    Black Rubber Plant
+                                </a>
+                                <h6>Air-Purifying</h6>
+
+                                <div class="flex-space mt-2">
+                                    <h4 class="price">$15<del> $20</del></h4>
+                                    <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="plant-product-box">
+                            <div class="img-part">
+                                <a href="product.html" class="product-image"><img
+                                        src="../assets/images/plant/product/4.png" alt="" class="img-fluid product"></a>
+                                <button class="wishlist-btn btn">
+                                    <i class="iconly-Heart icli"></i>
+                                    <i class="iconly-Heart icbo"></i>
+                                </button>
+                            </div>
+                            <div class="product-content">
+
+                                <a href="product.html" class="product-name">
+                                    Peace Lily Plant
+                                </a>
+                                <h6>Indirect Light</h6>
+
+                                <div class="flex-space mt-2">
+                                    <h4 class="price">$12<del> $15</del></h4>
+                                    <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- product section end -->
+
+    <!-- filter offcanvas section start -->
+    <div class="offcanvas offcanvas-bottom  filter-theme-offcanvas" id="offcanvasFilter">
+        <div class="offcanvas-header hotel-theme-header">
+            <h5 class="offcanvas-title">Filter</h5>
+        </div>
+        <div class="offcanvas-body small pt-0">
+            <div class="custom-slider-theme">
+                <h4>Guest Details</h4>
+                <div class="range-slider hotel-range-slider">
+                    <div class="progress-slider"></div>
+                    <input type="range" min="0" max="100" value="30" class="min-range" />
+                    <input type="range" min="0" max="100" value="60" class="max-range" />
+
+                    <div class="range-number hotel-range-number">
+                        <div class="range-box input-min-box hotel-range-box">
+                            <span class="rs-label">$</span>
+                            <input type="number" value="30" class="input-min" />
+                        </div>
+                        <div class="range-box input-max-box hotel-range-box">
+                            <span class="rs-label">$</span>
+                            <input type="number" value="60" class="input-max" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="title plant-title m_top-17">
+                <h3>Categories</h3>
+            </div>
+            <ul class="nav nav-tabs ecommerce-tab p-0">
+                <li class="nav-item">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#all" type="button">
+                        All</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#medicinal" type="button"> Medicinal
+                        Plant</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#shrubs" type="button">Shrubs
+                        product</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#herbs" type="button">Herbs
+                        Rhoeo</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#wild" type="button">Wild
+                        Shipping</button>
+                </li>
+            </ul>
+        </div>
+        <div class="hotel-filter-wrapper">
+            <h3>Star Rating</h3>
+            <ul class="hotel-star-rating hotel-tab">
+                <li><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">5</li>
+                <li class="active"><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">4</li>
+                <li><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">3</li>
+                <li><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">2</li>
+                <li><img src="../assets/images/svg/star-fill.svg" class="img-fluid" alt="star">1</li>
+            </ul>
+        </div>
+        <div class="hotel-filter-wrapper">
+            <h3>Facilities</h3>
+            <div class="checkbox-section">
+                <label class="native-checkbox">
+                    <input type="checkbox">
+                    Wifi
+                </label>
+                <label class="native-checkbox">
+                    <input type="checkbox" checked>
+                    Swimming Pool
+                </label>
+                <label class="native-checkbox">
+                    <input type="checkbox">
+                    Breakfast Available
+                </label>
+            </div>
+        </div>
+        <div class="plant-reset">
+            <a href="home.html" class="btn reset-btn">Reset</a>
+            <a href="categories.html" class="btn review-button">Apply Filter</a>
+        </div>
+    </div>
+    <div class="panel-space-sm"></div>
+    <!-- filter offcanvas section end -->
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- swiper js -->
+    <script src="../assets/js/vendors/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/js/custom-swiper.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- Active JS  -->
+    <script src="../assets/js/active-section.js"></script>
+
+    <!-- Range JS -->
+    <script src="../assets/js/range-slider.js"></script>
+
+    <!-- script js-->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

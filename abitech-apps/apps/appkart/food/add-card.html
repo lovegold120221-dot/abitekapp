@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/metropolis-font.css">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="food">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/FoodApp.gif" class="img-fluid" alt="food">
+    </div>
+    <!-- loader End -->
+
+    <!-- header starts -->
+    <header class="main-header food-main-header">
+        <div class="custom-container">
+            <div class="header-panel">
+                <a href="add-card.html#" onclick="history.back()">
+                    <i class="iconsax back-icon" data-icon="chevron-left"></i>
+                </a>
+                <h3>Credit Card Details</h3>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+    <!-- form section start -->
+    <section class="section-lg-t-space credit-card-section">
+        <div class="custom-container">
+            <form class="food-form mt-0">
+                <div class="form-group mt-0">
+                    <label>Card holder
+                        <input class="food-input-text" type="text" id="username" placeholder="Enter your name">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Card number
+                        <input class="food-input-text" type="number" id="phone" placeholder="XXXX-XXXX-XXXX-XXXX">
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <div class="flex-common gap-3 ">
+                        <div class="city">
+                            <label>Expire Date
+                                <input class="food-input-text" type="date" id="date">
+                            </label>
+                        </div>
+                        <div>
+                            <label>CVV
+                                <input class="food-input-text" type="number" id="cvv" placeholder="xxx">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <a href="payment.html" class="btn food-btn m_top-30">Add Credit Card</a>
+        </div>
+    </section>
+    <!-- form section end -->
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- Script Js  -->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

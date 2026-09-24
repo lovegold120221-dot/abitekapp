@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Manrope:wght@200..800&amp;display=swap.css" rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="chatting manrope-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/chatting.gif" class="img-fluid" alt="chatting">
+    </div>
+    <!-- loader End -->
+
+    <!-- chatting header section start -->
+    <header class="chatting-main-header audio-header">
+        <div class="custom-container2">
+            <div class="header-panel">
+                <a href="setting.html" onclick="history.back()">
+                    <i class="iconsax icon" data-icon="chevron-left"></i>
+                </a>
+                <a href="avatar.html#!" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <i class="iconsax icon add" data-icon="add"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- chatting header section end -->
+
+    <!-- avatar section star -->
+    <section class="avatar-box pt-0">
+        <div class="select-avatar">
+            <img id="selectedAvatar" src="../assets/images/chatting/avatar/1.png" class="img-fluid"
+                alt="selected avatar">
+        </div>
+        <div class="avatar-list chatting-height-scroll ">
+            <h3>Circle Avatar</h3>
+            <ul>
+                <li>
+                    <i class="iconsax icon" data-icon="not-allowed-3"></i>
+                </li>
+                <li data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom">
+                    <i class="iconsax icon" data-icon="add"></i>
+                </li>
+                <li class="active">
+                    <img src="../assets/images/chatting/avatar/1.png" class="img-fluid" alt="avatar">
+                </li>
+                <li>
+                    <img src="../assets/images/chatting/avatar/2.png" class="img-fluid" alt="avatar">
+                </li>
+                <li>
+                    <img src="../assets/images/chatting/avatar/3.png" class="img-fluid" alt="avatar">
+                </li>
+                <li>
+                    <img src="../assets/images/chatting/avatar/4.png" class="img-fluid" alt="avatar">
+                </li>
+                <li>
+                    <img src="../assets/images/chatting/avatar/5.png" class="img-fluid" alt="avatar">
+                </li>
+                <li>
+                    <img src="../assets/images/chatting/avatar/6.png" class="img-fluid" alt="avatar">
+                </li>
+                <li>
+                    <img src="../assets/images/chatting/avatar/7.png" class="img-fluid" alt="avatar">
+                </li>
+                <li>
+                    <img src="../assets/images/chatting/avatar/8.png" class="img-fluid" alt="avatar">
+                </li>
+            </ul>
+            <h3>Square Avatar</h3>
+            <ul class="square-avatar-list">
+                <li>
+                    <img src="../assets/images/chatting/avatar/1.png" class="img-fluid" alt="avatar">
+                </li>
+                <li>
+                    <img src="../assets/images/chatting/avatar/2.png" class="img-fluid" alt="avatar">
+                </li>
+                <li>
+                    <img src="../assets/images/chatting/avatar/3.png" class="img-fluid" alt="avatar">
+                </li>
+                <li>
+                    <img src="../assets/images/chatting/avatar/4.png" class="img-fluid" alt="avatar">
+                </li>
+                <li>
+                    <img src="../assets/images/chatting/avatar/5.png" class="img-fluid" alt="avatar">
+                </li>
+                <li>
+                    <img src="../assets/images/chatting/avatar/6.png" class="img-fluid" alt="avatar">
+                </li>
+                <li>
+                    <img src="../assets/images/chatting/avatar/7.png" class="img-fluid" alt="avatar">
+                </li>
+                <li>
+                    <img src="../assets/images/chatting/avatar/8.png" class="img-fluid" alt="avatar">
+                </li>
+                <li>
+                    <img src="../assets/images/chatting/avatar/9.png" class="img-fluid" alt="avatar">
+                </li>
+                <li>
+                    <img src="../assets/images/chatting/avatar/10.png" class="img-fluid" alt="avatar">
+                </li>
+            </ul>
+        </div>
+        <div class="chatting-fixed-button">
+            <a href="setting.html" class="btn chatting-btn">Create your Avatar</a>
+        </div>
+    </section>
+    <!-- avatar section end -->
+
+    <!-- clear storage start -->
+    <div class="modal fade" id="staticBackdrop">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="logout-section">
+                        <div class="logout-contant mt-0">
+                            <p class="mt-0">An avatar model is a digital character used to represent users or entities
+                                in virtual
+                                environments. It includes visual appearance, animation, and interactivity. Commonly used
+                                in games, VR, AI, and social platforms.</p>
+                        </div>
+                        <div class="modal-button">
+                            <a href="setting.html" class="no-btn">Discard</a>
+                            <a href="avatar.html#!" class="yes-btn" data-bs-dismiss="modal">Close</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- clear storage end -->
+
+    <!-- bottom offcanvas start  -->
+    <div class="offcanvas offcanvas-bottom theme-offcanvas" tabindex="-1" id="offcanvasBottom">
+        <div class="offcanvas-header theme-header">
+            <h3>Choose Your Avatar</h3>
+            <button type="button" class="btn-close offcanvas-close" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body small">
+            <div class="select-file">
+                <div class="choose-file">
+                    <input type="file" accept="image/*" capture="environment" id="capture-image" style="display: none;">
+                    <i class="iconsax edit-icon" data-icon="camera"></i>
+                </div>
+
+                <div class="choose-file">
+                    <input type="file" accept="image/*" id="file" style="display: none;">
+                    <i class="iconsax edit-icon" data-icon="picture"></i>
+                </div>
+            </div>
+            <div class="panel-space-sm"></div>
+            <div class="chatting-fixed-button" data-bs-dismiss="offcanvas" aria-label="Close">
+                <a href="avatar.html#!" class="btn chatting-btn">Save Profile</a>
+            </div>
+        </div>
+    </div>
+    <!-- bottom offcanvas  end  -->
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- image change js -->
+    <script src="../assets/js/avatar-change.js"></script>
+
+
+    <!-- script js-->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

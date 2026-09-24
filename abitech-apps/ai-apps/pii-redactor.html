@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PII Redactor — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .mono { font-family: 'Roboto Mono', monospace; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    mark { border-radius: 4px; padding: 0 3px; }
+  </style>
+</head>
+<body class="min-h-screen bg-[#140d14] text-rose-50">
+  <div class="max-w-3xl mx-auto px-4 py-8">
+    <a href="../index.html" class="text-xs text-rose-300/80 hover:text-white">← Abitech Apps Store</a>
+
+    <div class="text-center mt-4">
+      <div class="text-5xl">🩹</div>
+      <h1 class="text-3xl font-bold mt-2">PII Redactor</h1>
+      <p class="text-sm text-rose-200/80 mt-1">Strip names, organisations, addresses, emails and numbers before pasting text into a ticket, a prompt or a public issue.</p>
+    </div>
+
+    <div class="mt-4 flex flex-wrap items-center justify-center gap-2 text-[11px]">
+      <span id="bNer" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Entity model: loading…</span>
+      <span id="bRisk" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Risk check: idle</span>
+    </div>
+
+    <div class="mt-6 bg-rose-950/30 rounded-2xl p-5 border border-rose-900/50">
+      <label class="text-xs text-rose-300/80">Text to scrub</label>
+      <textarea id="text" rows="8"
+        class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2.5 text-sm outline-none border border-rose-900/50 focus:border-rose-400 resize-y placeholder:text-rose-200/30"
+        placeholder="Paste the email, ticket or log line that contains customer data…"></textarea>
+      <div class="flex items-center justify-between mt-2">
+        <span id="count" class="text-[11px] text-rose-200/50">0 characters</span>
+        <button id="sampleBtn" class="text-[11px] text-rose-300 hover:text-white font-semibold">Load sample</button>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-4 mt-3 text-xs text-rose-200/70">
+        <label class="flex items-center gap-2"><input id="doNames" type="checkbox" checked class="accent-rose-500" /> Names &amp; organisations</label>
+        <label class="flex items-center gap-2"><input id="doPlaces" type="checkbox" checked class="accent-rose-500" /> Locations</label>
+        <label class="flex items-center gap-2"><input id="doRegex" type="checkbox" checked class="accent-rose-500" /> Emails, phones, IDs, cards</label>
+        <label class="flex items-center gap-2"><input id="doRisk" type="checkbox" checked class="accent-rose-500" /> Document risk check</label>
+      </div>
+
+      <button id="runBtn" disabled class="mt-4 w-full bg-rose-600 hover:bg-rose-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold text-sm py-2.5 rounded-full transition">Redact</button>
+      <p id="status" class="mt-2 text-xs text-rose-200/60"></p>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/15 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="out" class="mt-5"></div>
+
+    <p class="mt-6 text-[11px] text-rose-200/50 text-center leading-relaxed">
+      Combines <b>Xenova/bert-base-NER</b> with regex patterns and a <b>mobilebert-mnli</b> risk pass.
+      <b>This is an assistant, not a compliance guarantee</b> — a model will miss things, so read the output before you ship it.
+    </p>
+  </div>
+
+  <script type="module">
+    import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0";
+
+    const NER = 'Xenova/bert-base-NER';
+    const ZERO = 'Xenova/mobilebert-uncased-mnli';
+    const RISK_LABELS = ['personal contact details', 'financial or payment data', 'credentials or secrets', 'general business text'];
+    const SAMPLE = `Hi team, following up on the escalation from Marcus Whitfield at Northwind Logistics.
+
+He's at marcus.whitfield@northwind-logistics.co.uk or +44 7700 900123, and the account is registered to
+Northwind Logistics Ltd, 42 Kingsway, London WC2B 6EX. Card on file ends 4242 4242 4242 4242.
+
+The API key [REDACTED_STRIPE_TEST_KEY] was rotated on 14 March but the staging webhook still points at
+https://staging.northwind-logistics.co.uk/hooks/payments and fails from IP 203.0.113.44.
+
+Please don't paste this into the public issue tracker.`;
+
+    const bNer = document.getElementById('bNer'), bRisk = document.getElementById('bRisk');
+    const runBtn = document.getElementById('runBtn');
+    const errBox = document.getElementById('errorBox');
+    const out = document.getElementById('out');
+    const textEl = document.getElementById('text');
+    const countEl = document.getElementById('count');
+    const statusEl = document.getElementById('status');
+    const cache = new Map();
+
+    function esc(v) {
+      return String(v || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function showError(m) { errBox.textContent = m; errBox.classList.remove('hidden'); }
+    function clearError() { errBox.classList.add('hidden'); }
+    function badge(el, text, tone) {
+      el.textContent = text;
+      const t = { wait: 'bg-amber-500/15 text-amber-300 border-amber-500/30', ok: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30', err: 'bg-red-500/15 text-red-300 border-red-500/30', idle: 'bg-slate-800 text-slate-400 border-slate-700' };
+      el.className = 'px-3 py-1 rounded-full border ' + (t[tone] || t.idle);
+    }
+    async function model(task, id) {
+      const key = task + '|' + id;
+      if (!cache.has(key)) {
+        const p = pipeline(task, id).catch(e => { cache.delete(key); throw e; });
+        cache.set(key, p);
+      }
+      return cache.get(key);
+    }
+
+    const PATTERNS = [
+      ['EMAIL', /\b[\w.+-]+@[\w-]+\.[\w.-]+\b/g],
+      ['PHONE', /(?:\+\d{1,3}[\s-]?)?(?:\(\d{1,4}\)[\s-]?)?\d(?:[\s-]?\d){6,14}\b/g],
+      ['CARD', /\b(?:\d[ -]?){13,19}\b/g],
+      ['IBAN', /\b[A-Z]{2}\d{2}[A-Z0-9]{10,30}\b/g],
+      ['SECRET', /\b(?:sk|pk|rk)_(?:live|test)_[A-Za-z0-9]{8,}\b|\b(?:AKIA|ghp_|xox[baprs]-)[A-Za-z0-9_-]{8,}\b|\bBearer\s+[A-Za-z0-9._-]{12,}\b/g],
+      ['IP', /\b(?:\d{1,3}\.){3}\d{1,3}\b/g],
+      ['URL', /\bhttps?:\/\/[^\s<>"')]+/g],
+      ['IBAN_CODE', /\b\d{3}-\d{2}-\d{4}\b/g]
+    ];
+    const LABEL_OF = { PER: 'PERSON', ORG: 'ORG', LOC: 'LOCATION', MISC: 'MISC' };
+
+    function collectSpans(text, entities, useNames, usePlaces, useRegex) {
+      const spans = [];
+      for (const e of entities) {
+        const raw = String(e.entity_group || e.entity || '').replace(/^[BI]-/, '').toUpperCase();
+        if (!LABEL_OF[raw]) continue;
+        if (raw === 'PER' && !useNames) continue;
+        if (raw === 'ORG' && !useNames) continue;
+        if (raw === 'LOC' && !usePlaces) continue;
+        const start = typeof e.start === 'number' ? e.start : -1;
+        const end = typeof e.end === 'number' ? e.end : -1;
+        if (start < 0 || end <= start) continue;
+        spans.push({ start, end, type: LABEL_OF[raw], source: 'model' });
+      }
+      if (useRegex) {
+        for (const [type, re] of PATTERNS) {
+          re.lastIndex = 0;
+          let m;
+          while ((m = re.exec(text)) !== null) {
+            if (!m[0].trim()) continue;
+            spans.push({ start: m.index, end: m.index + m[0].length, type, source: 'pattern' });
+            if (m.index === re.lastIndex) re.lastIndex++;
+          }
+        }
+      }
+      // Drop overlaps, longest first at each position.
+      spans.sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
+      const kept = [];
+      for (const s of spans) {
+        if (kept.some(k => s.start < k.end && s.end > k.start)) continue;
+        kept.push(s);
+      }
+      return kept.sort((a, b) => a.start - b.start);
+    }
+
+    function redact(text, spans) {
+      const counters = {};
+      let outText = '';
+      let cursor = 0;
+      for (const s of spans) {
+        counters[s.type] = (counters[s.type] || 0) + 1;
+        outText += text.slice(cursor, s.start) + `[${s.type}_${counters[s.type]}]`;
+        cursor = s.end;
+      }
+      return outText + text.slice(cursor);
+    }
+
+    function highlight(text, spans) {
+      const colours = { PERSON: '#f43f5e', ORG: '#a855f7', LOCATION: '#0ea5e9', MISC: '#64748b', EMAIL: '#f59e0b', PHONE: '#f59e0b', CARD: '#dc2626', IBAN: '#dc2626', SECRET: '#dc2626', IP: '#10b981', URL: '#0ea5e9', IBAN_CODE: '#dc2626' };
+      let html = '', cursor = 0;
+      for (const s of spans) {
+        html += esc(text.slice(cursor, s.start));
+        const c = colours[s.type] || '#64748b';
+        html += `<mark style="background:${c}33;color:${c};box-shadow:inset 0 0 0 1px ${c}66">${esc(text.slice(s.start, s.end))}</mark>`;
+        cursor = s.end;
+      }
+      return html + esc(text.slice(cursor));
+    }
+
+    function updateCount() { countEl.textContent = textEl.value.length + ' characters'; }
+
+    async function boot() {
+      try {
+        await model('token-classification', NER);
+        badge(bNer, 'Entity model: ready', 'ok');
+        runBtn.disabled = false;
+      } catch (e) {
+        badge(bNer, 'Entity model: failed', 'err');
+        showError('Could not load the entity model: ' + (e.message || e));
+      }
+    }
+
+    async function run() {
+      clearError(); out.innerHTML = '';
+      const text = textEl.value;
+      if (!text.trim()) return showError('Paste some text to scrub.');
+      runBtn.disabled = true;
+      const original = runBtn.textContent;
+      try {
+        const useNames = document.getElementById('doNames').checked;
+        const usePlaces = document.getElementById('doPlaces').checked;
+        const useRegex = document.getElementById('doRegex').checked;
+        const wantRisk = document.getElementById('doRisk').checked;
+
+        statusEl.textContent = 'Finding entities…';
+        let entities = [];
+        if (useNames || usePlaces) {
+          try {
+            const ner = await model('token-classification', NER);
+            entities = await ner(text.slice(0, 4000), { aggregation_strategy: 'simple' });
+          } catch (e) {
+            badge(bNer, 'Entity model: failed', 'err');
+            showError('Entity detection failed, falling back to pattern matching: ' + (e.message || e));
+          }
+        }
+
+        const spans = collectSpans(text, entities, useNames, usePlaces, useRegex);
+        const cleaned = redact(text, spans);
+        const byType = spans.reduce((acc, s) => { acc[s.type] = (acc[s.type] || 0) + 1; return acc; }, {});
+
+        let risk = null;
+        if (wantRisk) {
+          statusEl.textContent = 'Checking document risk…';
+          badge(bRisk, 'Risk check: working…', 'wait');
+          try {
+            const zero = await model('zero-shot-classification', ZERO);
+            const r = await zero(text.slice(0, 700), RISK_LABELS, { hypothesis_template: 'This document contains {}.' });
+            risk = r.labels.map((l, i) => ({ label: l, score: r.scores[i] }));
+            badge(bRisk, 'Risk check: ready', 'ok');
+          } catch (e) {
+            badge(bRisk, 'Risk check: failed', 'err');
+          }
+        }
+
+        statusEl.textContent = `✅ ${spans.length} span${spans.length === 1 ? '' : 's'} redacted.`;
+        out.innerHTML = `
+          <div class="fade-in space-y-4">
+            <section class="bg-rose-950/30 rounded-2xl p-4 border border-rose-700/50">
+              <div class="flex items-center justify-between">
+                <p class="text-xs uppercase tracking-widest text-rose-300 font-semibold">Redacted — safe to paste</p>
+                <button id="copyClean" class="text-[11px] font-semibold bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full transition">Copy</button>
+              </div>
+              <pre class="mono mt-3 text-xs whitespace-pre-wrap text-rose-50/90">${esc(cleaned)}</pre>
+            </section>
+
+            <section class="bg-rose-950/30 rounded-2xl p-4 border border-rose-900/50">
+              <p class="text-xs uppercase tracking-widest text-rose-300/80 font-semibold">What was found (${spans.length})</p>
+              ${Object.keys(byType).length
+                ? `<div class="flex flex-wrap gap-2 mt-2">${Object.entries(byType).map(([t, n]) =>
+                    `<span class="text-[11px] px-2.5 py-1 rounded-full bg-black/40 border border-rose-900/60">${esc(t)} <b>×${n}</b></span>`).join('')}</div>`
+                : '<p class="mt-2 text-sm text-rose-200/60">Nothing matched.</p>'}
+              ${risk ? `
+                <div class="mt-4 pt-3 border-t border-rose-900/50">
+                  <p class="text-[11px] text-rose-300/70 mb-2">Document risk read (zero-shot, may be wrong):</p>
+                  ${risk.slice(0, 3).map(r => `
+                    <div class="flex items-center gap-2 mt-1">
+                      <span class="text-[11px] w-48 truncate ${r === risk[0] ? 'text-rose-100 font-semibold' : 'text-rose-200/60'}">${esc(r.label)}</span>
+                      <div class="flex-1 h-1.5 rounded-full bg-black/40 overflow-hidden"><div class="h-full ${r === risk[0] ? 'bg-rose-400' : 'bg-rose-900'}" style="width:${Math.round(r.score * 100)}%"></div></div>
+                      <span class="text-[10px] text-rose-200/50 w-8 text-right">${Math.round(r.score * 100)}%</span>
+                    </div>`).join('')}
+                </div>` : ''}
+            </section>
+
+            <section class="bg-rose-950/30 rounded-2xl p-4 border border-rose-900/50">
+              <p class="text-xs uppercase tracking-widest text-rose-300/80 font-semibold">Highlighted original</p>
+              <pre class="mono mt-3 text-xs whitespace-pre-wrap text-rose-50/80">${highlight(text, spans)}</pre>
+            </section>
+          </div>`;
+        document.getElementById('copyClean').addEventListener('click', () => navigator.clipboard.writeText(cleaned));
+      } catch (e) {
+        statusEl.textContent = 'Redaction failed.';
+        showError('Redaction failed: ' + (e.message || e));
+      } finally {
+        runBtn.disabled = false;
+        runBtn.textContent = original;
+      }
+    }
+
+    textEl.addEventListener('input', updateCount);
+    document.getElementById('sampleBtn').addEventListener('click', () => { textEl.value = SAMPLE; updateCount(); });
+    runBtn.addEventListener('click', run);
+    updateCount();
+    boot();
+  </script>
+</body>
+</html>

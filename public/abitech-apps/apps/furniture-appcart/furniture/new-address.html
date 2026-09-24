@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="../../../../fonts.googleapis.com/css2%3Ffamily=Poppins:ital,wght@0,100%3B0,200%3B0,300%3B0,400%3B0,500%3B0,600%3B0,700%3B0,800%3B0,900%3B1,100%3B1,200%3B1,300%3B1,400%3B1,500%3B1,600%3B1,700%3B1,800%3B1,900&amp;display=swap.css"
+        rel="stylesheet">
+
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="furniture poppins-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/Furniture.gif" class="img-fluid" alt="furniture">
+    </div>
+    <!-- loader End -->
+
+    <!-- header start -->
+    <header class="furniture-header">
+        <div class="custom-container2">
+            <div class="header-panel">
+                <button class="left-btn" onclick="history.back()">
+                    <i class="iconsax arrow-icon" data-icon="arrow-left"></i>
+                </button>
+                <h3>New Address</h3>
+            </div>
+        </div>
+    </header>
+    <!-- header  end  -->
+
+    <!-- new address section start -->
+    <section class="pt-0 new-address-section">
+        <div class="custom-container2">
+            <form class="furniture-auth-form mt-1">
+                <div class="form-group">
+                    <label class="form-check-label" for="name">Full Name</label>
+                    <div class="position-relative">
+                        <input type="text" class="form-control wo-icon" id="name" placeholder="Enter your Name">
+                        <i class="iconsax icon" data-icon="user-2"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label" for="number">Phone Number</label>
+                    <div class="position-relative">
+                        <input type="number" class="form-control wo-icon" id="number" placeholder="Enter your Number">
+                        <i class="iconsax icon" data-icon="phone"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label" for="number">Pin Code</label>
+                    <div class="position-relative">
+                        <input type="number" class="form-control wo-icon" id="pin-number" placeholder="395004">
+                        <i class="iconsax icon" data-icon="message-dots-search"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label" for="number">Country/Region</label>
+                    <div class="position-relative">
+                        <i class="iconsax icon" data-icon="location"></i>
+                        <select class="form-select form-control">
+                            <option selected value="1">India</option>
+                            <option value="2">Australia</option>
+                            <option value="3">Dubai</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label" for="number">Flat, House No, Building</label>
+                    <div class="position-relative">
+                        <textarea name="text" id="text" class="form-control" placeholder="Enter Address"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- new address section  end  -->
+
+    <!-- type address section start -->
+    <section class="section-t-space type-address-section">
+        <div class="custom-container2">
+            <div class="furniture-title">
+                <h3>Type Of Address</h3>
+            </div>
+            <div class="product-address-choose">
+                <label>
+                    <input type="checkbox" class="radio-circle" name="payment" checked>
+                    Home
+                </label>
+                <label>
+                    <input type="checkbox" class="radio-circle" name="payment">
+                    Office
+                </label>
+                <label>
+                    <input type="checkbox" class="radio-circle" name="payment">
+                    Other
+                </label>
+            </div>
+
+        </div>
+    </section>
+    <!-- type address section  end  -->
+
+    <!-- bottom button start -->
+    <div class="furniture-fix-button">
+        <a href="shipping.html" class="btn furniture-btn">Done</a>
+    </div>
+    <!-- bottom button  end  -->
+
+    <!-- Bootstrap JS-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax JS-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- script JS -->
+    <script src="../assets/js/script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/metropolis-font.css">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Iconly css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconly.css">
+
+    <!-- swiper css -->
+    <link rel="stylesheet" href="../assets/css/vendors/swiper/swiper.min.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="food">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/FoodApp.gif" class="img-fluid" alt="food">
+    </div>
+    <!-- loader End -->
+
+    <!-- top header starts -->
+    <header class="main-header food-main-header">
+        <div class="custom-container">
+            <div class="header-panel">
+                <a href="new-address.html#" onclick="history.back()">
+                    <i class="iconsax back-icon" data-icon="chevron-left"></i>
+                </a>
+                <h3>Add New Address</h3>
+                <a href="address.html">
+                    <i class="iconsax back-icon" data-icon="close-circle"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- top header end -->
+
+    <!-- header start  -->
+    <section class="section-lg-t-space">
+        <div class="custom-container">
+            <div class="title2">
+                <h3>Save As</h3>
+            </div>
+            <ul class="button-header">
+                <li class="active"><a href="new-address.html#!">
+                        <svg>
+                            <use href="../assets/svg/icon-sprite.svg#home2"></use>
+                        </svg>Home</a>
+                </li>
+                <li><a href="new-address.html#!">
+                        <svg>
+                            <use href="../assets/svg/icon-sprite.svg#work2"></use>
+                        </svg>Work</a>
+                </li>
+                <li><a href="new-address.html#!">
+                        <svg>
+                            <use href="../assets/svg/icon-sprite.svg#hotel"></use>
+                        </svg>Hotel</a>
+                </li>
+                <li><a href="new-address.html#!">
+                        <svg>
+                            <use href="../assets/svg/icon-sprite.svg#map"></use>
+                        </svg>Other</a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- header end  -->
+
+    <!-- form section start -->
+    <section class="section-t-space">
+        <div class="custom-container">
+            <form class="food-form mt-0">
+                <div class="form-group mt-0">
+                    <label>Full name
+                        <input class="food-input-text" type="text" id="username" placeholder="Enter your name">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number
+                        <input class="food-input-text" type="number" id="phone" placeholder="Enter your phone number">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Street Address</label>
+                    <input class="food-input-text" type="text" id="address" placeholder="Enter your street address">
+                </div>
+                <div class="form-group">
+                    <div class="flex-common gap-3">
+                        <div class="city">
+                            <label>City
+                                <input class="food-input-text" type="text" id="city" placeholder="Enter your city">
+                            </label>
+                        </div>
+                        <div class="text">
+                            <label>ZIP Code
+                                <input class="food-input-text" type="number" id="code"
+                                    placeholder="Enter your zip code">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Country
+                        <input class="food-input-text" type="text" id="country" placeholder="Enter your Country">
+                    </label>
+                </div>
+                <label class="custom-checkbox fw-medium fs-6">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>Set as default address
+                </label>
+            </form>
+            <a href="address.html" class="btn food-btn m_top-15">Save Address</a>
+        </div>
+    </section>
+    <!-- form section end -->
+
+
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- Script Js  -->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

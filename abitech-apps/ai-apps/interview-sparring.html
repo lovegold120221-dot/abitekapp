@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interview Sparring — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-100 text-slate-800">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+    <div class="mt-4">
+      <h1 class="text-3xl font-bold">💼 Interview Sparring</h1>
+      <p class="text-sm text-slate-500 mt-1">Name a role. Face 3 interview questions. Get a brutally honest scorecard.</p>
+    </div>
+
+    <div id="setup" class="mt-5 bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+      <input id="roleInput" placeholder="Role: e.g. junior frontend developer, barista, data analyst…" class="w-full bg-slate-50 rounded-xl px-3 py-2.5 text-sm outline-none border border-slate-200 focus:border-blue-500" />
+      <button id="startBtn" onclick="start()" class="mt-3 w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm py-2.5 rounded-full transition">Start interview 🎙️</button>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-50 border border-red-300 text-red-700 rounded-xl p-3"></div>
+    <div id="chat" class="mt-4 space-y-3"></div>
+
+    <div id="answerBox" class="hidden mt-4 bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+      <p id="qLabel" class="text-xs uppercase tracking-widest text-blue-600 font-semibold mb-2"></p>
+      <textarea id="ansInput" rows="3" placeholder="Your answer…" class="w-full bg-slate-50 rounded-xl p-3 text-sm outline-none border border-slate-200 focus:border-blue-500"></textarea>
+      <button id="sendBtn" onclick="answer()" class="mt-2 w-full bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm py-2.5 rounded-full transition">Submit answer ➤</button>
+    </div>
+  </div>
+
+  <script>
+const GEMINI_KEY = sessionStorage.getItem('abitech_gemini_key') || '';
+    const GEMINI_MODEL = "gemini-3.5-flash-lite";
+    const LIVE_MODEL = "gemini-3.5-flash-live";
+    let history = [], qNum = 0;
+    const TOTAL_Q = 3;
+    function esc(s) { return s.replace(/[&<>"']/g, c => ({ '&': '&', '<': '<', '>': '>', '"': '"', "'": ''' }[c])); }
+    function bubble(who, html) {
+
+    // Gemini Live API TTS voice state
+    let ttsWs = null;
+    let ttsQueue = [];
+    let ttsSpeaking = false;
+    function ttsSpeakQueue() {
+      if (ttsSpeaking || !ttsWs) return;
+      if (ttsQueue.length === 0) { ttsSpeaking = false; return; }
+      const text = ttsQueue.shift();
+      ttsSpeaking = true;
+      ttsWs.send(JSON.stringify({
+        turns: [{ parts: [{ text: text }] }], turnComplete: true
+      }));
+    }
+    function ttsStop() { try { if (ttsWs) ttsWs.close(); ttsSpeaking = false; ttsQueue = []; } catch (e) {} }
+
+    // Initialise Live API TTS WebSocket
+    function ttsInit() {
+      if (ttsWs) return;
+      const wsUrl = `wss://generativelanguage.googleapis.com/v1beta/models/${LIVE_MODEL}:streamGenerateContent?key=${GEMINI_KEY}`;
+      ttsWs = new WebSocket(wsUrl);
+      ttsWs.onopen = () => ttsSpeakQueue();
+      ttsWs.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        if (data.serverContent && data.serverContent.modelTurn && data.serverContent.modelTurn.parts) {
+          const audioB64 = data.serverContent.modelTurn.parts.find(p => p.inlineData).inlineData.data;
+          const audioBlob = base64ToBlob(audioB64, 'audio/mp3');
+          const url = URL.createObjectURL(audioBlob);
+          const audio = new Audio(url);
+          audio.play().catch(() => {});
+          ttsSpeaking = false;
+          ttsSpeakQueue();
+        }
+      };
+      ttsWs.onerror = () => { ttsSpeaking = false; ttsSpeakQueue(); };
+    }
+
+    // Send text to Gemini Live API for TTS
+    function ttsPlay(text) {
+      try { text = String(text).replace(/[*#_]/g, '').slice(0, 800); } catch (e) {}
+      if (!text) return;
+      ttsQueue.push(text);
+      ttsInit();
+      ttsSpeakQueue();
+    }
+
+    // Base64 decode helper for audio chunks
+    function base64ToBlob(b64, mime) {
+      const byteChars = atob(b64);
+      const byteNumbers = new Uint8Array(byteChars.length);
+      for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
+      return new Blob([byteNumbers], { type: mime });
+    }
+      const me = who === 'you';
+      document.getElementById('chat').insertAdjacentHTML('beforeend',
+        `<div class="fade-in flex ${me ? 'justify-end' : 'justify-start'}"><div class="max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${me ? 'bg-blue-600 text-white' : 'bg-white border border-slate-200'}">
+        <p class="text-[10px] uppercase tracking-widest opacity-60 mb-1">${me ? '🙋 You' : '🎙️ Interviewer'}</p><div>${html}</div></div></div>`);
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    async function call(temp, max) {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: history, generationConfig: { temperature: temp, maxOutputTokens: max } })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      return data.candidates[0].content.parts.map(p => p.text || '').join('');
+    }
+
+    async function start() {
+      const role = document.getElementById('roleInput').value.trim();
+      const err = document.getElementById('errorBox');
+      err.classList.add('hidden');
+      if (!role) { err.textContent = 'What role are you sparring for?'; err.classList.remove('hidden'); return; }
+      qNum = 0;
+      history = [{ role: 'user', parts: [{ text: `You are a sharp but fair hiring manager interviewing me for: ${role}. Ask exactly ONE opening interview question (one line, no preamble). I will answer, then you ask the next. Do not score yet.` }] }];
+      document.getElementById('setup').classList.add('hidden');
+      try {
+        const q = await call(0.8, 200);
+        history.push({ role: 'model', parts: [{ text: q }] });
+        qNum = 1; ask(q);
+      } catch (e) { err.textContent = 'Interview error: ' + e.message; err.classList.remove('hidden'); }
+    }
+    function ask(q) {
+      bubble('ai', esc(q).replace(/\n/g, '<br>'));
+      document.getElementById('qLabel').textContent = `Question ${qNum} of ${TOTAL_Q}`;
+      document.getElementById('ansInput').value = '';
+      document.getElementById('answerBox').classList.remove('hidden');
+    }
+    async function answer() {
+      const ans = document.getElementById('ansInput').value.trim();
+      const err = document.getElementById('errorBox'), btn = document.getElementById('sendBtn');
+      err.classList.add('hidden');
+      if (!ans) { err.textContent = 'Type an answer first.'; err.classList.remove('hidden'); return; }
+      bubble('you', esc(ans).replace(/\n/g, '<br>'));
+      document.getElementById('answerBox').classList.add('hidden');
+      btn.disabled = true;
+      try {
+        if (qNum < TOTAL_Q) {
+          history.push({ role: 'user', parts: [{ text: `My answer: ${ans}\nBriefly acknowledge it (one short sentence), then ask question ${qNum + 1} of ${TOTAL_Q} (one line).` }] });
+          const q = await call(0.8, 250);
+          history.push({ role: 'model', parts: [{ text: q }] });
+          qNum++;
+          btn.disabled = false;
+          ask(q);
+        } else {
+          history.push({ role: 'user', parts: [{ text: `My final answer: ${ans}\nThe interview is over. Give the scorecard EXACTLY:\nSCORE: <0-100>\nSTRENGTHS: <2 bullets>\nFIXES: <2 bullets>\nVERDICT: <hired or not, one funny line>` }] });
+          const s = await call(0.6, 500);
+          renderCard(s);
+        }
+      } catch (e) { err.textContent = 'Interview error: ' + e.message; err.classList.remove('hidden'); btn.disabled = false; }
+    }
+    function renderCard(s) {
+      const get = n => (s.match(new RegExp('^' + n + ':\\s*([\\s\\S]*?)(?=\\n[A-Z]+:|$)', 'm')) || [])[1]?.trim() || '';
+      const score = parseInt((s.match(/SCORE:\s*(\d+)/i) || [])[1] || '0', 10);
+      const color = score >= 75 ? 'bg-green-600' : score >= 50 ? 'bg-yellow-500' : 'bg-red-500';
+      document.getElementById('chat').insertAdjacentHTML('beforeend', `<div class="fade-in bg-white rounded-2xl p-5 border-2 border-slate-800 shadow">
+        <p class="text-xs uppercase tracking-widest text-slate-500 font-semibold">📋 Final scorecard</p>
+        <div class="flex items-center gap-3 mt-2"><div class="flex-1 h-3 bg-slate-200 rounded-full overflow-hidden"><div class="h-full ${color} rounded-full" style="width:${Math.min(100, score)}%"></div></div><span class="font-bold text-xl">${score}</span></div>
+        <p class="text-sm mt-3"><b class="text-green-700">💪 Strengths:</b><br>${esc(get('STRENGTHS')).replace(/\n/g, '<br>')}</p>
+        <p class="text-sm mt-2"><b class="text-red-700">🔧 Fixes:</b><br>${esc(get('FIXES')).replace(/\n/g, '<br>')}</p>
+        <p class="text-sm mt-2">🏁 <b>${esc(get('VERDICT'))}</b></p>
+        <button onclick="location.reload()" class="mt-3 text-sm text-blue-600 font-semibold hover:underline">↻ Spar again</button></div>`);
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

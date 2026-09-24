@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Answer Desk — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0d1412] text-emerald-50">
+  <div class="max-w-3xl mx-auto px-4 py-8">
+    <a href="../index.html" class="text-xs text-emerald-300/80 hover:text-white">← Abitech Apps Store</a>
+
+    <div class="text-center mt-4">
+      <div class="text-5xl">💡</div>
+      <h1 class="text-3xl font-bold mt-2">Answer Desk</h1>
+      <p class="text-sm text-emerald-200/80 mt-1">Drop in your own documents and ask questions. It finds the passage, then quotes the exact sentence.</p>
+    </div>
+
+    <div class="mt-4 flex flex-wrap items-center justify-center gap-2 text-[11px]">
+      <span id="bEmb" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Retriever: loading…</span>
+      <span id="bQa" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Reader: idle</span>
+    </div>
+
+    <div class="mt-6 bg-emerald-950/30 rounded-2xl p-5 border border-emerald-900/50">
+      <div class="flex items-center justify-between">
+        <label class="text-xs text-emerald-300/80">Your knowledge base</label>
+        <button id="sampleBtn" class="text-[11px] text-emerald-300 hover:text-white font-semibold">Load sample docs</button>
+      </div>
+      <textarea id="kb" rows="8"
+        class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2.5 text-sm outline-none border border-emerald-900/50 focus:border-emerald-400 resize-y placeholder:text-emerald-200/30"
+        placeholder="Paste policy docs, notes, a handbook, a spec — blank lines separate passages."></textarea>
+      <div class="flex items-center justify-between mt-2">
+        <span id="kbStats" class="text-[11px] text-emerald-200/50">0 passages</span>
+        <button id="indexBtn" disabled class="text-[11px] font-semibold bg-white/10 hover:bg-white/20 disabled:opacity-40 px-3 py-1.5 rounded-full transition">Build index</button>
+      </div>
+    </div>
+
+    <div class="mt-4 bg-emerald-950/30 rounded-2xl p-5 border border-emerald-900/50">
+      <label class="text-xs text-emerald-300/80">Your question</label>
+      <div class="flex flex-col sm:flex-row gap-2 mt-1">
+        <input id="q" type="text"
+          class="flex-1 bg-black/40 rounded-xl px-3 py-2.5 text-sm outline-none border border-emerald-900/50 focus:border-emerald-400 placeholder:text-emerald-200/30"
+          placeholder="e.g. How many days of notice do I need to give?" />
+        <button id="askBtn" disabled class="bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold text-sm px-6 py-2.5 rounded-full transition">Ask</button>
+      </div>
+      <p id="status" class="mt-2 text-xs text-emerald-200/60"></p>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/15 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="out" class="mt-5"></div>
+
+    <p class="mt-6 text-[11px] text-emerald-200/50 text-center leading-relaxed">
+      Retrieval with <b>Xenova/all-MiniLM-L6-v2</b> embeddings, then a <b>distilbert-squad</b> reader for the span.
+      Extractive only — if the answer is not in your text, it will pick the closest sentence instead of inventing one.
+    </p>
+  </div>
+
+  <script type="module">
+    import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0";
+
+    const EMB = 'Xenova/all-MiniLM-L6-v2';
+    const QA = 'Xenova/distilbert-base-cased-distilled-squad';
+    const SAMPLE = `Refund policy
+Annual plans can be cancelled within 30 days of purchase for a full refund. Monthly plans are refunded on a pro-rata basis for unused whole days. Refunds are returned to the original payment method within 5-10 business days.
+
+Support hours
+Email support is staffed Monday to Friday, 09:00 to 18:00 Central European Time. Urgent production incidents are paged 24 hours a day, every day, and have a 1 hour first-response target on Business plans.
+
+Data retention
+Customer data is retained for 13 months after account closure, then permanently deleted. Backups roll off after 35 days. You can request immediate erasure at any time from the account settings page.
+
+Service levels
+Business plans carry a 99.9% monthly uptime commitment. If we miss it, you receive service credits equal to 10% of that month's fee for every 0.1% below target, capped at the full monthly fee.`;
+
+    const bEmb = document.getElementById('bEmb'), bQa = document.getElementById('bQa');
+    const kbEl = document.getElementById('kb');
+    const kbStats = document.getElementById('kbStats');
+    const qEl = document.getElementById('q');
+    const askBtn = document.getElementById('askBtn');
+    const indexBtn = document.getElementById('indexBtn');
+    const errBox = document.getElementById('errorBox');
+    const out = document.getElementById('out');
+    const statusEl = document.getElementById('status');
+    const cache = new Map();
+    let index = null;      // { passages: string[], vectors: number[][] }
+
+    function esc(v) {
+      return String(v || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function showError(m) { errBox.textContent = m; errBox.classList.remove('hidden'); }
+    function clearError() { errBox.classList.add('hidden'); }
+    function badge(el, text, tone) {
+      el.textContent = text;
+      const t = { wait: 'bg-amber-500/15 text-amber-300 border-amber-500/30', ok: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30', err: 'bg-red-500/15 text-red-300 border-red-500/30', idle: 'bg-slate-800 text-slate-400 border-slate-700' };
+      el.className = 'px-3 py-1 rounded-full border ' + (t[tone] || t.idle);
+    }
+    async function model(task, id) {
+      const key = task + '|' + id;
+      if (!cache.has(key)) {
+        const p = pipeline(task, id).catch(e => { cache.delete(key); throw e; });
+        cache.set(key, p);
+      }
+      return cache.get(key);
+    }
+    // transformers.js task name is 'feature-extraction' (not 'embed').
+    async function embed(texts) {
+      const m = await model('feature-extraction', EMB);
+      const t = await m(texts, { pooling: 'mean', normalize: true });
+      return t.tolist();
+    }
+
+    // Passages: blank-line separated, then split again if a block is very long.
+    function splitPassages(text) {
+      const blocks = text.split(/\n\s*\n+/).map(b => b.trim()).filter(Boolean);
+      const passages = [];
+      for (const b of blocks) {
+        if (b.length <= 700) { passages.push(b); continue; }
+        const sents = b.split(/(?<=[.!?])\s+/);
+        let cur = '';
+        for (const s of sents) {
+          if ((cur + ' ' + s).length > 700 && cur) { passages.push(cur.trim()); cur = s; }
+          else cur += (cur ? ' ' : '') + s;
+        }
+        if (cur.trim()) passages.push(cur.trim());
+      }
+      return passages.slice(0, 200);
+    }
+    function updateStats() {
+      const n = splitPassages(kbEl.value).length;
+      kbStats.textContent = n + ' passage' + (n === 1 ? '' : 's');
+    }
+
+    async function boot() {
+      try {
+        await model('feature-extraction', EMB);
+        badge(bEmb, 'Retriever: ready', 'ok');
+        indexBtn.disabled = false;
+        askBtn.disabled = false;
+      } catch (e) {
+        badge(bEmb, 'Retriever: failed', 'err');
+        showError('Could not load the retriever: ' + (e.message || e));
+      }
+    }
+
+    async function buildIndex() {
+      clearError();
+      const passages = splitPassages(kbEl.value);
+      if (!passages.length) return showError('Add some documents first.');
+      indexBtn.disabled = true;
+      const original = indexBtn.textContent;
+      try {
+        indexBtn.textContent = 'Embedding…';
+        statusEl.textContent = `Embedding ${passages.length} passages…`;
+        const started = performance.now();
+        const vectors = await embed(passages);
+        index = { passages, vectors };
+        const secs = ((performance.now() - started) / 1000).toFixed(1);
+        statusEl.textContent = `✅ Indexed ${passages.length} passages in ${secs}s. Ask away.`;
+      } catch (e) {
+        statusEl.textContent = 'Indexing failed.';
+        showError('Could not index: ' + (e.message || e));
+      } finally {
+        indexBtn.disabled = false;
+        indexBtn.textContent = original;
+      }
+    }
+
+    async function ask() {
+      clearError(); out.innerHTML = '';
+      const q = qEl.value.trim();
+      if (!q) return showError('Type a question.');
+      if (!index) {
+        await buildIndex();
+        if (!index) return;
+      }
+      askBtn.disabled = true;
+      const original = askBtn.textContent;
+      try {
+        const [qv] = await embed([q]);
+        const scored = index.passages.map((p, i) => {
+          const v = index.vectors[i];
+          let dot = 0;
+          for (let d = 0; d < qv.length; d++) dot += qv[d] * v[d];
+          return { text: p, score: dot };
+        }).sort((a, b) => b.score - a.score);
+        const top = scored.slice(0, 3);
+
+        statusEl.textContent = 'Reading the best passage…';
+        badge(bQa, 'Reader: working…', 'wait');
+        const qa = await model('question-answering', QA);
+        let answer = null;
+        try {
+          const r = await qa(q, top[0].text);
+          answer = r;
+        } catch (e) { /* fall through to retrieval-only result */ }
+        badge(bQa, answer ? 'Reader: ready' : 'Reader: failed', answer ? 'ok' : 'err');
+
+        const strong = top[0].score >= 0.25;
+        statusEl.textContent = answer
+          ? `✅ Answered from passage 1 (similarity ${(top[0].score * 100).toFixed(0)}%).`
+          : 'Retrieved passages, but could not extract a span.';
+
+        out.innerHTML = `
+          <div class="fade-in space-y-4">
+            <section class="bg-emerald-950/30 rounded-2xl p-5 border border-emerald-600/50">
+              <p class="text-xs uppercase tracking-widest text-emerald-300 font-semibold">Answer</p>
+              ${answer ? `
+                <p class="mt-2 text-lg font-semibold text-emerald-50">${esc(answer.answer)}</p>
+                <p class="text-[11px] text-emerald-200/60 mt-1">reader confidence ${Math.round(answer.score * 100)}%</p>`
+                : `<p class="mt-2 text-sm text-emerald-100/80">No short answer found in the passage.</p>`}
+              ${!strong ? `<p class="mt-3 text-[11px] text-amber-300/90">⚠️ The closest passage is only ${(top[0].score * 100).toFixed(0)}% similar to your question — it may not contain the answer at all.</p>` : ''}
+            </section>
+
+            <section class="bg-emerald-950/30 rounded-2xl p-5 border border-emerald-900/50">
+              <p class="text-xs uppercase tracking-widest text-emerald-300/80 font-semibold">Where it came from</p>
+              <ol class="mt-3 space-y-3">
+                ${top.map((t, i) => `
+                  <li class="flex gap-3">
+                    <span class="text-xs font-bold text-emerald-400/70 w-4 text-right mt-0.5">${i + 1}</span>
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center gap-2">
+                        <div class="flex-1 h-1.5 rounded-full bg-black/40 overflow-hidden"><div class="h-full ${i === 0 ? 'bg-emerald-400' : 'bg-emerald-900'}" style="width:${Math.min(100, Math.max(3, Math.round(t.score * 100)))}%"></div></div>
+                        <span class="text-[10px] text-emerald-200/50 w-8 text-right">${Math.round(t.score * 100)}%</span>
+                      </div>
+                      <p class="text-xs text-emerald-100/80 mt-1.5 whitespace-pre-wrap">${esc(t.text.slice(0, 420))}${t.text.length > 420 ? '…' : ''}</p>
+                    </div>
+                  </li>`).join('')}
+              </ol>
+            </section>
+          </div>`;
+      } catch (e) {
+        statusEl.textContent = 'Question failed.';
+        showError('Could not answer: ' + (e.message || e));
+      } finally {
+        askBtn.disabled = false;
+        askBtn.textContent = original;
+      }
+    }
+
+    kbEl.addEventListener('input', () => { index = null; updateStats(); });
+    document.getElementById('sampleBtn').addEventListener('click', () => { kbEl.value = SAMPLE; index = null; updateStats(); });
+    indexBtn.addEventListener('click', buildIndex);
+    askBtn.addEventListener('click', ask);
+    qEl.addEventListener('keydown', e => { if (e.key === 'Enter' && !askBtn.disabled) ask(); });
+    updateStats();
+    boot();
+  </script>
+</body>
+</html>

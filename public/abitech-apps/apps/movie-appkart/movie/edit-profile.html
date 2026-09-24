@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Outfit:wght@100..900&amp;display=swap.css" rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="movie movie outfit-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/movie.gif" class="img-fluid" alt="movie">
+    </div>
+    <!-- loader End -->
+
+    <!-- header start -->
+    <header class="movie-header">
+        <div class="custom-container2">
+            <button class="back-arrow-icon" onclick="history.back()">
+                <i class="iconsax icon" data-icon="arrow-left"></i>
+            </button>
+            <h3>Edit profile</h3>
+        </div>
+    </header>
+    <!-- header  end  -->
+
+    <!-- profile section start -->
+    <section class="pt-0 movie-profile-section">
+        <div class="custom-container2">
+            <div class="movie-profile-list">
+                <img id="output" src="../assets/images/profile/p12.png" class="img-fluid" alt="profile">
+                <div class="movie-profile-content">
+                    <div>
+                        <h4>Jacob Mark</h4>
+                        <a href="edit-profile.html#!">Jacobmark@gmail.com</a>
+                    </div>
+                    <div>
+                        <input id="file" type="file" onchange="loadFile(event)">
+                        <i class="iconsax icon" data-icon="edit-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- profile section  end  -->
+
+    <!-- auth section start -->
+    <section class="section-t-space-2 movie-auth-section">
+        <div class="custom-container2">
+            <form class="movie-auth-form mt-0">
+                <div class="form-group">
+                    <label class="form-check-label" for="name">First Name</label>
+                    <div class="position-relative">
+                        <input type="text" class="form-control" id="name" placeholder="Enter User Name">
+                        <i class="iconsax icon" data-icon="user-1"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label" for="last-name">Last Name</label>
+                    <div class="position-relative">
+                        <input type="text" class="form-control" id="last-name" placeholder="Enter User Name">
+                        <i class="iconsax icon" data-icon="user-1"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label" for="email">Email Id</label>
+                    <div class="position-relative">
+                        <input type="text" class="form-control" id="email" placeholder="Enter email id">
+                        <i class="iconsax icon" data-icon="mail"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label" for="number">Mobile Number</label>
+                    <div class="position-relative">
+                        <input type="number" class="form-control" id="number" placeholder="Enter your number">
+                        <i class="iconsax icon" data-icon="phone"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label" for="password">Password</label>
+                    <div class="position-relative password-box">
+                        <input type="password" class="form-control" id="password" placeholder="Enter Your Password">
+                        <i class="iconsax icon" data-icon="key"></i>
+                    </div>
+                </div>
+            </form>
+            <div class="movie-auth-btn">
+                <a href="setting.html" class="btn movie-btn">Apply</a>
+            </div>
+        </div>
+    </section>
+    <!-- auth section  end  -->
+
+    <!-- Bootstrap JS-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax JS-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- Image change JS -->
+    <script src="../assets/js/image-change.js"></script>
+
+    <!-- script JS -->
+    <script src="../assets/js/script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Mulish:ital,wght@0,200..1000%3B1,200..1000&amp;display=swap.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- Iconly css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconly.css">
+
+    <!-- swiper css -->
+    <link rel="stylesheet" href="../assets/css/vendors/swiper/swiper.min.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="grocery mulish-font">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/grocery.gif" class="img-fluid" alt="grocery">
+    </div>
+    <!-- loader End -->
+
+    <!-- header start -->
+    <header class="header grocery-header">
+        <div class="custom-container">
+            <div class="head-content">
+                <div class="flex-common gap-2">
+                    <a href="home.html#sidebar" class="sidebar-btn" data-bs-toggle="offcanvas">
+                        <i class="iconsax" data-icon="text-align-left"></i>
+                    </a>
+                    <h2>Appkart</h2>
+                </div>
+
+                <div class="flex-common gap-2">
+                    <span class="points">250 Points</span>
+                    <a href="notification.html">
+                        <i class="iconsax icon-btn notification-icon" data-icon="bell-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+    <!-- Mobile Section Start -->
+    <div class="ecommerce-mobile-menu grocery-mobile-menu">
+        <ul class="mobile-list">
+            <li class="active">
+                <a href="home.html">
+                    <div class="icon">
+                        <img class="inactive" src="../assets/images/grocery/svg/home.svg" alt="home">
+                        <img class="active" src="../assets/images/grocery/svg/home-fill.svg" alt="home">
+                    </div>
+                    <h5 class="active">Home</h5>
+                </a>
+            </li>
+
+            <li>
+                <a href="categories.html">
+                    <div class="icon">
+                        <img class="inactive" src="../assets/images/grocery/svg/category.svg" alt="category">
+                        <img class="active" src="../assets/images/grocery/svg/category-fill.svg" alt="category">
+                    </div>
+                    <h5>Category</h5>
+                </a>
+            </li>
+
+            <li>
+                <a href="cart.html">
+                    <div class="icon">
+                        <img class="inactive" src="../assets/images/grocery/svg/cart.svg" alt="cart">
+                        <img class="active" src="../assets/images/grocery/svg/cart-fill.svg" alt="cart">
+                    </div>
+                    <h5>Cart</h5>
+                </a>
+            </li>
+
+            <li>
+                <a href="profile.html">
+                    <div class="icon">
+                        <img class="inactive" src="../assets/images/grocery/svg/profile.svg" alt="profile">
+                        <img class="active" src="../assets/images/grocery/svg/profile-fill.svg" alt="profile">
+                    </div>
+                    <h5>Profile</h5>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- Mobile Section End -->
+
+    <!-- search section starts -->
+    <section class="pt-0">
+        <div class="custom-container">
+            <form class="auth-input-form">
+                <div class="form-group mt-0">
+                    <input type="search" class="form-control search" id="inputusername" placeholder="Search here.....">
+                    <i class="iconsax search-icon" data-icon="search-normal-2"> </i>
+                    <i class="iconsax mic-icon" data-icon="mic-2"> </i>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- search section end -->
+
+    <!-- banner section starts -->
+    <section class="banner-section pt-2">
+        <div class="custom-container">
+            <a href="shop.html">
+                <img class="img-fluid banner-img w-100" src="../assets/images/grocery/banner/1.png" alt="1">
+            </a>
+        </div>
+    </section>
+    <!-- banner section ends -->
+
+    <!-- category section starts -->
+    <section class="section-t-space">
+        <div class="custom-container">
+            <div class="title plant-title">
+                <h3>Food Categories</h3>
+                <a href="categories.html">See All</a>
+            </div>
+
+            <ul class="category-list">
+                <li>
+                    <a href="shop.html" class="category-item">
+                        <img class="img-fluid category-icon" src="../assets/images/grocery/category/1.svg"
+                            alt="category">
+                    </a>
+
+                    <a href="shop.html" class="category-name">Sugar</a>
+                </li>
+
+                <li>
+                    <a href="shop.html" class="category-item">
+                        <img class="img-fluid category-icon" src="../assets/images/grocery/category/2.svg"
+                            alt="category">
+                    </a>
+
+                    <a href="shop.html" class="category-name">Vegetables</a>
+                </li>
+
+                <li>
+                    <a href="shop.html" class="category-item">
+                        <img class="img-fluid category-icon" src="../assets/images/grocery/category/3.svg"
+                            alt="category">
+                    </a>
+
+                    <a href="shop.html" class="category-name">Cold Drinks </a>
+                </li>
+
+                <li>
+                    <a href="shop.html" class="category-item">
+                        <img class="img-fluid category-icon" src="../assets/images/grocery/category/4.svg"
+                            alt="category">
+                    </a>
+
+                    <a href="shop.html" class="category-name">Fruits</a>
+                </li>
+                <li>
+                    <a href="shop.html" class="category-item">
+                        <img class="img-fluid category-icon" src="../assets/images/grocery/category/5.svg"
+                            alt="category">
+                    </a>
+
+                    <a href="shop.html" class="category-name">Organic</a>
+                </li>
+
+                <li>
+                    <a href="shop.html" class="category-item">
+                        <img class="img-fluid category-icon" src="../assets/images/grocery/category/6.svg"
+                            alt="category">
+                    </a>
+
+                    <a href="shop.html" class="category-name">Household</a>
+                </li>
+                <li>
+                    <a href="shop.html" class="category-item">
+                        <img class="img-fluid category-icon" src="../assets/images/grocery/category/7.svg"
+                            alt="category">
+                    </a>
+
+                    <a href="shop.html" class="category-name">Cakes</a>
+                </li>
+
+                <li>
+                    <a href="shop.html" class="category-item">
+                        <img class="img-fluid category-icon" src="../assets/images/grocery/category/8.svg"
+                            alt="category">
+                    </a>
+
+                    <a href="shop.html" class="category-name">Oil</a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- category section ends -->
+
+    <!-- top seller section starts -->
+    <section class="section-t-space">
+        <div class="custom-container">
+            <div class="title plant-title">
+                <h3>Top Selling Products</h3>
+                <a href="shop.html">See All</a>
+            </div>
+            <div class="swiper grocery-product">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="product-box grocery-product-box">
+                            <div class="img-part">
+                                <a href="product.html" class="product-image"><img
+                                        src="../assets/images/grocery/product/1.png" alt=""
+                                        class="img-fluid product"></a>
+                            </div>
+                            <div class="product-content">
+                                <a href="product.html" class="product-name">
+                                    Organic Nature’s Fresh Mulberry
+                                </a>
+                                <h6>1 kg</h6>
+                                <div class="flex-space mt-2">
+                                    <h4 class="price">$15<del> $20</del></h4>
+                                    <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="product-box grocery-product-box">
+                            <div class="img-part">
+                                <a href="product.html" class="product-image"><img
+                                        src="../assets/images/grocery/product/2.png" alt=""
+                                        class="img-fluid product"></a>
+                            </div>
+
+                            <div class="product-content">
+                                <a href="product.html" class="product-name">
+                                    Nature’s Green Gems of Goodness </a>
+                                <h6>2 kg</h6>
+
+                                <div class="flex-space mt-2">
+                                    <h4 class="price">$20<del> $30</del></h4>
+                                    <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="product-box grocery-product-box">
+                            <div class="img-part">
+                                <a href="product.html" class="product-image"><img
+                                        src="../assets/images/grocery/product/3.png" alt=""
+                                        class="img-fluid product"></a>
+                            </div>
+                            <div class="product-content">
+
+                                <a href="product.html" class="product-name">
+                                    Potato Organically Grown
+                                </a>
+                                <h6>1 kg</h6>
+
+                                <div class="flex-space mt-2">
+                                    <h4 class="price">$15<del> $20</del></h4>
+                                    <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="product-box grocery-product-box">
+                            <div class="img-part">
+                                <a href="product.html" class="product-image"><img
+                                        src="../assets/images/grocery/product/4.png" alt=""
+                                        class="img-fluid product"></a>
+                            </div>
+                            <div class="product-content">
+
+                                <a href="product.html" class="product-name">
+                                    gourmet garden Organic Onion
+                                </a>
+                                <h6>1 kg</h6>
+                                <div class="flex-space mt-2">
+                                    <h4 class="price">$12<del> $15</del></h4>
+                                    <a href="cart.html" class="btn btn-sm plant-cart-btn">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- top seller section ends -->
+
+    <!-- coupon section start -->
+    <section class="section-t-space grocery-coupon-section">
+        <div class="title plant-title">
+            <h3>Coupons For You</h3>
+            <a href="home.html#!">See All</a>
+        </div>
+        <div class="grocery-coupon-boxs">
+            <div class="grocery-coupon-card">
+                <div>
+                    <img src="../assets/images/grocery/svg/discount.svg" class="img-fluid" alt="discount">
+                </div>
+                <span class="dash-line"></span>
+                <div class="grocery-content">
+                    <h4>50% OFF</h4>
+                    <h5>UPTO $20.00</h5>
+                </div>
+            </div>
+            <div class="grocery-coupon-card second-bg">
+                <div>
+                    <img src="../assets/images/grocery/svg/discount.svg" class="img-fluid" alt="discount">
+                </div>
+                <span class="dash-line"></span>
+                <div class="grocery-content">
+                    <h4>50% OFF</h4>
+                    <h5>UPTO $20.00</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- coupon section  end  -->
+
+    <!-- top price section starts -->
+    <section>
+        <div class="custom-container">
+            <div class="title plant-title">
+                <h3>Top Selling Products</h3>
+                <a href="shop.html">See All</a>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row g-3">
+                <div class="col-12">
+                    <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                        <div class="img-part">
+                            <img class="img-fluid product-img" src="../assets/images/grocery/horizontal-product/1.png"
+                                alt="p1">
+                        </div>
+                        <div class="product-content">
+                            <div class="flex-space">
+                                <h5>Living that sweet, strawberry life</h5>
+                            </div>
+
+                            <h6 class="content-color">500g</h6>
+
+                            <div class="flex-space mt-1">
+                                <h4 class="price">$30 <span class="offer">25% off</span></h4>
+                                <div class="plus-minus">
+                                    <i class="iconsax icon sub" data-icon="minus"></i>
+                                    <input type="number" disabled="" value="1" min="1" max="10">
+                                    <i class="iconsax icon add" data-icon="add"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                        <div class="img-part">
+                            <img class="img-fluid product-img" src="../assets/images/grocery/horizontal-product/2.png"
+                                alt="p1">
+                        </div>
+                        <div class="product-content">
+                            <div class="flex-space">
+                                <h5>Assorted Capsicum Combo </h5>
+                            </div>
+
+                            <h6 class="content-color">250g</h6>
+
+                            <div class="flex-space mt-1">
+                                <h4 class="price">$15 <span class="offer">15% off</span></h4>
+                                <div class="plus-minus">
+                                    <i class="iconsax icon sub" data-icon="minus"></i>
+                                    <input type="number" disabled="" value="1" min="1" max="10">
+                                    <i class="iconsax icon add" data-icon="add"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="plant-horizontal-product-box grocery-horizontal-product-box">
+                        <div class="img-part">
+                            <img class="img-fluid product-img" src="../assets/images/grocery/horizontal-product/3.png"
+                                alt="p1">
+                        </div>
+                        <div class="product-content">
+                            <div class="flex-space">
+                                <h5>Fresh Organic Avocado</h5>
+                            </div>
+
+                            <h6 class="content-color">200g</h6>
+
+                            <div class="flex-space mt-1">
+                                <h4 class="price">$10 <span class="offer">10% off</span></h4>
+                                <div class="plus-minus">
+                                    <i class="iconsax icon sub" data-icon="minus"></i>
+                                    <input type="number" disabled="" value="1" min="1" max="10">
+                                    <i class="iconsax icon add" data-icon="add"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- top price section ends -->
+
+    <!-- panel-space start -->
+    <div class="panel-space"></div>
+    <!-- panel-space end -->
+
+
+    <!-- sidebar starts -->
+    <div class="offcanvas sidebar-offcanvas offcanvas-start" tabindex="-1" id="sidebar">
+        <div class="offcanvas-body">
+            <div class="custom-container">
+                <div class="profile-background">
+                    <div class="profile-part">
+                        <div class="profile-image">
+                            <img id="output" class="img-fluid profile-pic" src="../assets/images/profile/p8.png"
+                                alt="3">
+                        </div>
+
+                        <h3>Leslie Alexander</h3>
+                        <h4>lesliealexander@gmail.com</h4>
+                    </div>
+                </div>
+
+
+                <ul class="profile-list">
+                    <li>
+                        <a href="order.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="document-text-1"> </i>
+                            </div>
+                            <div class="setting-content">
+                                <h5>Orders</h5>
+                                <h6>Ongoing orders, Recent orders..</h6>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="wishlist.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="heart"> </i>
+
+                            </div>
+                            <div class="setting-content">
+                                <h5> Your Wishlist</h5>
+                                <h6>Your save products</h6>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="payment.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="bank-card-diagonal"> </i>
+
+                            </div>
+                            <div class="setting-content">
+                                <h5>Payment</h5>
+                                <h6>Saved cards, Wallets</h6>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="language.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="globe"> </i>
+                            </div>
+                            <div class="setting-content">
+                                <h5>Langauge</h5>
+                                <h6>Select your language here..</h6>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="notification.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="bell-2"> </i>
+                            </div>
+                            <div class="setting-content">
+                                <h5>Notification</h5>
+                                <h6>Offers, Order tracking messages..</h6>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="app-setting.html" class="setting-box">
+                            <div class="setting-icon">
+                                <i class="iconsax main-icon" data-icon="setting-1"> </i>
+                            </div>
+                            <div class="setting-content">
+                                <h5>Settings</h5>
+                                <h6>App settings, Help center</h6>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="bottom-sidebar">
+                    <a href="auth.html" class="btn plant-btn w-100"> <i class="iconsax sidebar-icon"
+                            data-icon="logout-2">
+                        </i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- sidebar end -->
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+
+    <!-- quantity js -->
+    <script src="../assets/js/quantity.js"></script>
+
+    <!-- swiper js -->
+    <script src="../assets/js/vendors/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/js/custom-swiper.js"></script>
+
+    <!-- template Settings js-->
+    <script src="../assets/js/template-setting.js"></script>
+
+    <!-- script js-->
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

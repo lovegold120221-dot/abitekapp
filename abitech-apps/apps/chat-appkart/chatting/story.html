@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="appkart">
+    <meta name="keywords" content="appkart">
+    <meta name="author" content="appkart">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="../assets/images/logo/favicon.png" type="image/x-icon">
+    <title>Appkart</title>
+    <link rel="apple-touch-icon" href="../assets/images/logo/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="appkart">
+    <meta name="msapplication-TileImage" content="../assets/images/logo/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google font css -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../../../../fonts.googleapis.com/css2%3Ffamily=Manrope:wght@200..800&amp;display=swap.css" rel="stylesheet">
+    <!-- Bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="../assets/css/vendors/bootstrap/bootstrap.min.css">
+
+    <!-- Iconsax css -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/iconsax.css">
+
+    <!-- swiper css -->
+    <link rel="stylesheet" href="../assets/css/vendors/swiper/swiper.min.css">
+
+    <!-- Style css -->
+    <link id="change-link" rel="stylesheet" type="text/css" href="../assets/css/style.css">
+</head>
+
+<body class="chatting manrope-font position-relative">
+
+    <!-- loader Start -->
+    <div class="loader">
+        <img src="../assets/images/gif/chatting.gif" class="img-fluid" alt="chatting">
+    </div>
+    <!-- loader End -->
+
+    <!-- chatting story section start -->
+    <section class="pt-0">
+        <div class="swiper story-slider">
+            <div class="story-person-content">
+                <div class="d-flex align-items-center gap-2">
+                    <a href="home.html" onclick="history.back()">
+                        <i class="iconsax back-icon" data-icon="chevron-left"></i>
+                    </a>
+                    <div class="story-person-img">
+                        <img src="../assets/images/chatting/profile/7.png" class="img-fluid" alt="profile">
+                    </div>
+                    <h3> Albert Flores</h3>
+                    <h4>1h ago</h4>
+                </div>
+            </div>
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="../assets/images/chatting/story/2.jpg" class="img-fluid" alt="image">
+                </div>
+                <div class="swiper-slide">
+                    <img src="../assets/images/chatting/story/3.jpg" class="img-fluid" alt="image">
+                </div>
+                <div class="swiper-slide">
+                    <img src="../assets/images/chatting/story/4.jpg" class="img-fluid" alt="image">
+                </div>
+                <div class="swiper-slide">
+                    <img src="../assets/images/chatting/story/2.jpg" class="img-fluid" alt="image">
+                </div>
+            </div>
+            <div class="swiper-pagination">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="message-chat-box bg-transparent">
+                <form>
+                    <input type="text" class="chat-input story-chat" placeholder="Type here...">
+                    <img src="../assets/images/svg/3.svg" class="img-fluid smile" alt="smile">
+                    <div class="chat-message-icon chat-icon">
+                        <button class="send-btn">
+                            <i class="iconsax send-icon" data-icon="send-2"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- chatting story section  end  -->
+
+    <!-- Bootstrap js-->
+    <script src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Swiper js -->
+    <script src="../assets/js/vendors/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/js/custom-swiper.js"></script>
+
+    <!-- Script JS -->
+    <script src="../assets/js/script.js"></script>
+
+    <!-- Iconsax js-->
+    <script src="../assets/js/iconsax.js"></script>
+</body>
+
+</html>

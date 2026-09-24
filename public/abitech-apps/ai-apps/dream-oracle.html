@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dream Oracle — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .stars { background-image: radial-gradient(1px 1px at 20% 30%, #fff 100%, transparent 0), radial-gradient(1px 1px at 70% 10%, #fff 100%, transparent 0), radial-gradient(1.5px 1.5px at 40% 70%, #c4b5fd 100%, transparent 0), radial-gradient(1px 1px at 85% 60%, #fff 100%, transparent 0), radial-gradient(1.5px 1.5px at 10% 85%, #c4b5fd 100%, transparent 0), radial-gradient(1px 1px at 55% 40%, #fff 100%, transparent 0); }
+    .fade-in { animation: fadeIn .5s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-[#0b0620] via-[#1b1040] to-[#2b1a5e] text-violet-100">
+  <div class="stars fixed inset-0 pointer-events-none"></div>
+  <div class="relative max-w-2xl mx-auto px-4 py-8">
+    <div class="text-center mt-4">
+      <div class="text-5xl">🔮</div>
+      <h1 class="text-3xl font-bold mt-2 text-white">Dream Oracle</h1>
+      <p class="text-sm text-violet-300 mt-1">Whisper last night's dream. The Oracle decodes its symbols.</p>
+    </div>
+
+    <div class="mt-6 bg-white/10 backdrop-blur rounded-2xl p-5 border border-white/10">
+      <textarea id="dreamInput" rows="4" placeholder="Last night I dreamt I was flying over a city made of glass, but my shoes kept falling off..."
+        class="w-full bg-black/30 rounded-xl p-3 text-sm outline-none border border-white/10 focus:border-violet-400 placeholder:text-violet-300/50"></textarea>
+      <div class="flex gap-2 mt-3">
+        <select id="moodInput" class="bg-black/30 rounded-full px-4 py-2 text-sm border border-white/10 outline-none">
+          <option value="vivid">😳 Vivid</option>
+          <option value="scary">😱 Scary</option>
+          <option value="peaceful">😌 Peaceful</option>
+          <option value="weird">🌀 Weird</option>
+          <option value="recurring">🔁 Recurring</option>
+        </select>
+        <button id="askBtn" onclick="interpret()" class="flex-1 bg-violet-500 hover:bg-violet-400 text-white font-semibold text-sm py-2.5 rounded-full transition">Consult the Oracle ✨</button>
+      </div>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/20 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="result" class="mt-5"></div>
+  </div>
+
+  <script>
+    const GEMINI_KEY = sessionStorage.getItem('abitech_gemini_key') || '';
+    const GEMINI_MODEL = "gemini-3.5-flash-lite";
+    const SYSTEM = "You are the Dream Oracle, a mystical but insightful dream interpreter. Structure every answer exactly like this:\nSYMBOLS: 3 bullet lines, each naming one dream symbol and its meaning in one line.\nMESSAGE: 2-3 sentences on what the dream is really telling the dreamer.\nRITUAL: one tiny real-world action for today, one line.\nLUCKY: one lucky number and one lucky color, one line.\nKeep it enchanting, under 220 words, no markdown headers.";
+
+    function esc(s) { return s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+    function fmt(t) { return esc(t).replace(/\*\*(.+?)\*\*/g, '<b class="text-amber-300">$1</b>').replace(/\n/g, '<br>'); }
+
+    // Voice: browser speech engine. Tap 🔊 to hear, tap again to stop.
+    const spokenTexts = [];
+    function speakText(t) {
+      try {
+        if (speechSynthesis.speaking) { speechSynthesis.cancel(); return; }
+        const u = new SpeechSynthesisUtterance(String(t).replace(/[*#_]/g, '').slice(0, 1200));
+        const vs = speechSynthesis.getVoices().filter(v => v.lang && v.lang.toLowerCase().startsWith('en'));
+        u.voice = vs.find(v => /samantha|zira|google us english|female/i.test(v.name || '')) || vs[0] || null;
+        speechSynthesis.speak(u);
+      } catch (e) {}
+    }
+    function stopSpeak() { try { speechSynthesis.cancel(); } catch (e) {} }
+    function hearBtn(i) { return `<button onclick="speakText(spokenTexts[${i}] || '')" class="mt-2 text-xs font-semibold text-amber-300 hover:text-amber-200">🔊 Listen</button>`; }
+
+    async function gemini(user) {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ system_instruction: { parts: [{ text: SYSTEM }] }, contents: [{ parts: [{ text: user }] }], generationConfig: { temperature: 0.95, maxOutputTokens: 700 } })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      return data.candidates[0].content.parts.map(p => p.text || '').join('');
+    }
+
+    async function interpret() {
+      const dream = document.getElementById('dreamInput').value.trim();
+      const mood = document.getElementById('moodInput').value;
+      const btn = document.getElementById('askBtn'), err = document.getElementById('errorBox'), out = document.getElementById('result');
+      err.classList.add('hidden');
+      if (!dream) { err.textContent = 'Tell the Oracle your dream first.'; err.classList.remove('hidden'); return; }
+      btn.disabled = true; btn.textContent = 'Reading the stars… 🔭';
+      out.innerHTML = '';
+      stopSpeak();
+      try {
+        const text = await gemini(`Dream (mood: ${mood}): ${dream}`);
+        out.innerHTML = `<div class="fade-in bg-white/10 backdrop-blur rounded-2xl p-5 border border-violet-400/30 shadow-lg shadow-violet-900/40">
+          <p class="text-xs uppercase tracking-widest text-amber-300 font-semibold mb-2">🔮 The Oracle speaks</p>
+          <div class="text-sm leading-relaxed">${fmt(text)}</div>${hearBtn(spokenTexts.push(text) - 1)}</div>`;
+      } catch (e) {
+        err.textContent = 'The stars are silent: ' + e.message; err.classList.remove('hidden');
+      }
+      btn.disabled = false; btn.textContent = 'Consult the Oracle ✨';
+    }
+  </script>
+</body>
+</html>

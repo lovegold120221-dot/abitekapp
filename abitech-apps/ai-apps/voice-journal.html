@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voice Journal — Abitech AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .pulse-rec { animation: pulseRec 1.1s ease-in-out infinite; }
+    @keyframes pulseRec { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#12141c] text-indigo-50">
+  <div class="max-w-2xl mx-auto px-4 py-8">
+    <a href="../index.html" class="text-xs text-indigo-300/80 hover:text-white">← Abitech Apps Store</a>
+
+    <div class="text-center mt-4">
+      <div class="text-5xl">🎙️</div>
+      <h1 class="text-3xl font-bold mt-2">Voice Journal</h1>
+      <p class="text-sm text-indigo-200/80 mt-1">Talk for a minute. It writes the entry, scores the mood, and charts the trend — stored only on this device.</p>
+    </div>
+
+    <div class="mt-4 flex flex-wrap items-center justify-center gap-2 text-[11px]">
+      <span id="bAsr" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">Whisper: loading…</span>
+      <span id="bSent" class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Sentiment: idle</span>
+    </div>
+
+    <div class="mt-6 bg-indigo-950/40 rounded-2xl p-5 border border-indigo-900/50">
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="recBtn" disabled class="flex-1 min-w-[170px] bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 text-white font-semibold text-sm py-2.5 rounded-full transition">● Record entry</button>
+        <label class="px-4 py-2.5 bg-white/10 hover:bg-white/20 text-xs font-semibold rounded-full cursor-pointer transition">
+          Upload clip <input id="file" type="file" accept="audio/*" class="hidden" />
+        </label>
+      </div>
+      <label class="block text-xs text-indigo-300/80 mt-3">Or type instead
+        <textarea id="typed" rows="3" class="mt-1 w-full bg-black/40 rounded-xl px-3 py-2.5 text-sm outline-none border border-indigo-900/50 focus:border-indigo-400 resize-y placeholder:text-indigo-200/30" placeholder="Write today's entry…"></textarea>
+      </label>
+      <button id="saveBtn" class="mt-3 w-full bg-white/10 hover:bg-white/20 text-sm font-semibold py-2.5 rounded-full transition">Save typed entry</button>
+      <p id="status" class="mt-2 text-xs text-indigo-200/60"></p>
+    </div>
+
+    <div id="errorBox" class="hidden mt-4 text-sm bg-red-500/15 border border-red-400/40 rounded-xl p-3"></div>
+    <div id="out" class="mt-5"></div>
+
+    <p class="mt-6 text-[11px] text-indigo-200/50 text-center leading-relaxed">
+      <b>onnx-community/whisper-base</b> transcribes, <b>distilbert-sst-2</b> scores each entry. Entries live in this
+      browser's localStorage — clear them any time, and note that sentiment scoring is blunt: it reads wording, not you.
+    </p>
+  </div>
+
+  <script type="module">
+    import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0';
+
+    const ASR = 'onnx-community/whisper-base';
+    const SENT = 'Xenova/distilbert-base-uncased-finetuned-sst-2-english';
+    const KEY = 'abitech_voice_journal_v1';
+
+    const bAsr = document.getElementById('bAsr'), bSent = document.getElementById('bSent');
+    const recBtn = document.getElementById('recBtn');
+    const fileInput = document.getElementById('file');
+    const typedEl = document.getElementById('typed');
+    const saveBtn = document.getElementById('saveBtn');
+    const errBox = document.getElementById('errorBox');
+    const out = document.getElementById('out');
+    const statusEl = document.getElementById('status');
+
+    const cache = new Map();
+    let recorder = null, chunks = [], busy = false;
+    let entries = [];
+
+    function esc(v) {
+      return String(v || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function showError(m) { errBox.textContent = m; errBox.classList.remove('hidden'); }
+    function clearError() { errBox.classList.add('hidden'); }
+    function badge(el, text, tone) {
+      el.textContent = text;
+      const t = { wait: 'bg-amber-500/15 text-amber-300 border-amber-500/30', ok: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30', err: 'bg-red-500/15 text-red-300 border-red-500/30', idle: 'bg-slate-800 text-slate-400 border-slate-700' };
+      el.className = 'px-3 py-1 rounded-full border ' + (t[tone] || t.idle);
+    }
+    async function model(task, id) {
+      const key = task + '|' + id;
+      if (!cache.has(key)) {
+        const p = pipeline(task, id).catch(e => { cache.delete(key); throw e; });
+        cache.set(key, p);
+      }
+      return cache.get(key);
+    }
+    function resample16k(input, inRate) {
+      if (!inRate || inRate === 16000) return input;
+      const ratio = inRate / 16000;
+      const len = Math.max(1, Math.round(input.length / ratio));
+      const o = new Float32Array(len);
+      for (let i = 0; i < len; i++) {
+        const pos = i * ratio, i0 = Math.floor(pos), i1 = Math.min(i0 + 1, input.length - 1), f = pos - i0;
+        o[i] = input[i0] * (1 - f) + input[i1] * f;
+      }
+      return o;
+    }
+    async function decode(blob) {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      const ctx = new Ctx();
+      const buf = await ctx.decodeAudioData(await blob.arrayBuffer());
+      const mix = buf.numberOfChannels > 1
+        ? (() => { const a = buf.getChannelData(0), b = buf.getChannelData(1), m = new Float32Array(a.length); for (let i = 0; i < a.length; i++) m[i] = (a[i] + b[i]) / 2; return m; })()
+        : buf.getChannelData(0);
+      const audio = resample16k(mix, buf.sampleRate);
+      ctx.close();
+      return audio;
+    }
+
+    function load() {
+      try { entries = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { entries = []; }
+      if (!Array.isArray(entries)) entries = [];
+    }
+    function persist() {
+      try { localStorage.setItem(KEY, JSON.stringify(entries)); }
+      catch (e) { showError('Could not save locally (storage blocked or full).'); }
+    }
+    const moodColour = m => m > 0.15 ? 'text-emerald-300' : m < -0.15 ? 'text-rose-300' : 'text-amber-300';
+    const moodWord = m => m > 0.5 ? 'bright' : m > 0.15 ? 'positive' : m < -0.5 ? 'heavy' : m < -0.15 ? 'low' : 'even';
+
+    function render() {
+      if (!entries.length) {
+        out.innerHTML = `<div class="bg-indigo-950/40 rounded-2xl p-6 border border-indigo-900/50 text-center text-sm text-indigo-200/50">
+          No entries yet. Record or type one above — nothing leaves this device.</div>`;
+        return;
+      }
+      const recent = entries.slice(-14);
+      const avg = entries.reduce((s, e) => s + e.mood, 0) / entries.length;
+      const best = entries.reduce((a, b) => b.mood > a.mood ? b : a);
+      const worst = entries.reduce((a, b) => b.mood < a.mood ? b : a);
+
+      out.innerHTML = `
+        <div class="fade-in space-y-4">
+          <section class="bg-indigo-950/40 rounded-2xl p-5 border border-indigo-700/50">
+            <div class="flex items-start justify-between">
+              <div>
+                <p class="text-xs uppercase tracking-widest text-indigo-300/80 font-semibold">Mood trend</p>
+                <p class="text-2xl font-bold ${moodColour(avg)} mt-1">${moodWord(avg)}</p>
+                <p class="text-[11px] text-indigo-200/60">average ${avg > 0 ? '+' : ''}${avg.toFixed(2)} across ${entries.length} entr${entries.length === 1 ? 'y' : 'ies'}</p>
+              </div>
+              <div class="text-right text-[11px] text-indigo-200/60">
+                <p>best: <span class="text-emerald-300">${best.mood > 0 ? '+' : ''}${best.mood.toFixed(2)}</span></p>
+                <p>lowest: <span class="text-rose-300">${worst.mood.toFixed(2)}</span></p>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 h-28 mt-5">
+              ${recent.map(e => {
+                const h = Math.max(6, Math.round(Math.abs(e.mood) * 100));
+                const up = e.mood >= 0;
+                return `<div class="flex-1 flex flex-col items-center justify-end h-full" title="${esc(e.date)} · ${e.mood.toFixed(2)}">
+                  ${up ? `<div class="w-full rounded-t ${e.mood > 0.15 ? 'bg-emerald-400/80' : 'bg-amber-400/60'}" style="height:${h}%"></div>` : ''}
+                  <div class="w-full h-px bg-indigo-500/40"></div>
+                  ${!up ? `<div class="w-full rounded-b ${e.mood < -0.15 ? 'bg-rose-400/80' : 'bg-amber-400/60'}" style="height:${h}%"></div>` : ''}
+                </div>`;
+              }).join('')}
+            </div>
+            <p class="text-[10px] text-indigo-200/40 mt-2 text-center">last ${recent.length} entr${recent.length === 1 ? 'y' : 'ies'}, oldest left</p>
+          </section>
+
+          <section class="bg-indigo-950/40 rounded-2xl border border-indigo-900/50 overflow-hidden">
+            <div class="p-4 flex items-center justify-between border-b border-indigo-900/50">
+              <p class="text-xs uppercase tracking-widest text-indigo-300/80 font-semibold">Entries</p>
+              <button id="clearAll" class="text-[11px] text-rose-300 hover:text-white font-semibold">Clear all</button>
+            </div>
+            <ul class="divide-y divide-indigo-900/40 max-h-96 overflow-y-auto">
+              ${[...entries].reverse().map(e => `
+                <li class="p-4">
+                  <div class="flex items-center gap-2 text-[10px] text-indigo-200/50">
+                    <span>${esc(e.date)}</span>
+                    <span class="px-1.5 py-0.5 rounded-full bg-black/40 ${moodColour(e.mood)}">${e.mood > 0 ? '+' : ''}${e.mood.toFixed(2)}</span>
+                    <span class="truncate">${esc(e.source)}</span>
+                  </div>
+                  <p class="text-sm text-indigo-50/90 mt-1.5 whitespace-pre-wrap">${esc(e.text)}</p>
+                </li>`).join('')}
+            </ul>
+          </section>
+        </div>`;
+
+      document.getElementById('clearAll').addEventListener('click', () => {
+        if (!confirm('Delete all journal entries from this browser?')) return;
+        entries = []; persist(); render();
+      });
+    }
+
+    async function boot() {
+      try {
+        await model('automatic-speech-recognition', ASR);
+        badge(bAsr, 'Whisper: ready', 'ok');
+        recBtn.disabled = false;
+        statusEl.textContent = 'Ready — record or type an entry.';
+      } catch (e) {
+        badge(bAsr, 'Whisper: failed', 'err');
+        showError('Could not load Whisper: ' + (e.message || e));
+      }
+    }
+
+    async function score(text) {
+      const sent = await model('sentiment-analysis', SENT);
+      const r = await sent(text.slice(0, 500));
+      const signed = r[0].label === 'POSITIVE' ? r[0].score : -r[0].score;
+      return Math.max(-1, Math.min(1, signed));
+    }
+
+    async function addEntry(text, source) {
+      clearError();
+      if (!text.trim()) return showError('Nothing to save.');
+      statusEl.textContent = 'Scoring the mood…';
+      try {
+        badge(bSent, 'Sentiment: working…', 'wait');
+        const mood = await score(text);
+        badge(bSent, 'Sentiment: ready', 'ok');
+        entries.push({ text: text.trim(), mood, date: new Date().toLocaleString(), source });
+        persist();
+        typedEl.value = '';
+        statusEl.textContent = `✅ Saved (${mood > 0 ? '+' : ''}${mood.toFixed(2)}).`;
+        render();
+      } catch (e) {
+        badge(bSent, 'Sentiment: failed', 'err');
+        showError('Could not score that entry: ' + (e.message || e));
+      }
+    }
+
+    async function process(blob) {
+      if (busy) return;
+      busy = true; clearError();
+      recBtn.disabled = true;
+      const original = recBtn.textContent;
+      try {
+        recBtn.textContent = 'Transcribing…';
+        statusEl.textContent = 'Transcribing your entry…';
+        const audio = await decode(blob);
+        const asr = await model('automatic-speech-recognition', ASR);
+        const r = await asr(audio, { task: 'transcribe', language: 'en', chunk_length_s: 30, stride_length_s: 5 });
+        const text = (r.text || '').trim();
+        if (!text) throw new Error('No speech detected.');
+        await addEntry(text, 'voice');
+      } catch (e) {
+        statusEl.textContent = 'Transcription failed.';
+        showError('Could not transcribe: ' + (e.message || e));
+      } finally {
+        busy = false;
+        recBtn.disabled = false;
+        recBtn.textContent = original;
+      }
+    }
+
+    recBtn.addEventListener('click', async () => {
+      clearError();
+      if (recorder && recorder.state === 'recording') { recorder.stop(); return; }
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        chunks = [];
+        recorder = new MediaRecorder(stream);
+        recorder.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+        recorder.onstop = () => {
+          stream.getTracks().forEach(t => t.stop());
+          recBtn.textContent = '● Record entry';
+          recBtn.classList.remove('pulse-rec');
+          if (chunks.length) process(new Blob(chunks, { type: recorder.mimeType || 'audio/webm' }));
+        };
+        recorder.start();
+        recBtn.textContent = '■ Stop & save';
+        recBtn.classList.add('pulse-rec');
+        statusEl.textContent = 'Recording…';
+      } catch (e) { showError('Microphone unavailable: ' + (e.message || e)); }
+    });
+
+    fileInput.addEventListener('change', e => {
+      const f = e.target.files && e.target.files[0];
+      if (f) process(f);
+      e.target.value = '';
+    });
+    saveBtn.addEventListener('click', () => addEntry(typedEl.value, 'typed'));
+
+    load();
+    render();
+    boot();
+  </script>
+</body>
+</html>
